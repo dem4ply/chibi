@@ -51,10 +51,24 @@ def inflate_dir( src ):
 
 
 def is_dir( src ):
+    """
+    revisa si una direcion es un directorio
+
+    Returns
+    =======
+    bool
+    """
     return os.path.isdir( src )
 
 
 def is_file( src ):
+    """
+    revisa si una direcion es un archivo
+
+    Returns
+    =======
+    bool
+    """
     return os.path.isfile( src )
 
 
