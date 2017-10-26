@@ -127,6 +127,20 @@ def exists( file_name ):
 
 
 def copy( source, dest ):
+    """
+    copia el contenido de un archivo al destino
+
+    Parameters
+    ==========
+    source: string
+        ruta del archivo original
+    dest: string
+        ruta del destine del nuevo archivo
+
+    Returns
+    =======
+    None
+    """
     shutil.copy( source, dest )
 
 
