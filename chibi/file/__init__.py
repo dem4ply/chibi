@@ -97,6 +97,17 @@ def ls_only_dir( src=None ):
 
 
 def join( *patch ):
+    """
+    une los argumentes en una direcion
+
+    Parameters
+    ==========
+    patch: list of strings
+
+    Returns
+    =======
+    string
+    """
     return os.path.join( *patch )
 
 
