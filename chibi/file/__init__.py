@@ -112,6 +112,17 @@ def join( *patch ):
 
 
 def exists( file_name ):
+    """
+    revisa si el archivo existe en la ruta
+
+    Parameters
+    ==========
+    file_name: string
+
+    Returns
+    =======
+    bool
+    """
     return os.path.exists( file_name )
 
 
