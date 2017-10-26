@@ -73,12 +73,26 @@ def is_file( src ):
 
 
 def ls( src=None ):
+    """
+    lo mismo que ls en unix
+
+    Returns
+    =======
+    iterador of strings
+    """
     if src is None:
         src = current_dir()
     return ( name for name in os.listdir( src ) )
 
 
 def ls_only_dir( src=None ):
+    """
+    lo mismo que ls en unix
+
+    Returns
+    =======
+    iterador of strings
+    """
     return ( name for name in ls( src ) if is_dir( name ) )
 
 

@@ -8,6 +8,7 @@ class Test_with_files( TestCase ):
 
     def setUp(self):
         self.root_dir = tempfile.mkdtemp()
+        self.empty_folder = tempfile.mkdtemp()
         self.files = [
             tempfile.mkstemp( dir=self.root_dir )[0]
             for i in range( self.amount_of_files ) ]
@@ -17,3 +18,4 @@ class Test_with_files( TestCase ):
 
     def tearDown(self):
         shutil.rmtree( self.root_dir )
+        shutil.rmtree( self.empty_folder )
