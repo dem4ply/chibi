@@ -1,6 +1,7 @@
 from unittest import TestCase
 import tempfile, shutil
 from faker import Factory as Faker_factory
+from chibi.file import current_dir, cd
 
 
 faker = Faker_factory.create()
@@ -36,3 +37,11 @@ class Test_with_files( TestCase ):
         shutil.rmtree( self.root_dir )
         shutil.rmtree( self.empty_folder )
         shutil.rmtree( self.folder_with_files_with_content )
+
+
+class Test_moving_dir( TestCase ):
+    def setUp( self ):
+        self.origin_dir = current_dir()
+
+    def tearDown(self):
+        cd( self.origin_dir )

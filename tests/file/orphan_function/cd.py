@@ -1,8 +1,9 @@
 from unittest import TestCase
 from chibi.file import current_dir, cd
+from tests.snippet.files import Test_moving_dir
 
 
-class Test_cd( TestCase ):
+class Test_cd( Test_moving_dir ):
 
     def test_ch_can_use_the_simbol_of_home( self ):
         cd( '~' )
