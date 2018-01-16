@@ -11,6 +11,7 @@ class Test_with_files( TestCase ):
     amount_of_files = 3
     amount_of_dirs = 3
     amount_of_files_with_content = 3
+    amount_of_inner_dirs = 3
 
     def setUp(self):
         self.root_dir = tempfile.mkdtemp()
@@ -23,6 +24,9 @@ class Test_with_files( TestCase ):
         self.dirs = [
             tempfile.mkdtemp( dir=self.root_dir )
             for i in range( self.amount_of_dirs ) ]
+        for dir_level_1 in self.dirs:
+            for i in range( self.amount_of_inner_dirs ):
+                tempfile.mkdtemp( dir=dir_level_1 )
 
         self.files_with_content = []
         for i in range( self.amount_of_files_with_content ):

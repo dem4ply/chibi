@@ -93,7 +93,7 @@ def ls_only_dir( src=None ):
     =======
     iterador of strings
     """
-    return ( name for name in ls( src ) if is_dir( name ) )
+    return ( name for name in ls( src ) if is_dir( join( src, name ) ) )
 
 
 def join( *patch ):
