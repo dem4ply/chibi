@@ -12,7 +12,7 @@ def iwconfig():
 
     Returns
     =======
-    py:class:`chibi.atlas.Chibi_atlas`
+    py:class: `chibi.atlas.Chibi_atlas`
     """
     command_result, error, return_code = command( 'iwconfig', stdout='pipe' )
 
