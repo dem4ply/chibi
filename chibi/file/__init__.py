@@ -96,6 +96,12 @@ def ls_only_dir( src=None ):
     return ( name for name in ls( src ) if is_dir( join( src, name ) ) )
 
 
+def mkdir( new_dir, is_ok_exists=True ):
+    """
+    """
+    os.makedirs( inflate_dir( new_dir, is_ok_exists ) )
+
+
 def join( *patch ):
     """
     une los argumentes en una direcion
@@ -126,7 +132,7 @@ def exists( file_name ):
     return os.path.exists( file_name )
 
 
-def copy( source, dest ):
+def copy( source, dest, verbose=False ):
     """
     copia el contenido de un archivo al destino
 
@@ -136,12 +142,15 @@ def copy( source, dest ):
         ruta del archivo original
     dest: string
         ruta del destine del nuevo archivo
+    verbose: bool
 
     Returns
     =======
     None
     """
     shutil.copy( source, dest )
+    if verbose:
+        print( source, '->', dest )
 
 
 class Chibi_file:
