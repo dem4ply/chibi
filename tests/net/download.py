@@ -1,14 +1,15 @@
-from chibi.net import download
 import tempfile, shutil
-from unittest import TestCase
+
 from chibi.file import exists
+from chibi.net import download
+from unittest import TestCase
 
 
 class Test_download_lenna( TestCase ):
     def setUp( self ):
         self.download_folder = tempfile.mkdtemp()
         self.lenna_url = (
-            'https://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png' )
+            'http://www.lenna.org/len_std.jpg' )
 
     def tearDown(self):
         shutil.rmtree( self.download_folder )
