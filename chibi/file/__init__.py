@@ -98,8 +98,17 @@ def ls_only_dir( src=None ):
 
 def mkdir( new_dir, is_ok_exists=True ):
     """
+    crea un nuevo directiorio
+
+    Parameters
+    ==========
+    new_dir: string
+        nombre o direcion del nuevo directorio
+    is_ok_exists: bool
+        define si esta bien is el directorio ya existe
+        y no lanza una exception
     """
-    os.makedirs( inflate_dir( new_dir, is_ok_exists ) )
+    os.makedirs( inflate_dir( new_dir ), exist_ok=is_ok_exists )
 
 
 def join( *patch ):
