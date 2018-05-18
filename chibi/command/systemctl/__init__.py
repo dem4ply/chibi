@@ -30,18 +30,19 @@ def status( *services ):
 
 
 def enable( *services ):
-    command_result, error, return_code = systemctl(
-        'enable', *services, stdout=False )
+    command_result, error, return_code = systemctl( 'enable', *services )
     return command_result, error, return_code
 
 
 def start( *services ):
-    command_result, error, return_code = systemctl(
-        'start', *services, stdout=False )
+    command_result, error, return_code = systemctl( 'start', *services )
     return command_result, error, return_code
 
 
 def restart( *services ):
-    command_result, error, return_code = systemctl(
-        'restart', *services, stdout=False )
+    command_result, error, return_code = systemctl( 'restart', *services )
+    return command_result, error, return_code
+
+def daemon_reload( *services ):
+    command_result, error, return_code = systemctl( 'daemon-reload' )
     return command_result, error, return_code
