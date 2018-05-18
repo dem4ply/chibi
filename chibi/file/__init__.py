@@ -1,6 +1,10 @@
 import mmap
 import os
 import shutil
+from pwd import getpwnam, getpwuid
+from grp import getgrgid, getgrnam
+from chibi.atlas import Chibi_atlas
+from chibi.nix import get_passwd, get_group
 
 
 def current_dir():
@@ -168,6 +172,77 @@ def copy( source, dest, verbose=False ):
         print( source, '->', dest )
 
 
+def _print_verboce_chown( path, old_stat, current_stat ):
+    user_change = old_stat.user.name != current_stat.user.name
+    group_change = old_stat.group.name != current_stat.group.name
+
+    if user_change or group_change:
+        print(
+            "el propietario de '{path}' cambio de '{old}' a '{new}'"
+            .format(
+                path=path, new="{user}:{group}".format(
+                    user=current_stat.user.name,
+                    group=current_stat.group.name ),
+                old="{user}:{group}".format(
+                    user=old_stat.user.name, group=old_stat.group.name ) ) )
+    else:
+        print(
+            "el propietario de '{path}' permanece '{old}'"
+            .format(
+                path=path, new="{user}:{group}".format(
+                    user=current_stat.user.name,
+                    group=current_stat.group.name ),
+                old="{user}:{group}".format(
+                    user=old_stat.user.name, group=old_stat.group.name ) ) )
+
+
+
+
+def chown(
+        *paths, verbose=True, user_name=None, group_name=None,
+        recursive=False ):
+    if user_name is None:
+        user = None
+        uid = -1
+    else:
+        user = get_passwd( user_name )
+        uid = user.uid
+
+    if group_name is None:
+        group = None
+        gid = -1
+    else:
+        group = get_group( group_name )
+        gid = group.gid
+
+    for path in paths:
+        old_stat = stat( path )
+        os.chown( path, uid, gid )
+        current_stat = stat( path )
+        if verbose:
+            _print_verboce_chown( path, old_stat, current_stat )
+
+        if recursive and is_dir( path ):
+            inner_paths = (
+                join( path, dir )
+                for dir in ls( inflate_dir( path ) ) )
+            chown(
+                *inner_paths, user=user, group=group, verbose=verbose,
+                recursive=True )
+
+
+def stat( src ):
+    s = os.stat( src )
+    result = Chibi_atlas( dict( mode=s.st_mode, ino=s.st_ino, dev=s.st_dev,
+        nlink=s.st_nlink, size=s.st_size, atime=s.st_atime, mtime=s.st_mtime,
+        ctime=s.st_ctime ) )
+    result.user = get_passwd( uid=s.st_uid )
+    result.group = get_group( gid=s.st_gid )
+
+    return result
+
+
+
 class Chibi_file:
     def __init__( self, file_name ):
         self._file_name = file_name
@@ -209,3 +284,7 @@ class Chibi_file:
 
     def copy( self, dest ):
         copy( self.file_name, dest )
+
+    @property
+    def properties( self ):
+        pass
