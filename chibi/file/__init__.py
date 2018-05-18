@@ -205,14 +205,14 @@ def chown(
         user = None
         uid = -1
     else:
-        user = get_passwd( user_name )
+        user = get_passwd( name=user_name )
         uid = user.uid
 
     if group_name is None:
         group = None
         gid = -1
     else:
-        group = get_group( group_name )
+        group = get_group( name=group_name )
         gid = group.gid
 
     for path in paths:
