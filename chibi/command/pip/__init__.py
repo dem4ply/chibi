@@ -23,3 +23,15 @@ def upgrade(*packages):
         lista de paquetes que se quieren actualizar
     """
     return pip.main( [ 'install', '--upgrade', *packages] )
+
+
+def uninstall(*packages):
+    """
+    elimina los paquetes de python
+
+    Arguments
+    =========
+    packages: tuple of strings
+        lista de paquetes que se quieren eliminar
+    """
+    return pip.main( [ 'uninstall', '--yes', *packages] )
