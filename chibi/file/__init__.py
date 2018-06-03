@@ -172,6 +172,12 @@ def copy( source, dest, verbose=False ):
         print( source, '->', dest )
 
 
+def ln( source, dest, verbose=True ):
+    os.symlink( source, dest )
+    if verbose:
+        print( source, '->', dest )
+
+
 def _print_verboce_chown( path, old_stat, current_stat ):
     user_change = old_stat.user.name != current_stat.user.name
     group_change = old_stat.group.name != current_stat.group.name
