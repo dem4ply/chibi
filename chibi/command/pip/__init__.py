@@ -1,7 +1,7 @@
 import pip
 
 
-def install(*packages):
+def install( *packages, upgrade=False ):
     """
     instala los paquetes de python
 
@@ -10,10 +10,13 @@ def install(*packages):
     packages: tuple of strings
         lista de paquetes que se quieren instalar
     """
-    return pip.main( [ 'install', *packages] )
+    if upgrade:
+        return pip.main( [ 'install', '--upgrade', *packages] )
+    else:
+        return pip.main( [ 'install', *packages] )
 
 
-def upgrade(*packages):
+def upgrade( *packages ):
     """
     actualiza los paquetes de python
 
@@ -25,7 +28,7 @@ def upgrade(*packages):
     return pip.main( [ 'install', '--upgrade', *packages] )
 
 
-def uninstall(*packages):
+def uninstall( *packages ):
     """
     elimina los paquetes de python
 
