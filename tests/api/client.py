@@ -1,5 +1,6 @@
 from unittest import TestCase
-from chibi.api.client import Client
+from chibi.api import Client
+from chibi.api.connection import Connections
 
 
 class Test_client( TestCase ):
@@ -21,3 +22,9 @@ class Test_using( Test_client ):
     def test_if_the_connection_no_exists_should_raise_a_key_error( self ):
         with self.assertRaises( KeyError ):
             self.client.using( 'explotion' )
+
+
+class Test_extract_connections( Test_client ):
+    def test_should_return_a_instance_of_connetions( self ):
+        connections = self.client.extract_connections()
+        self.assertIsInstance( connections, Connections )

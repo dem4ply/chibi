@@ -1,13 +1,20 @@
+from chibi.atlas import Chibi_atlas
+
 class Connections:
     def __init__( self ):
         self._kwargs = {}
         self._connections = {}
 
     def configure( self, **kw ):
-        self._connections = kw
+        self._connections = { k: Connection( **v ) for k, v in kw.items() }
 
     def add( self, name, connection ):
-        self._connections[ name ] = connection
+        if isinstance( connection, Connection ):
+            self._connections[ name ] = connection
+        elif isinstance( connection, dict ):
+            self._connections[ name ] = Connection( **connection )
+        else:
+            raise NotImplementedError
 
     def get( self, alias='default' ):
         if not isinstance( alias, str ):
@@ -26,3 +33,7 @@ class Connections:
 
     def __setitem__( self, name ):
         return self.add( name )
+
+
+class Connection( Chibi_atlas ):
+    pass
