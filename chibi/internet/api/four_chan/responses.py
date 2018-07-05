@@ -7,7 +7,6 @@ class Thread_list( Response ):
         super().__init__( *args, **kw )
         self.board = board
 
-
     @property
     def native( self ):
         try:

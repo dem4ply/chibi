@@ -1,7 +1,7 @@
 from chibi.command import command
 
 
-def cowsay( text, capture=False):
+def cowsay( text, capture=False ):
     """
     comando de unix llamado cowsay
 

@@ -2,11 +2,12 @@ import datetime
 from unittest import TestCase, skip
 from chibi.internet.api.four_chan.client import Board
 from chibi.internet.api.four_chan.endpoints import Thread
+from chibi.internet.api.four_chan import w, wallpaper
 
 
 class Test_board_wallpaper( TestCase ):
     def setUp( self ):
-        self.w = Board( 'w' )
+        self.w = w
 
 
 class Test_threads( Test_board_wallpaper ):
