@@ -22,13 +22,13 @@ class MQ:
     channel: py:class:`chibi.circuit.chip.mcp3008.MCP3008_channel`
     voltage: float
         voltage de entrada del sensor ( default=5 )
-    resistence: float
+    resistance: float
         resistencia del sensor ( default=1000 )
     """
-    def __init__( self, channel, voltage=5, resistence=1000 ):
+    def __init__( self, channel, voltage=5, resistance=1000 ):
         self.channel = channel
         self.voltage = voltage
-        self.resistence = resistence
+        self.resistance = resistance
 
     def read( self ):
         """
@@ -45,18 +45,18 @@ class MQ:
 
     def read_all_lectures( self ):
         analog, voltage = self.read_analogic_voltage()
-        resistence = self.calculate_resistence( voltage )
-        return analog, voltage, resistence, value
+        resistance = self.calculate_resistance( voltage )
+        return analog, voltage, resistance
 
     def read_voltage( self ):
         return self.channel.read_voltage()
 
-    def resistence( self ):
+    def resistance( self ):
         voltage_lecture = self.read_voltage()
-        return self.calculate_resistence( voltage_lecture )
+        return self.calculate_resistance( voltage_lecture )
 
-    def calculate_resistence( self, voltage ):
-        return self.resistence * ( ( self.voltage - voltage ) / voltage )
+    def calculate_resistance( self, voltage ):
+        return self.resistance * ( ( self.voltage - voltage ) / voltage )
 
 
 class MQ2( MQ ):
@@ -65,8 +65,8 @@ class MQ2( MQ ):
     """
     name = "MQ-2"
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_gas_lp( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_gas_lp( resistance )
         return {
             'gas_lp': {
                 "unit": "ppm",
@@ -75,17 +75,17 @@ class MQ2( MQ ):
                 "chemical_formula": [ "C3H8", "C4H10" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_gas_lp( self ):
-         return self.calcualte_gas_lp( self.resistence )
+         return self.calcualte_gas_lp( self.resistance )
 
-    def calculate_gas_lp( self, resistence ):
-         return 8555 * pow( resistence / 5463, -1.74 )
+    def calculate_gas_lp( self, resistance ):
+         return 8555 * pow( resistance / 5463, -1.74 )
 
 
 class MQ3( MQ ):
@@ -95,26 +95,26 @@ class MQ3( MQ ):
     name = "MQ-3"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_alcohol( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_alcohol( resistance )
         return {
             'alchohol': {
                 "unit": "mg/L",
                 "description": "Alcohol ( Benceno, Propano, Etanol, Metanol )",
-                "formula_quimica": [ "C6H6", "C3H8", "C2H6O", "CH3OH" ],
+                "chemical_formula": [ "C6H6", "C3H8", "C2H6O", "CH3OH" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_alcohol( self ):
-        return self.calculate_alcohol( self.resistence )
+        return self.calculate_alcohol( self.resistance )
 
-    def calculate_alcohol( self, resistence ):
-        return  1.108 * pow( resistence / 5463, -1.41 )
+    def calculate_alcohol( self, resistance ):
+        return  1.108 * pow( resistance / 5463, -1.41 )
 
 
 class MQ4( MQ ):
@@ -124,26 +124,26 @@ class MQ4( MQ ):
     name = "MQ-4"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_methane( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_methane( resistance )
         return {
-            'alchohol': {
+            'methane': {
                 "unit": "ppm",
                 "description": "Gas natural, Metano",
                 "chemical_formula": [ "CH4" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_methane( self ):
-        return self.calculate_methane( self.resistence )
+        return self.calculate_methane( self.resistance )
 
-    def calculate_methane( self, resistence ):
-        return 6922 * pow( resistence / 5463, -1.91 )
+    def calculate_methane( self, resistance ):
+        return 6922 * pow( resistance / 5463, -1.91 )
 
 
 class MQ6( MQ ):
@@ -153,8 +153,8 @@ class MQ6( MQ ):
     name = "MQ-6"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_propane( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_propane( resistance )
         return {
             'propane': {
                 "unit": "ppm",
@@ -162,17 +162,17 @@ class MQ6( MQ ):
                 "chemical_formula": [ "C3H8" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_propane( self ):
-        return self.calculate_propane( self.resistence )
+        return self.calculate_propane( self.resistance )
 
-    def calculate_propane( self, resistence ):
-        return 2738 * pow( resistence / 5463, -1.81 )
+    def calculate_propane( self, resistance ):
+        return 2738 * pow( resistance / 5463, -1.81 )
 
 
 class MQ7( MQ ):
@@ -182,26 +182,26 @@ class MQ7( MQ ):
     name = "MQ-7"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_co( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_co( resistance )
         return {
-            'propane': {
+            'carbon_monoxide': {
                 "unit": "ppm",
                 "description": "Monóxido de Carbono",
                 "chemical_formula": [ "CO" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_co( self ):
-        return self.calculate_propane( self.resistence )
+        return self.calculate_propane( self.resistance )
 
-    def calculate_co( self, resistence ):
-        return 233.9 * pow( resistence / 5463, -1.40 )
+    def calculate_co( self, resistance ):
+        return 233.9 * pow( resistance / 5463, -1.40 )
 
 
 
@@ -213,26 +213,26 @@ class MQ8( MQ ):
     name = "MQ-8"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        value = self.calculate_hydrogen( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        value = self.calculate_hydrogen( resistance )
         return {
-            'propane': {
+            'hydrogen': {
                 "unit": "ppm",
                 "description": "Hidrógeno",
                 "chemical_formula": [ "H2" ],
                 "value": value,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             }
         }
 
     def read_hydrogen( self ):
-        return self.calculate_hydrogen( self.resistence )
+        return self.calculate_hydrogen( self.resistance )
 
-    def calculate_hydrogen( self, resistence ):
-        return 1803 * pow( resistence / 5463, -0.66 )
+    def calculate_hydrogen( self, resistance ):
+        return 1803 * pow( resistance / 5463, -0.66 )
 
 
 class MQ135( MQ ):
@@ -243,10 +243,10 @@ class MQ135( MQ ):
     name = "MQ-135"
 
     def read( self ):
-        analog, voltage, resistence = self.read_all_lectures()
-        co2 = self.calculate_co2( resistence )
-        n2o = self.calculate_n2o( resistence )
-        ammonia = self.calculate_ammonia( resistence )
+        analog, voltage, resistance = self.read_all_lectures()
+        co2 = self.calculate_co2( resistance )
+        n2o = self.calculate_n2o( resistance )
+        ammonia = self.calculate_ammonia( resistance )
 
         return {
             'co2': {
@@ -255,8 +255,8 @@ class MQ135( MQ ):
                 "chemical_formula": [ "H2" ],
                 "value": co2,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             },
             'n2o': {
@@ -269,8 +269,8 @@ class MQ135( MQ ):
                     [ "NOx", "N2O", "NO", "N2O3", "N2O4", "NO2", "N2O5" ],
                 "value": n2o,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             },
             'ammonia': {
@@ -279,26 +279,26 @@ class MQ135( MQ ):
                 "chemical_formula": [ "NH3" ],
                 "value": ammonia,
                 "voltage": voltage,
-                "resistence": resistence,
-                "analog_value": analog,
+                "resistance": resistance,
+                "analogic_value": analog,
                 "sensor": self.name
             },
         }
 
     def read_co2( self ):
-        return self.calculate_co2( self.resistence )
+        return self.calculate_co2( self.resistance )
 
     def read_n2o( self ):
-        return self.calculate_n2o( self.resistence )
+        return self.calculate_n2o( self.resistance )
 
     def read_ammonia( self ):
-        return self.calculate_ammonia( self.resistence )
+        return self.calculate_ammonia( self.resistance )
 
-    def calculate_co2( self, resistence ):
-        return 245 * pow( resistence / 5463, -2.26 )
+    def calculate_co2( self, resistance ):
+        return 245 * pow( resistance / 5463, -2.26 )
 
-    def calculate_n2o( self, resistence ):
-        return 132.6 * pow( resistence / 5463, -2.74 )
+    def calculate_n2o( self, resistance ):
+        return 132.6 * pow( resistance / 5463, -2.74 )
 
-    def calculate_ammonia( self, resistence ):
-        return 161.7 * pow( resistence / 5463, -2.26 )
+    def calculate_ammonia( self, resistance ):
+        return 161.7 * pow( resistance / 5463, -2.26 )
