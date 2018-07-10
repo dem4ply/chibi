@@ -40,11 +40,11 @@ class MQ:
         """
         raise NotImplementedError
 
-    def read_analog_voltage( self ):
-        return self.channel.read_analog_voltage()
+    def read_analogic_voltage( self ):
+        return self.channel.read_analogic_voltage()
 
     def read_all_lectures( self ):
-        analog, voltage = self.read_analog_voltage()
+        analog, voltage = self.read_analogic_voltage()
         resistence = self.calculate_resistence( voltage )
         return analog, voltage, resistence, value
 

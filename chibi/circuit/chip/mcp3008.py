@@ -15,9 +15,10 @@ class MCP3008:
     """
     def __init__( self, v_dd=5, v_ref=5, spi_port=0, spi_device=0 ):
         self._chip = Adafruit_MCP3008.MCP3008(
-            spi=SPI.SpiDev( SPI_PORT, SPI_DEVICE ) )
+            spi=SPI.SpiDev( spi_port, spi_device ) )
         self.v_dd = v_dd
         self.v_ref = v_ref
+        self._channels = self._build_channels( 8 )
 
     def read( self, channel ):
         """
@@ -47,21 +48,22 @@ class MCP3008:
         float
             valor entre 0 y v_ref
         """
-        return read( channel ) * ( self.v_ref / 1023 )
+        analogic, voltage = self.read_analogic_voltage( channel )
+        return self[ channel ].read_voltage()
 
     def read_analogic_voltage( self, channel ):
-        analogic = self.read( channel )
-        voltage = analogic * ( self.v_ref / 1023 )
-        return analogic, voltage
-
-    def detach_channel( self, channel ):
-        return MCP3008_channel( self, channel )
+        return self[ channel ].read_analogic_voltage()
 
     def __getitem__( self, channel ):
-        return self.read( channel )
+        return self._channels[ channel ]
 
     def __iter__( self ):
-        return ( self.read( i ) for i in range( 8 ) )
+        return ( channel for channel in self._channels )
+
+    def _build_channels( self, number_of_channels ):
+        return [
+            MCP3008_channel( self, i )
+            for i in range( number_of_channels ) ]
 
 
 class MCP3008_channel:
@@ -76,4 +78,11 @@ class MCP3008_channel:
         return self.chip.read( self.channel )
 
     def read_voltage( self ):
-        return self.chip.read_voltage( self.channel )
+        analogic = self.read()
+        voltage = analogic * ( self.chip.v_ref / 1023 )
+        return voltage
+
+    def read_analogic_voltage( self ):
+        analogic = self.read()
+        voltage = analogic * ( self.chip.v_ref / 1023 )
+        return analogic, voltage
