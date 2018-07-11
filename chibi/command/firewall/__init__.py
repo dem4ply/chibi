@@ -1,7 +1,7 @@
 from chibi.command import command
 
 
-def cmd():
+def cmd( *args ):
     return command( 'firewall-cmd', *args )
 
 

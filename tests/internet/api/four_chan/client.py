@@ -3,9 +3,10 @@ from unittest import TestCase, skip
 from chibi.internet.api.four_chan.client import Board
 from chibi.internet.api.four_chan.endpoints import Thread
 from chibi.internet.api.four_chan import w, wallpaper
+from vcr_unittest import VCRTestCase
 
 
-class Test_board_wallpaper( TestCase ):
+class Test_board_wallpaper( VCRTestCase ):
     def setUp( self ):
         self.w = w
 

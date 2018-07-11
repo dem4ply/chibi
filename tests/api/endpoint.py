@@ -1,24 +1,26 @@
 import json
 from unittest import TestCase, skip
 from chibi.api import Endpoint
+from vcr_unittest import VCRTestCase
+
 
 
 class Endpoint_test( Endpoint ):
     url = 'http://a.4cdn.org/{board}/threads.json'
 
 
-class Test_endpoint_4chan_wallpaper_board( TestCase ):
+class Test_endpoint_4chan_wallpaper_board( VCRTestCase ):
     def setUp( self ):
         self.endpoint = Endpoint( 'http://a.4cdn.org/w/threads.json' )
 
 
-class Test_endpoint_4chan_thread( TestCase ):
+class Test_endpoint_4chan_thread( VCRTestCase ):
     def setUp( self ):
         self.endpoint = Endpoint( 'http://a.4cdn.org/{board}/threads.json' )
         pass
 
 
-class Test_endpoint_class( TestCase ):
+class Test_endpoint_class( VCRTestCase ):
     def setUp( self ):
         self.endpoint = Endpoint_test()
 

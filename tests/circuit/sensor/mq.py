@@ -2,7 +2,8 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 from chibi.circuit.chip.mcp3008 import MCP3008, MCP3008_channel
 from chibi.circuit.sensor.MQ import MQ2, MQ3, MQ4, MQ6, MQ7, MQ8, MQ135
-from .mcp3008 import Set_up_mcp3008
+
+from tests.circuit.mcp3008 import Set_up_mcp3008
 
 
 class Test_mq_sensor:
