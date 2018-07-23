@@ -22,7 +22,7 @@ def add_port( ports, kind='tcp', permanent=True ):
         raise NotImplementedError
     else:
         permanent = '--permanent'
-    return cmd( permanent, "{}/{}".format( ports, kind ) )
+    return cmd( permanent, "--add-port={}/{}".format( ports, kind ) )
 
 
 def reload():

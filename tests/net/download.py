@@ -3,9 +3,10 @@ import tempfile, shutil
 from chibi.file import exists
 from chibi.net import download
 from unittest import TestCase
+from vcr_unittest import VCRTestCase
 
 
-class Test_download_lenna( TestCase ):
+class Test_download_lenna( VCRTestCase ):
     def setUp( self ):
         self.download_folder = tempfile.mkdtemp()
         self.lenna_url = (
