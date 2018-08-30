@@ -18,4 +18,4 @@ def set_user_tags( user, tag ):
 
 
 def set_permissions( vhost, user, conf='.*', write='.*', read='.*' ):
-    rabbitmqctl( 'set_permissions', '-P', vhost, user, conf, write, read )
+    rabbitmqctl( 'set_permissions', '-p', vhost, user, conf, write, read )
