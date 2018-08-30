@@ -5,8 +5,8 @@ def rabbitmqctl( *args ):
     return command( "rabbitmqctl", *args )
 
 
-def add_user( user ):
-    rabbitmqctl( 'add_user', user )
+def add_user( user, password ):
+    rabbitmqctl( 'add_user', user, password )
 
 
 def delete_user( user ):
