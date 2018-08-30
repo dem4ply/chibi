@@ -5,7 +5,7 @@ import os
 import random
 import string
 import base64
-from chibi import chibi_base64
+from chibi import b64
 
 
 def decode( s, code='utf-8' ):
@@ -97,7 +97,7 @@ def generate_token_b64( length=8 ):
         numero de bites usados para generar el token
         el default es 8 porque quiero 32 caracteres por default
     """
-    return chibi_base64.encode( os.urandom( length ) )
+    return b64.encode( os.urandom( length ) )
 
 
 def generate_b64_unsecure( length=24 ):

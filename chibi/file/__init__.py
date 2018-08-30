@@ -6,7 +6,7 @@ from pwd import getpwnam, getpwuid
 from grp import getgrgid, getgrnam
 from chibi.atlas import Chibi_atlas
 from chibi.nix import get_passwd, get_group
-from chibi import chibi_base64
+from chibi import b64
 
 
 def current_dir():
@@ -218,7 +218,7 @@ def check_sum_md5( file_name, check_sum ):
     for chunk in read_in_chunks( file_name ):
         md5.update( chunk )
     md5_bin = md5.digest()
-    return chibi_base64.encode( md5_bin ) == check_sum
+    return b64.encode( md5_bin ) == check_sum
 
 
 def delete( path ):
