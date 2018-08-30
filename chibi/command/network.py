@@ -3,6 +3,20 @@ from chibi.atlas import Chibi_atlas
 import re
 
 
+class Interface( Chibi_atlas ):
+    pass
+
+
+class Interfaces:
+    def __init__( self, interfaces ):
+        self._raw_interfaces = Chibi_atlas( interfaces )
+        self.interfaces = Chibi_atlas(
+            { k: Interface( v ) for k, v in interfaces.items() } )
+
+    def to_dict( self ):
+        return self._raw_interfaces.copy()
+
+
 def iwconfig():
     """
     ejecuta el comando de iwconfig y lo parsea en dicionarios
@@ -36,4 +50,4 @@ def iwconfig():
             key, value = split_item
             interface_result[ key.replace( ' ', '_' ) ] = value
 
-    return Chibi_atlas(result)
+    return Interfaces( result )

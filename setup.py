@@ -14,7 +14,7 @@ setup(name='chibi',
       author='',
       author_email='',
       packages=find_packages(),
-      install_requires=[ 'GitPython==2.1.5', 'requests==2.19.1' ],
+      #install_requires=[ 'GitPython==2.1.5', 'requests==2.19.1' ],
       dependency_links = [],
       classifiers=[
           'Environment :: Console',

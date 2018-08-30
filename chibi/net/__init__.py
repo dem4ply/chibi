@@ -27,7 +27,7 @@ def download( url, directory=None, file_name=None ):
 
     if file_name is None:
         file_name = url.rsplit( '/', 1 )[1]
-    response = request.urlopen( url )
+    response = request.urlopen( url, timeout=30 )
     patch = join( directory, file_name )
     with open( patch, 'wb' ) as file:
         file.write( response.read() )

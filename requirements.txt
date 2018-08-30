@@ -5,3 +5,7 @@ pep8==1.7.0
 factory-boy==2.9.2
 GitPython==2.1.5
 vcrpy-unittest==0.1.6
+
+
+git+https://github.com/adafruit/Adafruit_Python_GPIO.git#egg=Adafruit_Python_GPIO
+git+https://github.com/adafruit/Adafruit_Python_MCP3008.git#egg=Adafruit_Python_MCP3008

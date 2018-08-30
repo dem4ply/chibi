@@ -1,10 +1,12 @@
 import mmap
 import os
 import shutil
+import hashlib
 from pwd import getpwnam, getpwuid
 from grp import getgrgid, getgrnam
 from chibi.atlas import Chibi_atlas
 from chibi.nix import get_passwd, get_group
+from chibi import chibi_base64
 
 
 def current_dir():
@@ -100,7 +102,7 @@ def ls_only_dir( src=None ):
     return ( name for name in ls( src ) if is_dir( join( src, name ) ) )
 
 
-def mkdir( new_dir, is_ok_exists=True, verbose=False ):
+def mkdir( new_dir, is_ok_exists=True, verbose=True):
     """
     crea un nuevo directiorio
 
@@ -202,6 +204,28 @@ def _print_verboce_chown( path, old_stat, current_stat ):
                     user=old_stat.user.name, group=old_stat.group.name ) ) )
 
 
+def read_in_chunks( file_name, prop='rb', chunk_size=4096 ):
+    with open( file_name, prop ) as f:
+        while True:
+            current_read = f.read( chunk_size )
+            if not current_read:
+                break
+            yield current_read
+
+
+def check_sum_md5( file_name, check_sum ):
+    md5 = hashlib.md5()
+    for chunk in read_in_chunks( file_name ):
+        md5.update( chunk )
+    md5_bin = md5.digest()
+    return chibi_base64.encode( md5_bin ) == check_sum
+
+
+def delete( path ):
+    if is_file( path ):
+        os.remove( path )
+    else:
+        shutil.rmtree( path )
 
 
 def chown(
@@ -261,7 +285,10 @@ class Chibi_file:
         return self._file_name
 
     def __del__( self ):
-        self._file_content.close()
+        try:
+            self._file_content.close()
+        except AttributeError:
+            pass
 
     def find( self, string_to_find ):
         if isinstance( string_to_find, str ):
@@ -269,9 +296,13 @@ class Chibi_file:
         return self._file_content.find( string_to_find )
 
     def reread( self ):
-        with open( self._file_name, 'r' ) as f:
-            self._file_content = mmap.mmap( f.fileno(), 0,
-                                            prot=mmap.PROT_READ )
+        try:
+            with open( self._file_name, 'r' ) as f:
+                self._file_content = mmap.mmap(
+                    f.fileno(), 0, prot=mmap.PROT_READ )
+        except ValueError as e:
+            if not str( e ) == 'cannot mmap an empty file':
+                raise
 
     def __contains__( self, string ):
         return self.find( string ) >= 0
@@ -293,4 +324,10 @@ class Chibi_file:
 
     @property
     def properties( self ):
-        pass
+        raise NotImplementedError
+
+    def chunk( self, chunk_size=4096 ):
+        return read_in_chunks( self.file_name, 'r', chunk_size=chunk_size )
+
+    def check_sum_md5( self, check_sum ):
+        return check_sum_md5( self.file_name, check_sum )

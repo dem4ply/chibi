@@ -1,4 +1,4 @@
-from chibi.command.network import iwconfig
+from chibi.command.network import iwconfig, Interfaces, Interface
 from chibi.atlas import Chibi_atlas
 from unittest.mock import patch
 from unittest import TestCase
@@ -48,19 +48,20 @@ class Test_iwconfig( TestCase ):
             result = iwconfig()
         return result
 
+    def test_result_contain_the_container_interfaces( self ):
+        result = self.iwconfig_with_patch()
+        self.assertIsInstance( result, Interfaces )
+
     def test_result_should_have_the_expected_interfaces( self ):
         result = self.iwconfig_with_patch()
-        self.assertCountEqual( result.keys(), self.expected_interfaces )
+        self.assertCountEqual(
+            result.interfaces.keys(), self.expected_interfaces )
 
-    def test_result_should_be_a_atlas( self ):
+    def test_result_should_have_wlan0( self ):
         result = self.iwconfig_with_patch()
-        self.assertIsInstance( result, Chibi_atlas )
+        self.assertIn( 'wlan0', result.interfaces )
+        self.assertIsInstance( result.interfaces.wlan0, Interface )
 
-    def test_result_inner_values_should_be_a_atlas( self ):
+    def test_result_should_be_a_class_for_interfaces( self ):
         result = self.iwconfig_with_patch()
-        for interface, data in result.items():
-            self.assertIsInstance( data, Chibi_atlas )
-
-    def test_result_should_be_like_expected( self ):
-        result = self.iwconfig_with_patch()
-        self.assertDictEqual( result, self.expected_iwconfig_result )
+        self.assertIsInstance( result.interfaces, Chibi_atlas )
