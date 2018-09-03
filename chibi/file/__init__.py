@@ -91,9 +91,22 @@ def ls( src=None ):
     return ( name for name in os.listdir( src ) )
 
 
+def ls_only_files( src=None ):
+    """
+    lo mismo que ls en unix pero solo archivos
+
+    Returns
+    =======
+    iterador of strings
+    """
+    if src is None:
+        src = current_dir()
+    return ( name for name in os.listdir( src ) if is_file( join( src, name ) ) )
+
+
 def ls_only_dir( src=None ):
     """
-    lo mismo que ls en unix
+    lo mismo que ls en unix pero solo directorios
 
     Returns
     =======
@@ -151,6 +164,26 @@ def exists( file_name ):
     bool
     """
     return os.path.exists( file_name )
+
+def move( source, dest, verbose=False ):
+    """
+    mueve archivos
+
+    Parameters
+    ==========
+    source: string
+        ruta del archivo original
+    dest: string
+        ruta del destine
+    verbose: bool
+
+    Returns
+    =======
+    None
+    """
+    shutil.move( source, dest )
+    if verbose:
+        print( source, '->', dest )
 
 
 def copy( source, dest, verbose=False ):
