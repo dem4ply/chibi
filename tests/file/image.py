@@ -21,3 +21,23 @@ class Test_imges( TestCase ):
         self.assertFalse( self.jpg.is_empty )
         self.assertFalse( self.png.is_empty )
         self.assertFalse( self.gif.is_empty )
+
+    def test_should_return_resolution( self ):
+        self.assertEqual( self.jpg.dimension, ( 498, 397 ) )
+        self.assertEqual( self.png.dimension, ( 418, 498 ) )
+        self.assertEqual( self.gif.dimension, ( 728, 720 ) )
+
+    def test_should_get_the_correct_type( self ):
+        self.assertEqual( self.jpg.properties.type, 'raster-image' )
+        self.assertEqual( self.png.properties.type, 'raster-image' )
+        self.assertEqual( self.gif.properties.type, 'raster-image' )
+
+    def test_should_get_the_correct_mime( self ):
+        self.assertEqual( self.jpg.properties.mime, 'image/jpeg' )
+        self.assertEqual( self.png.properties.mime, 'image/png' )
+        self.assertEqual( self.gif.properties.mime, 'image/gif' )
+
+    def test_should_get_the_correct_extention( self ):
+        self.assertEqual( self.jpg.properties.extension, 'jpg' )
+        self.assertEqual( self.png.properties.extension, 'png' )
+        self.assertEqual( self.gif.properties.extension, 'gif' )

@@ -1,4 +1,5 @@
 import mmap
+import fleep
 import os
 import shutil
 import hashlib
@@ -326,6 +327,17 @@ class Chibi_file:
     def is_empty( self ):
         return self.properties.size == 0
 
+    @property
+    def properties( self ):
+        prop = stat( self.file_name )
+        with open( self.file_name, 'rb' ) as f:
+            info = fleep.get( f.read( 128 ) )
+
+        prop.type = info.type[0] if info.type else None
+        prop.extension = info.extension[0] if info.extension else None
+        prop.mime = info.mime[0] if info.mime else None
+        return prop
+
     def __del__( self ):
         try:
             self._file_content.close()
@@ -363,10 +375,6 @@ class Chibi_file:
 
     def copy( self, dest ):
         copy( self.file_name, dest )
-
-    @property
-    def properties( self ):
-        return stat( self.file_name )
 
     def chunk( self, chunk_size=4096 ):
         return read_in_chunks( self.file_name, 'r', chunk_size=chunk_size )
