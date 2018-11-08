@@ -309,6 +309,7 @@ def stat( src ):
 class Chibi_file:
     def __init__( self, file_name ):
         self._file_name = file_name
+        self._current_dir = current_dir()
         if not self.exists:
             self.touch()
         self.reread()
@@ -316,6 +317,14 @@ class Chibi_file:
     @property
     def file_name( self ):
         return self._file_name
+
+    @property
+    def dir( self ):
+        return self._current_dir
+
+    @property
+    def is_empty( self ):
+        return self.properties.size == 0
 
     def __del__( self ):
         try:
@@ -357,7 +366,7 @@ class Chibi_file:
 
     @property
     def properties( self ):
-        raise NotImplementedError
+        return stat( self.file_name )
 
     def chunk( self, chunk_size=4096 ):
         return read_in_chunks( self.file_name, 'r', chunk_size=chunk_size )
