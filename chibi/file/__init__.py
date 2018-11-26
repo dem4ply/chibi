@@ -1,13 +1,14 @@
+import glob
+import hashlib
 import mmap
-import fleep
 import os
 import shutil
-import hashlib
-from pwd import getpwnam, getpwuid
-from grp import getgrgid, getgrnam
+
+import fleep
+
+from chibi import b64
 from chibi.atlas import Chibi_atlas
 from chibi.nix import get_passwd, get_group
-from chibi import b64
 
 
 def current_dir():
@@ -79,6 +80,11 @@ def is_file( src ):
     return os.path.isfile( src )
 
 
+def get_file_from_path( src ):
+    s = os.path.split( src )
+    return s[-1]
+
+
 def ls( src=None ):
     """
     lo mismo que ls en unix
@@ -89,7 +95,8 @@ def ls( src=None ):
     """
     if src is None:
         src = current_dir()
-    return ( name for name in os.listdir( src ) )
+    dirs = glob.iglob( src )
+    return ( join( src, name ) for d in dirs for name in os.listdir( d ) )
 
 
 def ls_only_files( src=None ):
@@ -100,9 +107,7 @@ def ls_only_files( src=None ):
     =======
     iterador of strings
     """
-    if src is None:
-        src = current_dir()
-    return ( name for name in os.listdir( src ) if is_file( join( src, name ) ) )
+    return ( f for f in ls( src ) if is_file( f ) )
 
 
 def ls_only_dir( src=None ):
@@ -113,10 +118,10 @@ def ls_only_dir( src=None ):
     =======
     iterador of strings
     """
-    return ( name for name in ls( src ) if is_dir( join( src, name ) ) )
+    return ( name for name in ls( src ) if is_dir( name ) )
 
 
-def mkdir( new_dir, is_ok_exists=True, verbose=True):
+def mkdir( new_dir, is_ok_exists=True, verbose=True ):
     """
     crea un nuevo directiorio
 
@@ -182,9 +187,21 @@ def move( source, dest, verbose=False ):
     =======
     None
     """
-    shutil.move( source, dest )
-    if verbose:
-        print( source, '->', dest )
+    g = glob.glob( source )
+    if len( g ) > 1 and not is_a_folder( dest ):
+        raise ValueError( "'{}' was expected be a dir".format( dest ) )
+    for f in g:
+        shutil.move( f, dest )
+        if verbose:
+            print( f, '->', dest )
+
+
+def is_a_folder( dir ):
+    return os.path.isdir( dir )
+
+
+def is_a_file( f ):
+    return os.path.isfile( f )
 
 
 def copy( source, dest, verbose=False ):

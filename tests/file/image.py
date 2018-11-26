@@ -41,3 +41,18 @@ class Test_imges( TestCase ):
         self.assertEqual( self.jpg.properties.extension, 'jpg' )
         self.assertEqual( self.png.properties.extension, 'png' )
         self.assertEqual( self.gif.properties.extension, 'gif' )
+
+    def test_should_be_equal( self ):
+        self.assertEqual( self.jpg, self.jpg )
+        self.assertEqual( self.gif, self.gif )
+        self.assertEqual( self.png, self.png )
+
+    def test_should_be_no_equal( self ):
+        self.assertNotEqual( self.jpg, self.gif )
+        self.assertNotEqual( self.jpg, self.png )
+
+        self.assertNotEqual( self.gif, self.png )
+        self.assertNotEqual( self.gif, self.jpg )
+
+        self.assertNotEqual( self.png, self.jpg )
+        self.assertNotEqual( self.png, self.gif )
