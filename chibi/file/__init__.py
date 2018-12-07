@@ -3,12 +3,16 @@ import hashlib
 import mmap
 import os
 import shutil
+import re
 
 import fleep
 
 from chibi import b64
 from chibi.atlas import Chibi_atlas
 from chibi.nix import get_passwd, get_group
+from chibi.snippet import regex
+
+from chibi.file.path import Chibi_path
 
 
 def current_dir():
@@ -19,7 +23,11 @@ def current_dir():
     =======
     string
     """
-    return os.getcwd()
+    return Chibi_path( os.getcwd() )
+
+
+def file_dir( f ):
+    return os.path.dirname( os.path.realpath( f ) )
 
 
 def cd( to ):
@@ -85,7 +93,7 @@ def get_file_from_path( src ):
     return s[-1]
 
 
-def ls( src=None ):
+def ls( src=None, recursive=False ):
     """
     lo mismo que ls en unix
 
@@ -95,8 +103,30 @@ def ls( src=None ):
     """
     if src is None:
         src = current_dir()
-    dirs = glob.iglob( src )
-    return ( join( src, name ) for d in dirs for name in os.listdir( d ) )
+    else:
+        src = Chibi_path( src )
+    if not recursive:
+        dirs = glob.iglob( src )
+        for d in dirs:
+            try:
+                for name in os.listdir( d ):
+                    yield src + name
+            except NotADirectoryError:
+                yield d
+    else:
+        for r in ls( src ):
+            yield r
+            if is_a_folder( r ):
+                for rr in ls( r, recursive=True ):
+                    yield rr
+
+
+def find( src=None, search_term=r'.*' ):
+    name = re.compile( search_term )
+    for f in ls( src, recursive=True ):
+        last_part = os.path.basename( f )
+        if regex.test( name, last_part ):
+            yield f
 
 
 def ls_only_files( src=None ):
@@ -118,7 +148,7 @@ def ls_only_dir( src=None ):
     =======
     iterador of strings
     """
-    return ( name for name in ls( src ) if is_dir( name ) )
+    return ( name for name in ls( src ) if name.is_a_folder )
 
 
 def mkdir( new_dir, is_ok_exists=True, verbose=True ):
@@ -154,7 +184,7 @@ def join( *patch ):
     =======
     string
     """
-    return os.path.join( *patch )
+    return Chibi_path( os.path.join( *patch ) )
 
 
 def exists( file_name ):
@@ -218,11 +248,15 @@ def copy( source, dest, verbose=False ):
 
     Returns
     =======
-    None
+    Non
     """
-    shutil.copy( source, dest )
-    if verbose:
-        print( source, '->', dest )
+    g = glob.glob( source )
+    if len( g ) > 1 and not is_a_folder( dest ):
+        raise ValueError( "'{}' was expected be a dir".format( dest ) )
+    for f in g:
+        shutil.copy( f, dest )
+        if verbose:
+            print( f, '->', dest )
 
 
 def ln( source, dest, verbose=True ):
