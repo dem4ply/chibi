@@ -62,3 +62,7 @@ def local_install( *pkgs ):
         regresa lo mismo que :py:func:`chibi.command.command`
     """
     return yum( 'localinstall', *pkgs )
+
+
+def clean():
+    return yum( 'clean', 'all' )
