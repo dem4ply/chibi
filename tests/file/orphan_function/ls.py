@@ -1,5 +1,5 @@
 from tests.snippet.files import Test_with_files
-from chibi.file import ls
+from chibi.file.snippets import ls
 
 
 class Test_ls( Test_with_files ):

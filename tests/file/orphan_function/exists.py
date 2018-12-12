@@ -1,5 +1,5 @@
 from tests.snippet.files import Test_with_files
-from chibi.file import exists, join
+from chibi.file.snippets import exists, join
 
 
 class Test_exists( Test_with_files ):

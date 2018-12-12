@@ -1,6 +1,6 @@
 import tempfile, shutil
 
-from chibi.file import exists
+from chibi.file.snippets import exists
 from chibi.net import download
 from unittest import TestCase
 from vcr_unittest import VCRTestCase

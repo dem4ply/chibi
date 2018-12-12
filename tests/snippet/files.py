@@ -1,7 +1,8 @@
 from unittest import TestCase
 import tempfile, shutil
 from faker import Factory as Faker_factory
-from chibi.file import current_dir, cd
+from chibi.file.snippets import current_dir, cd, join, mkdir
+from chibi.file import Chibi_file
 
 
 faker = Faker_factory.create()
@@ -12,6 +13,9 @@ class Test_with_files( TestCase ):
     amount_of_dirs = 3
     amount_of_files_with_content = 3
     amount_of_inner_dirs = 3
+
+    defined_folders = []
+    defined_files = []
 
     def setUp(self):
         self.root_dir = tempfile.mkdtemp()
@@ -36,6 +40,13 @@ class Test_with_files( TestCase ):
                 new_file.write(
                     faker.text(max_nb_chars=200, ext_word_list=None) )
             self.files_with_content.append( file_path )
+
+
+        for f in self.defined_folders:
+            mkdir( join( self.root_dir, f ), verbose=False )
+
+        for f in self.defined_files:
+            Chibi_file( join( self.root_dir, f ) )
 
     def tearDown(self):
         shutil.rmtree( self.root_dir )

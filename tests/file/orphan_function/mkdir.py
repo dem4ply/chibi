@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from chibi.file import mkdir, join, exists
+from chibi.file.snippets import mkdir, join, exists
 from tests.snippet.files import Test_with_files
 
 
@@ -12,7 +12,7 @@ class Test_is_dir( Test_with_files ):
             mkdir( self.dirs[0], False )
 
     def test_print_the_directory_name_when_is_verbose( self ):
-        with patch( "chibi.file.print" ) as print:
+        with patch( "chibi.file.snippets.print" ) as print:
             new_dir = join( self.dirs[0], 'asdf' )
             if exists( new_dir ):
                 self.fail(

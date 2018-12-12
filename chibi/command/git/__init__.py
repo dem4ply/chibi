@@ -1,5 +1,5 @@
 from git import Repo
-from chibi.file import current_dir
+from chibi.file.snippets import current_dir
 
 
 def clone( url, dest=None ):

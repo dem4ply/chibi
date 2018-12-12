@@ -2,7 +2,7 @@ import random
 
 from faker import Factory as Faker_factory
 
-from chibi.file import copy, exists, join
+from chibi.file.snippets import copy, exists, join
 from tests.snippet.files import Test_with_files
 
 

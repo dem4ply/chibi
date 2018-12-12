@@ -1,5 +1,5 @@
 from tests.snippet.files import Test_with_files
-from chibi.file import ls_only_dir, is_dir, join
+from chibi.file.snippets import ls_only_dir, is_dir, join
 
 
 class Test_ls_only_dir( Test_with_files ):

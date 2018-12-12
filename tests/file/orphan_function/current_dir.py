@@ -1,4 +1,4 @@
-from chibi.file import current_dir, cd
+from chibi.file.snippets import current_dir, cd
 from tests.snippet.files import Test_moving_dir
 
 

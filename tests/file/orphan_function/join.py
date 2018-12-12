@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from chibi.file import inflate_dir, join
+from chibi.file.snippets import inflate_dir, join
+from chibi.file.snippets import Chibi_path
 
 
 class Test_join( TestCase ):
@@ -16,3 +17,9 @@ class Test_join( TestCase ):
         result = join( self.home, 'qwert' )
         self.assertTrue( result.startswith( self.home ) )
         self.assertTrue( result.endswith( 'qwert' ) )
+
+    def test_join_a_chibi_path_and_a_string_should_work( self ):
+        a = Chibi_path( '/mnt/hard_drive' )
+        b = '12344389.jpg'
+        result = join( a, b )
+        self.assertEqual( result, '/mnt/hard_drive/12344389.jpg' )

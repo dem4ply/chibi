@@ -1,6 +1,6 @@
 from unittest import TestCase
 from chibi.file.path import Chibi_path
-from chibi.file import ls, join, file_dir
+from chibi.file.snippets import ls, join, file_dir
 from tests.snippet.files import Test_with_files
 
 

@@ -1,4 +1,4 @@
-from chibi.file import stat
+from chibi.file.snippets import stat
 from tests.snippet.files import Test_with_files
 
 

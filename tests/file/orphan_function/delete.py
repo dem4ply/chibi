@@ -1,5 +1,5 @@
 from tests.snippet.files import Test_with_files
-from chibi.file import delete, exists, join
+from chibi.file.snippets import delete, exists, join
 from faker import Factory as Faker_factory
 import random
 

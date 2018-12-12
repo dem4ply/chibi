@@ -1,5 +1,5 @@
 from unittest import TestCase
-from chibi.file import current_dir, inflate_dir
+from chibi.file.snippets import current_dir, inflate_dir
 
 
 class Test_inflate_dir( TestCase ):

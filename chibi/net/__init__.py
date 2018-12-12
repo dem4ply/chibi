@@ -1,4 +1,4 @@
-from chibi.file import current_dir, join
+from chibi.file.snippets import current_dir, join
 from urllib import request
 
 

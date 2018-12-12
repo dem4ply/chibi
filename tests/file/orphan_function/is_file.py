@@ -1,4 +1,4 @@
-from chibi.file import is_file
+from chibi.file.snippets import is_file
 from tests.snippet.files import Test_with_files
 
 
