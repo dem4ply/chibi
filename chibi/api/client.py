@@ -3,7 +3,10 @@ from .connection import Connections
 
 class Client:
     def __init__( self, connection_name='default' ):
-        self._connections = Connections()
+        if _connections is None:
+            self._connections = self._build_connections_class()
+        else:
+            self._connections = _connections
         self._default_connection_name = connection_name
 
     def using( self, name ):
@@ -25,7 +28,7 @@ class Client:
             cuando no encunetra el nombre de la connecion
         """
         self._connections[ name ]
-        return self.__class__( name )
+        return self.__class__( name, _connections=self._connections )
 
     def extract_connections( self ):
         """
@@ -37,6 +40,16 @@ class Client:
         """
         return self._connections
 
+    def get_connection( self ):
+        """
+        Obtiene la connecion actual
+
+        Returns
+        =======
+        py:class`chibi.api.connection.Connection`
+        """
+        return self._connections.get( self._default_connection_name )
+
     def _get_my_connection( self ):
         """
         obtiene la connection asignada a este cliente
@@ -47,7 +60,7 @@ class Client:
         """
         return self._connecitons.get( self._my_connection_name )
 
-    def build_connections_class( self ):
+    def _build_connections_class( self ):
         """
         contrulle el objeto de las conneciones
 

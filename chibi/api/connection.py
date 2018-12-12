@@ -9,6 +9,14 @@ class Connections:
         self._connections = { k: Connection( **v ) for k, v in kw.items() }
 
     def add( self, name, connection ):
+        """
+        agrega una nueva connecion
+
+        Parameters
+        ==========
+        name: string
+        connection: `chibi.api.connection.Connection` or dict
+        """
         if isinstance( connection, Connection ):
             self._connections[ name ] = connection
         elif isinstance( connection, dict ):
