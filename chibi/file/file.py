@@ -2,7 +2,7 @@ import mmap
 import fleep
 
 from chibi.file.snippets import (
-    current_dir, exists, stat, check_sum_md5, read_in_chunks
+    current_dir, exists, stat, check_sum_md5, read_in_chunks, copy
 )
 
 
