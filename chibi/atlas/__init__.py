@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class Chibi_atlas( dict ):
     """
     Clase para crear dicionarios para que sus keys sean leibles como
@@ -40,3 +43,7 @@ class Chibi_atlas_ignore_case( Chibi_atlas ):
     def __setitem__( self, key, value ):
         key = key.lower()
         return super().__setitem__( key, value )
+
+
+class Chibi_atlas_default( defaultdict, Chibi_atlas ):
+    pass
