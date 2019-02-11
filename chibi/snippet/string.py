@@ -1,5 +1,5 @@
 from .regex import separate_camelcase_phase_1, separate_camelcase_phase_2
-from .__string import codepoint, replacement
+from ._string import codepoint, replacement
 from collections import defaultdict
 
 
