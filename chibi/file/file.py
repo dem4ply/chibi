@@ -1,4 +1,5 @@
 import mmap
+import json
 import fleep
 
 from chibi.file.snippets import (
@@ -80,3 +81,10 @@ class Chibi_file:
 
     def check_sum_md5( self, check_sum ):
         return check_sum_md5( self.file_name, check_sum )
+
+    def read_json( self ):
+        self.reread()
+        return json.load( self._file_content )
+
+    def write_json( self, data ):
+        self.append( json.dumps( data ) )

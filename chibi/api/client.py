@@ -2,7 +2,7 @@ from .connection import Connections
 
 
 class Client:
-    def __init__( self, connection_name='default' ):
+    def __init__( self, connection_name='default', _connections=None ):
         if _connections is None:
             self._connections = self._build_connections_class()
         else:
