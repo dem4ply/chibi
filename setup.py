@@ -8,7 +8,7 @@ except:
 
 setup(
     name='chibi',
-    version='0.4',
+    version='0.4.0.4',
     description='',
     # long_description=README,
     license='',
@@ -16,8 +16,8 @@ setup(
     author_email='',
     packages=find_packages(),
     install_requires=[
-        'GitPython>=2.1.5', 'requests>=2.19.1', 'pika>=0.12.0', 'fleep==1.0.1',
-        'Pillow==5.3.0', 'pytaglib==1.4.4'
+        'GitPython>=2.1.5', 'requests>=2.19.1', 'pika>=0.12.0', 'fleep>=1.0.1',
+        'Pillow>=5.3.0', 'dateutils>=0.6.6',
     ],
     dependency_links = [],
     classifiers=[
