@@ -1,6 +1,8 @@
 import datetime
+
 from chibi.atlas import Chibi_atlas_default
 from chibi.atlas.tree import Chibi_tree
+
 
 class Descriptor:
     """
@@ -37,7 +39,7 @@ class Kind( Descriptor ):
     """
     descriptor with assert of type
     """
-    kind=object
+    kind = object
 
     def __set__( self, instance, value ):
         if not isinstance( value, self.kind ):
@@ -46,26 +48,27 @@ class Kind( Descriptor ):
 
 
 class Integer( Kind ):
-    kind=int
+    kind = int
     default = 0
 
 
 class Float( Kind ):
-    kind=float
+    kind = float
     default = 0.0
 
 
 class String( Kind ):
-    kind=str
+    kind = str
     default = ''
 
 
 class DateTime( Kind ):
-    kind=datetime.datetime
+    kind = datetime.datetime
     default = datetime.datetime.now()
 
+
 class Date( Kind ):
-    kind=datetime.date
+    kind = datetime.date
     default = datetime.datetime.now().date()
 
 
@@ -98,7 +101,7 @@ class List_kind_strict( List ):
         super().__set__( instance, value )
 
     def append( self, item ):
-        if self._kind and not isinstance( value, self._kind ):
+        if self._kind and not isinstance( item, self._kind ):
             raise TypeError("Expected {}".format( self.kind ) )
         super().append( item )
 
@@ -120,6 +123,7 @@ class Dict_defaults( Chibi_atlas_default, Descriptor ):
             default = self.default
         if not callable( default ):
             default_item = default
+
             def default_factory():
                 return default_item
         else:
@@ -138,7 +142,7 @@ class Dict_defaults( Chibi_atlas_default, Descriptor ):
             raise TypeError(
                 "Expected type of {}".format( Chibi_atlas_default ) )
         else:
-            super().__set__( intance, value )
+            super().__set__( instance, value )
 
 
 class Tree_simple( Chibi_tree, Descriptor ):
@@ -150,16 +154,16 @@ class Tree_simple( Chibi_tree, Descriptor ):
 
     def __set__( self, instance, value ):
         if value is None:
-            new_tree= Chibi_tree( self._default_factory )
+            new_tree = Chibi_tree( self._default_factory )
             super().__set__( instance, new_tree )
         elif not isinstance( value, Chibi_tree ):
-            raise TypeError("Expected type of {}".format( Tree_attr ) )
+            raise TypeError("Expected type of {}".format( Chibi_tree ) )
         else:
-            super().__set__( intance, value )
+            super().__set__( instance, value )
 
 
 class Choice( Descriptor ):
-    choice=None
+    choice = None
 
     def __init__( self, *args, choice, **kargs ):
         super().__init__( *args, **kargs )
@@ -169,9 +173,9 @@ class Choice( Descriptor ):
         if value in self.choice:
             super().__set__( instance, value )
         else:
-            raise TypeError(
-                ( "Expected value of ( {} ) but received {}"
-                    ).format( self.choice, value ) )
+            raise TypeError( (
+                "Expected value of ( {} ) but received {}"
+            ).format( self.choice, value ) )
 
 
 class String_choice( Choice, String ):

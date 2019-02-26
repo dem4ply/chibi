@@ -55,5 +55,6 @@ class Post_list( Response ):
         except AttributeError:
             raw_list = self._response.json()[ 'posts' ]
 
-            self._native = [ Post( board=self.board, **post ) for post in raw_list ]
+            self._native = [
+                Post( board=self.board, **post ) for post in raw_list ]
             return self._native

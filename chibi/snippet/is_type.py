@@ -1,5 +1,6 @@
 from dateutil.parser import parse
 
+
 def is_date( string ):
     """
     check is a string is a date
@@ -21,6 +22,7 @@ def is_date( string ):
     except ValueError:
         return False
 
+
 def is_iter( obj ):
     """
     evaluate if the object can be iterate
@@ -38,6 +40,7 @@ def is_iter( obj ):
         return True
     except TypeError as e:
         return False
+
 
 def is_like_list( obj ):
     """

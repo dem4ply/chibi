@@ -214,6 +214,7 @@ def exists( file_name ):
     """
     return os.path.exists( file_name )
 
+
 def move( source, dest, verbose=False ):
     """
     mueve archivos
@@ -361,7 +362,8 @@ def chown(
 
 def stat( src ):
     s = os.stat( src )
-    result = Chibi_atlas( dict( mode=s.st_mode, ino=s.st_ino, dev=s.st_dev,
+    result = Chibi_atlas( dict(
+        mode=s.st_mode, ino=s.st_ino, dev=s.st_dev,
         nlink=s.st_nlink, size=s.st_size, atime=s.st_atime, mtime=s.st_mtime,
         ctime=s.st_ctime ) )
     result.user = get_passwd( uid=s.st_uid )

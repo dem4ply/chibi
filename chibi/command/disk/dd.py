@@ -1,5 +1,6 @@
 from chibi.command import command
 
+
 def dd( i_file, o_file, bs='1M' ):
     return command(
         'dd', 'if={}'.format( i_file ), 'of={}'.format( o_file ),

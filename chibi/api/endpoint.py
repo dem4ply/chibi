@@ -1,4 +1,3 @@
-import copy
 import requests
 
 from chibi.atlas import Chibi_atlas_ignore_case

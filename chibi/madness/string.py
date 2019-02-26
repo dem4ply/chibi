@@ -1,10 +1,9 @@
-import string
-import random
+import base64
 import binascii
 import os
 import random
 import string
-import base64
+
 from chibi import b64
 
 

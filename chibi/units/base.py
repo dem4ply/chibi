@@ -7,7 +7,6 @@ class Unit:
     symbol = 'abstract'
     valid_prefix = ( Base, )
 
-
     def __init__( self, value ):
         self.value = value
         self.prefix = Base
@@ -24,53 +23,50 @@ class Unit:
         if is_number( other ):
             return self.__class__( self.value + other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __sub__( self, other ):
         if is_number( other ):
             return self.__class__( self.value - other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
-
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __mul__( self, other ):
         if is_number( other ):
             return self.__class__( self.value * other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
-
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __truediv__( self, other ):
         if is_number( other ):
             return self.__class__( self.value / other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
-
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __floordiv__( self, other ):
         if is_number( other ):
             return self.__class__( self.value // other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __pow__( self, other ):
         if is_number( other ):
             return self.__class__( self.value ** other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __mod__( self, other ):
         if is_number( other ):
             return self.__class__( self.value % other )
         raise NotImplementedError(
-            "cannot subtract no numbers, you send a {}"
-                .format( type( other ) ) )
+            "cannot subtract no numbers, you send a {}".format(
+                type( other ) ) )
 
     def __radd__( self, other ):
         return self + other

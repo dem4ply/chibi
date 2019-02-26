@@ -29,7 +29,6 @@ def fold_to_ascii( s ):
     return s.translate( default_translate_table )
 
 
-
 def replace_with_dict( s, d ):
     """
     replaces the substrings in the dictionary keys with their values

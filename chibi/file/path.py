@@ -2,9 +2,8 @@ class Chibi_path( str ):
     def __new__( cls, *args, **kw ):
         return str.__new__( cls, *args, **kw )
 
-
-    def  __add__( self, other ):
-        from chibi.file.snippets import join, is_a_file
+    def __add__( self, other ):
+        from chibi.file.snippets import join
         if isinstance( other, self.__class__ ):
             if self.is_a_file:
                 return self.dir_name + other
@@ -15,7 +14,7 @@ class Chibi_path( str ):
 
     @property
     def is_a_folder( self ):
-        from chibi.file.snippets import join, is_a_folder
+        from chibi.file.snippets import is_a_folder
         return is_a_folder( self )
 
     @property

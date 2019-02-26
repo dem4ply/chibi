@@ -45,7 +45,7 @@ class Chibi_tree( Chibi_atlas_default ):
             del self[ obj ]
         if recursive:
             for v in self.values():
-                result = v.remove( obj, recursive=recursive )
+                v.remove( obj, recursive=recursive )
 
     def flat( self ):
         return flat( self )

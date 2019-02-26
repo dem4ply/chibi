@@ -1,7 +1,5 @@
-from chibi.api import Client as Client_base, Endpoint
-from urllib.parse import urljoin
 from . import endpoints
-
+from chibi.api import Client as Client_base
 
 
 class Board( Client_base ):

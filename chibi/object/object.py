@@ -63,11 +63,12 @@ class Chibi_object( metaclass=Chibi_object_meta ):
 
 class Chibi_object_iterate_field( Chibi_object ):
     class Meta( Chibi_object.Meta ):
-        iterate_field=None
+        iterate_field = None
 
     def __init__( self, *args, **kargs ):
         if not hasattr( self, self.Meta.iterate_field ):
-            AttributeError("No found attribute found %s" % self.Meta.iterate_field )
+            AttributeError(
+                "No found attribute found %s" % self.Meta.iterate_field )
         super().__init__(*args, **kargs )
 
     def __iter__( self ):

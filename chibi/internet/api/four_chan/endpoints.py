@@ -24,8 +24,8 @@ class Thread( Endpoint ):
             last_modified=self.last_modified, **kw )
 
     def __repr__( self ):
-        return "Thread( url={}, last_modifed={})".format( self.format_url,
-            self.parameters[ 'last_modified' ] )
+        return "Thread( url={}, last_modifed={})".format(
+            self.format_url, self.parameters[ 'last_modified' ] )
 
     def build_response( self, response ):
         return Post_list_response( response, board=self.parameters[ 'board' ] )

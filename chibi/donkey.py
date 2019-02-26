@@ -94,6 +94,7 @@ def get( key, d ):
         value = value[ k ]
     return value
 
+
 def setter( key, d, value ):
     """
     set the value in the dict in the key
@@ -120,6 +121,7 @@ def setter( key, d, value ):
             v[ k ] = {}
             v = v[ k ]
     v[ keys[-1] ] = value
+
 
 def inflate( d ):
     """

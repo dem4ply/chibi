@@ -1,5 +1,6 @@
 from chibi.atlas import Chibi_atlas
 
+
 class Connections:
     def __init__( self ):
         self._kwargs = {}
@@ -27,8 +28,8 @@ class Connections:
     def get( self, alias='default' ):
         if not isinstance( alias, str ):
             raise TypeError(
-                "unexpected type '{}' expected '{}'"
-                    .format( type( alias ), str ) )
+                "unexpected type '{}' expected '{}'".format(
+                    type( alias ), str ) )
 
         try:
             return self._connections[ alias ]
