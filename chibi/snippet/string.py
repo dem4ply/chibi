@@ -1,4 +1,6 @@
 import _string
+import io
+import gzip as gzip_module
 import re
 from collections import defaultdict
 
@@ -84,3 +86,11 @@ def decode( s, code='utf-8' ):
     decode a string
     '''
     return s.decode( code )
+
+
+def gzip( s ):
+    out = io.BytesIO()
+    with gzip_module.GzipFile( fileobj=out, mode='w' ) as f:
+        f.write( s.encode() )
+    result = out.getvalue()
+    return result

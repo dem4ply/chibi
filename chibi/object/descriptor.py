@@ -118,7 +118,7 @@ class Dict_defaults( Chibi_atlas_default, Descriptor ):
     default = None
 
     def __init__( self, *args, default=None, **kw ):
-        super().__init__(*args, **kw )
+        super().__init__( *args, **kw )
         if default is None:
             default = self.default
         if not callable( default ):
@@ -149,7 +149,7 @@ class Tree_simple( Chibi_tree, Descriptor ):
     default = None
 
     def __init__( self, *args, default_factory=None, **kw ):
-        super().__init__(*args, **kw )
+        super().__init__( *args, **kw )
         self._default_factory = default_factory
 
     def __set__( self, instance, value ):
