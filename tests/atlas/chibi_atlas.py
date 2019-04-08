@@ -47,3 +47,23 @@ class Test_chibi_atlas_deeper( TestCase ):
 
         self.d.b.b.bb = "another_value"
         self.assertEqual( self.d.b.b.bb, "another_value" )
+
+
+class Test_chibi_atlas_kw( TestCase ):
+    def setUp( self ):
+        self.d = Chibi_atlas( **dict(
+            a = 'a',
+            b = dict( b=dict( bb='bb' ) )
+        ) )
+
+    def test_the_inner_dicts_should_be_chibi_atlas( self ):
+        self.assertIsInstance( self.d.b, Chibi_atlas )
+        self.assertIsInstance( self.d.b.b, Chibi_atlas )
+
+    def test_when_assing_a_value_should_be_access_from_root( self ):
+        self.d.b.b = dict( a="a" )
+        self.assertEqual( self.d.b.b.a, "a" )
+        self.assertIsInstance( self.d.b.b, Chibi_atlas )
+
+        self.d.b.b.bb = "another_value"
+        self.assertEqual( self.d.b.b.bb, "another_value" )
