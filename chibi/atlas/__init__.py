@@ -1,11 +1,4 @@
 from collections import defaultdict
-def _wrap( val, klass=None ):
-    if type( val ) == dict:
-        if klass is None:
-            return Chibi_atlas( val )
-        else:
-            return klass( val )
-    return val
 
 
 class Chibi_atlas( dict ):
@@ -41,6 +34,9 @@ class Chibi_atlas( dict ):
 
 
 class Chibi_atlas_ignore_case( Chibi_atlas ):
+    """
+    clase que crea chibi atlas que son case insensitive
+    """
     def __init__( self, *args, **kw ):
         args_clean = []
         for a in args:
@@ -67,4 +63,16 @@ class Chibi_atlas_ignore_case( Chibi_atlas ):
 
 
 class Chibi_atlas_default( defaultdict, Chibi_atlas ):
+    """
+    chibi atlas que emula `py:class:collections.defaultdict`
+    """
     pass
+
+
+def _wrap( val, klass=None ):
+    if type( val ) == dict:
+        if klass is None:
+            return Chibi_atlas( val )
+        else:
+            return klass( val )
+    return val

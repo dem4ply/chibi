@@ -1,13 +1,13 @@
-import mmap
 import json
-import yaml
-import fleep
+import mmap
 
-from chibi.file.snippets import (
-    current_dir, exists, stat, check_sum_md5,
-    read_in_chunks, copy, base_name, file_dir
-)
+import fleep
+import yaml
+
 from chibi.file.path import Chibi_path
+from chibi.file.snippets import (
+    exists, stat, check_sum_md5, read_in_chunks, copy, base_name, file_dir
+)
 
 
 class Chibi_file:
