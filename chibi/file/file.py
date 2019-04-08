@@ -1,27 +1,34 @@
 import mmap
 import json
+import yaml
 import fleep
 
 from chibi.file.snippets import (
-    current_dir, exists, stat, check_sum_md5, read_in_chunks, copy
+    current_dir, exists, stat, check_sum_md5,
+    read_in_chunks, copy, base_name, file_dir
 )
+from chibi.file.path import Chibi_path
 
 
 class Chibi_file:
     def __init__( self, file_name ):
         self._file_name = file_name
-        self._current_dir = current_dir()
+        self._current_dir = file_dir( file_name )
         if not self.exists:
             self.touch()
         self.reread()
 
     @property
     def file_name( self ):
-        return self._file_name
+        return base_name( self._file_name )
 
     @property
     def dir( self ):
         return self._current_dir
+
+    @property
+    def path( self ):
+        return Chibi_path( self._file_name )
 
     @property
     def is_empty( self ):
@@ -29,8 +36,8 @@ class Chibi_file:
 
     @property
     def properties( self ):
-        prop = stat( self.file_name )
-        with open( self.file_name, 'rb' ) as f:
+        prop = stat( self.path )
+        with open( self.path, 'rb' ) as f:
             info = fleep.get( f.read( 128 ) )
 
         prop.type = info.type[0] if info.type else None
@@ -51,7 +58,7 @@ class Chibi_file:
 
     def reread( self ):
         try:
-            with open( self._file_name, 'r' ) as f:
+            with open( self.path, 'r' ) as f:
                 self._file_content = mmap.mmap(
                     f.fileno(), 0, prot=mmap.PROT_READ )
         except ValueError as e:
@@ -62,25 +69,25 @@ class Chibi_file:
         return self.find( string ) >= 0
 
     def append( self, string ):
-        with open( self._file_name, 'a' ) as f:
+        with open( self.path, 'a' ) as f:
             f.write( string )
         self.reread()
 
     @property
     def exists( self ):
-        return exists( self.file_name )
+        return exists( self.path )
 
     def touch( self ):
-        open( self.file_name, 'a' ).close()
+        open( self.path, 'a' ).close()
 
     def copy( self, dest ):
-        copy( self.file_name, dest )
+        copy( self.path, dest )
 
     def chunk( self, chunk_size=4096 ):
-        return read_in_chunks( self.file_name, 'r', chunk_size=chunk_size )
+        return read_in_chunks( self.path, 'r', chunk_size=chunk_size )
 
     def check_sum_md5( self, check_sum ):
-        return check_sum_md5( self.file_name, check_sum )
+        return check_sum_md5( self.path, check_sum )
 
     def read_json( self ):
         self.reread()
@@ -88,3 +95,10 @@ class Chibi_file:
 
     def write_json( self, data ):
         self.append( json.dumps( data ) )
+
+    def read_yaml( self ):
+        self.reread()
+        return yaml.load( self._file_content )
+
+    def write_yaml( self, data ):
+        self.append( yaml.dump( data ) )

@@ -9,7 +9,7 @@ class Chibi_image( Chibi_file ):
 
     @property
     def _PIL( self ):
-        return Image.open( self.file_name )
+        return Image.open( self.path )
 
     def __eq__( self, other ):
         if not isinstance( other, Chibi_image ):
