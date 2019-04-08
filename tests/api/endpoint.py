@@ -1,8 +1,9 @@
 import json
-from unittest import TestCase, skip
-from chibi.api import Endpoint
+
 from vcr_unittest import VCRTestCase
 
+from chibi.api import Endpoint
+from chibi.atlas import Chibi_atlas
 
 
 class Endpoint_test( Endpoint ):
@@ -29,7 +30,7 @@ class Test_get( Test_endpoint_4chan_wallpaper_board ):
     def test_response_should_be_200( self ):
         response = self.endpoint.get()
         self.assertEqual( response.status_code, 200 )
-        self.assertIsInstance( response.headers, dict )
+        self.assertIsInstance( response.headers, Chibi_atlas )
         self.assertIsInstance( response.body, str )
         self.assertIsInstance( response.native, list )
         self.assertListEqual( json.loads( response.body ), response.native )

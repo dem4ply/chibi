@@ -21,11 +21,11 @@ class Test_configure( Test_connection ):
 
     def test_get_should_retrive_default( self ):
         default = self.connections.get()
-        self.assertDictEqual( default, self.default_settings )
+        self.assertEqual( default, self.default_settings )
 
     def test_get_item_should_retrive_by_key( self ):
         default = self.connections[ 'default' ]
-        self.assertDictEqual( default, self.default_settings )
+        self.assertEqual( default, self.default_settings )
 
     def test_get_should_raise_key_error_when_is_no_exists_connection( self ):
         with self.assertRaises( KeyError ):
