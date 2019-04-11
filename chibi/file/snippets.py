@@ -370,3 +370,27 @@ def stat( src ):
     result.group = get_group( gid=s.st_gid )
 
     return result
+
+
+def add_extensions( file_name, *extensions ):
+    """
+    agrega extenciones al nombre del archivo
+
+    Parameters
+    ==========
+    file_name: str
+    extensions: tuple of str
+
+    Returns
+    =======
+    str
+
+    Examples
+    ========
+    >>>add_extensions( "image.jpg", "thumbnail" )
+    "image.thumbnail.jpg"
+    """
+    file_name, ext = os.path.splitext( file_name )
+    extensions = ".".join( extensions )
+    file_name = ".".join( ( file_name, extensions ) )
+    return Chibi_path( file_name + ext )

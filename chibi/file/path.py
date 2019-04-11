@@ -1,6 +1,15 @@
+import os
+
+
 class Chibi_path( str ):
     def __new__( cls, *args, **kw ):
-        return str.__new__( cls, *args, **kw )
+        from .snippets import inflate_dir
+        args_2 = []
+        for a in args:
+            if '~' in a:
+                a = os.path.expanduser( a )
+            args_2.append( a )
+        return str.__new__( cls, *args_2, **kw )
 
     def __add__( self, other ):
         from chibi.file.snippets import join

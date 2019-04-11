@@ -5,7 +5,7 @@ from chibi.file.snippets import current_dir, cd, join, mkdir
 from chibi.file import Chibi_file
 from chibi.snippet.dict import (
     keys_to_snake_case, replace_keys, pop_regex, get_regex, rename_keys,
-    lower_keys
+    lower_keys, delete_list_of_keys, remove_value, remove_nones
 )
 
 
@@ -154,4 +154,37 @@ class Test_dict(TestCase):
             "qwer": 456, "stuff": 123
         }
         result = lower_keys( dict_test )
+        self.assertEqual( result, dict_result_expected )
+
+    def test_lower_keys( self ):
+        dict_test = {
+            "ID": 123, "ASDF": 234, "ZXCV": 345,
+            "QWER": 456, "STUFF": 123
+        }
+        dict_result_expected = {
+            "ID": 123, "QWER": 456, "STUFF": 123
+        }
+        result = delete_list_of_keys( dict_test, 'ASDF', 'ZXCV' )
+        self.assertEqual( result, dict_result_expected )
+
+    def test_remove_value( self ):
+        dict_test = {
+            "new_id": 123, "new_asdf": 234, "new_zxcv": 345,
+            "new_qwer": 456, "stuff": 123
+        }
+        dict_result_expected = {
+            "new_asdf": 234, "new_zxcv": 345, "new_qwer": 456
+        }
+        result = remove_value( dict_test, 123 )
+        self.assertEqual( result, dict_result_expected )
+
+    def test_remove_none( self ):
+        dict_test = {
+            "new_id": None, "new_asdf": 234, "new_zxcv": 345,
+            "new_qwer": 456, "stuff": None
+        }
+        dict_result_expected = {
+            "new_asdf": 234, "new_zxcv": 345, "new_qwer": 456
+        }
+        result = remove_nones( dict_test )
         self.assertEqual( result, dict_result_expected )

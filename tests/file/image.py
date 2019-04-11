@@ -1,10 +1,11 @@
 from unittest import TestCase
+from tests.snippet.files import Test_with_files
 
-from chibi.file.imgage import Chibi_image
+from chibi.file.image import Chibi_image
 
-
-class Test_imges( TestCase ):
+class Test_images( TestCase ):
     def setUp( self ):
+        super().setUp()
         self.jpg_path = './tests/file/1529990793499.jpg'
         self.png_path = './tests/file/1535359854403.png'
         self.gif_path = './tests/file/1536637012160.gif'
@@ -13,6 +14,8 @@ class Test_imges( TestCase ):
         self.png = Chibi_image( self.png_path )
         self.gif = Chibi_image( self.gif_path )
 
+
+class Test_eq( Test_images ):
     def test_can_open_the_images( self ):
         self.assertTrue( self.jpg.exists )
         self.assertTrue( self.png.exists )
@@ -56,3 +59,10 @@ class Test_imges( TestCase ):
 
         self.assertNotEqual( self.png, self.jpg )
         self.assertNotEqual( self.png, self.gif )
+
+
+class Test_thumbnails( Test_images, Test_with_files ):
+    def test_create_in_diferent_folder( self ):
+        thumbnail = self.jpg.thumbnail( self.root_dir )
+        self.assertNotEqual( thumbnail.path, self.jpg.path )
+        self.assertNotEqual( thumbnail, self.jpg.path )

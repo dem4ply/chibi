@@ -6,24 +6,26 @@ from chibi.snippet.is_type import is_like_list
 
 
 def keys_to_snake_case( d ):
+    """
+    transforma los keys de un dicionaria a snake case
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>keys_to_snake_case( { "HolaMundo": "hola mundo" } )
+    { "hola_mundo": "hola_mundo" }
+    """
     result = {}
     for k, v in d.items():
         if isinstance( k, str ):
             k = camel_to_snake( k )
         if isinstance( v, ( dict, list, tuple ) ):
-            v = _inner_keys_to_snake_case( v )
+            v = __inner_keys_to_snake_case( v )
         result[k] = v
     return result
-
-
-def _inner_keys_to_snake_case( d ):
-    if isinstance( d, dict ):
-        return keys_to_snake_case( d )
-    elif isinstance( d, list ):
-        return [ _inner_keys_to_snake_case( a ) for a in d ]
-    elif isinstance( d, tuple ):
-        return tuple( _inner_keys_to_snake_case( a ) for a in d )
-    return d
 
 
 def replace_keys( d, dr ):
@@ -37,8 +39,8 @@ def replace_keys( d, dr ):
     dr: dict
         dict is going to use for remplace his keys
 
-    Example
-    =======
+    Examples
+    ========
     >>>replace_keys( { 'a': 'a' }, { 'a': 'b' } )
     {'b':'a'}
     """
@@ -61,11 +63,20 @@ def rename_keys( d, func ):
     rename the keys in a dict using a function
 
     Parameters
-    ----------
+    ==========
     d: dict
         target dict
     func: callable
         function is going to rename rename the keys
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>rename_keys( { 'a': 'a' }, lambda k: k.upper() )
+    {'A':'a'}
     """
     if not callable( func ):
         raise NotImplementedError
@@ -82,9 +93,18 @@ def lower_keys( d ):
     lower all the keys in the dict
 
     Parameters
-    ----------
+    ==========
     d: dict
         target dict
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>lower_keys( { 'A': 'a' } )
+    {'a':'a'}
     """
     return rename_keys( d, func=lambda x: x.lower() )
 
@@ -95,11 +115,23 @@ def pop_regex( d, regex ):
     those keys and values
 
     parameters
-    ----------
+    ==========
     d: dict
         target dict
     regex: str or regex
         string to compile the regex or a regex object
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>origin = { "a": "a", "b": "b", "aa": "aa" }
+    >>>pop_regex( origin, r'a*' )
+    { "a": "a", "aa": "aa" }
+    >>>origin == { "b": "b" }
+    True
     """
     if isinstance( regex, str ):
         regex = re.compile( regex )
@@ -117,11 +149,19 @@ def get_regex( d, regex ):
     y forma un nuevo dicionario con ese
 
     parameters
-    ----------
+    ==========
     d: dict
         dicionarrio que se le haran los gets
     regex: str or regex
         string que se compilara para ser regex
+
+    Examples
+    ========
+    >>>origin = { "a": "a", "b": "b", "aa": "aa" }
+    >>>pop_regex( origin, r'a*' )
+    { "a": "a", "aa": "aa" }
+    >>>origin == { "a": "a", "b": "b", "aa": "aa" }
+    True
     """
     if isinstance( regex, str ):
         regex = re.compile( regex )
@@ -131,3 +171,106 @@ def get_regex( d, regex ):
         if chibi_regex.test( regex, k ):
             result[ k ] = d.get( k )
     return result
+
+
+def delete_list_of_keys( d, *keys ):
+    """
+    elimina las keys de un dicionario
+
+    Parameters
+    ==========
+    d: dict
+        dicionario del que se eliminaran las keys
+    keys: tuple
+        llaves a eliminar
+
+    Examples
+    ========
+    >>>origin = { 'a': 'a', 'b': 'b': 'c': 'c' }
+    >>>delete_list_of_keys( origin, 'b', 'c' )
+    origin == { 'a': 'a' }
+    """
+    for key in keys:
+        del d[ key ]
+    return d
+
+
+def remove_value( d, element ):
+    """
+    elimina los items de un dicionario en el que su value es element
+
+    Parameters
+    ==========
+    d: dict
+    element: object
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>remove_value( { 'a': 1, 'b': 2, 'c': 1 }, 1 )
+    { 'b': 2 }
+    """
+    keys_to_delete = []
+    for key, value in d.items():
+        if value is element:
+            keys_to_delete.append( key )
+            continue
+        if isinstance( value, dict ):
+            r = remove_value( value, element )
+        elif isinstance( value, list ):
+            r = __remove_element__list( value, element )
+        else:
+            continue
+        if r:
+            d[ key ] = r
+        else:
+            keys_to_delete.append( key )
+
+    delete_list_of_keys( d, *keys_to_delete )
+    return d
+
+
+def remove_nones( d ):
+    """
+    elimina los Nones de un dicionario
+
+    Parameters
+    ==========
+    d: dict
+
+    Returns
+    =======
+    dict
+
+    Examples
+    ========
+    >>>remove_nones( { 'a': None, 'b': 2, 'c': None } )
+    { 'b': 2 }
+    """
+    return remove_value( d, None )
+
+
+def __remove_element__list( l, element ):
+    result = []
+    for i in l:
+        if i is element:
+            continue
+        if isinstance( i, list ):
+            result.append( __remove_element__list( i, element ) )
+        if isinstance( i, dict ):
+            result.append( remove_value( i, element ) )
+
+    return result
+
+
+def __inner_keys_to_snake_case( d ):
+    if isinstance( d, dict ):
+        return keys_to_snake_case( d )
+    elif isinstance( d, list ):
+        return [ __inner_keys_to_snake_case( a ) for a in d ]
+    elif isinstance( d, tuple ):
+        return tuple( __inner_keys_to_snake_case( a ) for a in d )
+    return d

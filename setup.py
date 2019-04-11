@@ -12,7 +12,7 @@ setup(
     description='',
     # long_description=README,
     license='',
-    author='',
+    author='dem4ply',
     author_email='',
     packages=find_packages(),
     install_requires=[
