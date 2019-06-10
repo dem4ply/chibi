@@ -2,7 +2,7 @@ import random
 
 from faker import Factory as Faker_factory
 
-from chibi.file.snippets import copy, exists, join
+from chibi.file.snippets import copy, exists, join, copy_folder, delete, ls
 from tests.snippet.files import Test_with_files
 
 
@@ -30,3 +30,15 @@ class Test_copy( Test_with_files ):
         with open( dest ) as file_dest:
             with open( file ) as file_src:
                 self.assertEqual( file_src.read(), file_dest.read() )
+
+
+class Test_copy_folder( Test_with_files ):
+    def test_should_copy_all_the_folder( self ):
+        dest = join( self.root_dir, 'hola' )
+        self.assertFalse( exists( dest ) )
+        copy_folder( self.folder_with_files_with_content, dest )
+        self.assertTrue( exists( dest ) )
+
+        self.assertEqual(
+            len( set( ls( self.folder_with_files_with_content ) ) ),
+            len( set( ls( dest ) ) ) )

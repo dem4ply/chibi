@@ -47,19 +47,22 @@ class Chibi_file:
 
     def __del__( self ):
         try:
-            self._file_content.close()
+            self.file.close()
         except AttributeError:
             pass
+
+    def close( self ):
+        self.file.close()
 
     def find( self, string_to_find ):
         if isinstance( string_to_find, str ):
             string_to_find = string_to_find.encode()
-        return self._file_content.find( string_to_find )
+        return self.file.find( string_to_find )
 
     def reread( self ):
         try:
             with open( self.path, 'r' ) as f:
-                self._file_content = mmap.mmap(
+                self.file = mmap.mmap(
                     f.fileno(), 0, prot=mmap.PROT_READ )
         except ValueError as e:
             if not str( e ) == 'cannot mmap an empty file':
@@ -73,6 +76,19 @@ class Chibi_file:
             f.write( string )
         self.reread()
 
+    def write( self, string ):
+        with open( self.path, 'w' ) as f:
+            f.write( string )
+        self.reread()
+
+    @property
+    def file( self ):
+        return self._file_content
+
+    @file.setter
+    def file( self, value ):
+        self._file_content = value
+
     @property
     def exists( self ):
         return exists( self.path )
@@ -80,8 +96,8 @@ class Chibi_file:
     def touch( self ):
         open( self.path, 'a' ).close()
 
-    def copy( self, dest ):
-        copy( self.path, dest )
+    def copy( self, dest, verbose=True, **kw ):
+        copy( self.path, dest, verbose=verbose, **kw )
 
     def chunk( self, chunk_size=4096 ):
         return read_in_chunks( self.path, 'r', chunk_size=chunk_size )
@@ -91,14 +107,14 @@ class Chibi_file:
 
     def read_json( self ):
         self.reread()
-        return json.load( self._file_content )
+        return json.load( self.file )
 
     def write_json( self, data ):
-        self.append( json.dumps( data ) )
+        self.write( json.dumps( data ) )
 
     def read_yaml( self ):
         self.reread()
-        return yaml.load( self._file_content )
+        return yaml.load( self.file )
 
     def write_yaml( self, data ):
-        self.append( yaml.dump( data ) )
+        self.write( yaml.dump( data ) )

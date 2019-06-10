@@ -2,7 +2,7 @@ from tests.snippet.files import Test_with_files
 from chibi.file import Chibi_file
 
 
-class Test_chibi_file_append( Test_with_files ):
+class Test_chibi_file_properties( Test_with_files ):
     def setUp( self ):
         super().setUp()
         self.chibi_file = Chibi_file( self.files_with_content[0] )

@@ -17,7 +17,7 @@ def current_dir():
 
     Returns
     =======
-    string
+    py:class:`chibi.file.Chibi_path`
     """
     return Chibi_path( os.getcwd() )
 
@@ -273,6 +273,10 @@ def copy( source, dest, verbose=False ):
             print( f, '->', dest )
 
 
+def copy_folder( source, dest ):
+    shutil.copytree( str( source ), str( dest ) )
+
+
 def ln( source, dest, verbose=True ):
     os.symlink( source, dest )
     if verbose:
@@ -394,3 +398,62 @@ def add_extensions( file_name, *extensions ):
     extensions = ".".join( extensions )
     file_name = ".".join( ( file_name, extensions ) )
     return Chibi_path( file_name + ext )
+
+
+def common_root( *paths ):
+    """
+    encuentra el la carpeta raiz en comun
+
+    Parameters
+    ==========
+    paths: tuple of str or Chibi_path
+
+    Returns
+    =======
+    py:class:`chibi.file.Chibi_path`
+
+    Examples
+    ========
+    >>>common_root( '/usr/var/log', '/usr/var/security' )
+    '/usr/var/'
+    """
+    return Chibi_path( os.path.commonprefix( paths ) )
+
+
+def get_relative_path( *paths, root=None ):
+    """
+    regresa los path relativos
+
+    Parameters
+    ==========
+    paths: tuple of str or Chibi_path
+    root: string
+
+    Returns
+    =======
+    list of strings
+        cuando se manda mas de path
+    string
+        cuando solo se envia 1 path
+
+    Examples
+    ========
+    >>>get_relative_path( '/usr/var/log', '/usr/var/security' )
+    [ 'log', 'security' ]
+    >>>get_relative_path( '/usr/var/log', root='/usr/var/' )
+    'log'
+    """
+    if len( paths ) > 1:
+        if root is None:
+            root = common_root( *paths )
+    else:
+        if root is None:
+            raise NotImplementedError
+    root = inflate_dir( root )
+
+    result = [
+        os.path.relpath( inflate_dir( path ), start=root )
+        for path in paths ]
+    if len( result ) == 1:
+        return result[0]
+    return result

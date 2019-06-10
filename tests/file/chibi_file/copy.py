@@ -17,7 +17,7 @@ class Test_copy( Test_with_files ):
         self.assertFalse( exists( dest ) )
 
         cf = Chibi_file( file )
-        cf.copy( dest )
+        cf.copy( dest, verbose=False )
         self.assertTrue( exists( dest ) )
         with open( dest ) as file_dest:
             self.assertFalse( file_dest.read() )
@@ -28,7 +28,7 @@ class Test_copy( Test_with_files ):
         self.assertFalse( exists( dest ) )
 
         cf = Chibi_file( file )
-        cf.copy( dest )
+        cf.copy( dest, verbose=False )
         self.assertTrue( exists( dest ) )
         with open( dest ) as file_dest:
             with open( file ) as file_src:

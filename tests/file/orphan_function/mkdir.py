@@ -3,7 +3,7 @@ from chibi.file.snippets import mkdir, join, exists
 from tests.snippet.files import Test_with_files
 
 
-class Test_is_dir( Test_with_files ):
+class Test_mkdir( Test_with_files ):
     def test_create_a_new_dir_and_that_exists_should_be_ok_in_default( self ):
         mkdir( self.dirs[0] )
 
