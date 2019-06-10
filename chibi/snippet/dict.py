@@ -1,3 +1,4 @@
+import json
 import re
 
 from . import regex as chibi_regex
@@ -188,11 +189,50 @@ def delete_list_of_keys( d, *keys ):
     ========
     >>>origin = { 'a': 'a', 'b': 'b': 'c': 'c' }
     >>>delete_list_of_keys( origin, 'b', 'c' )
+    { 'a': 'a' }
     origin == { 'a': 'a' }
     """
     for key in keys:
         del d[ key ]
     return d
+
+
+def get_list_of_keys( d, *keys ):
+    """
+    crea un nuevo dicionario con el subconjunto de llaves
+
+    Parameters
+    ==========
+    d: dict
+    keys: tuple
+
+    Examples
+    ========
+    >>>origin = { 'a': 'a', 'b': 'b': 'c': 'c' }
+    >>>get_list_of_keys( origin, 'b', 'c' )
+    { 'b': 'b': 'c': 'c' }
+    """
+    return { key: d[ key ] for key in keys }
+
+
+def get_from_dict( d, **kw ):
+    """
+    crea un nuevo dicionario usando el kw
+    la llave del kw es la llave del dicionario
+    y el valor de kw es el nombre de la nueva llave
+
+    Parameters
+    ==========
+    d: dict
+    kw: dict
+
+    Examples
+    ========
+    >>>origin = { 'a': 'a', 'b': 'b': 'c': 'c' }
+    >>>get_from_dict( origin, a='d', c='e' )
+    { 'd': 'a': 'e': 'c' }
+    """
+    return { v: d[ k ] for k, v in kw.items() }
 
 
 def remove_value( d, element ):
@@ -251,6 +291,28 @@ def remove_nones( d ):
     { 'b': 2 }
     """
     return remove_value( d, None )
+
+
+def hate_ordered_dict( d ):
+    """
+    elimina los orderer dicts
+    """
+    return json.loads( json.dumps( d ) )
+
+
+def remove_xml_notatation( d ):
+    if isinstance( d, dict ):
+        result = {}
+        for k, v in d.items():
+            if k.startswith( '#' ) or k.startswith( '@' ) or ':' in k:
+                new_k = k[1:]
+                new_k = new_k.replace( ':', '_' )
+                k = new_k
+            result[ k ] = remove_xml_notatation( v )
+        return result
+    elif isinstance( d, list ):
+        return [ remove_xml_notatation( i ) for i in d ]
+    return d
 
 
 def __remove_element__list( l, element ):

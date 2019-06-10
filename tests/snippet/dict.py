@@ -1,11 +1,11 @@
 from unittest import TestCase
-import tempfile, shutil
+
 from faker import Factory as Faker_factory
-from chibi.file.snippets import current_dir, cd, join, mkdir
-from chibi.file import Chibi_file
+
 from chibi.snippet.dict import (
     keys_to_snake_case, replace_keys, pop_regex, get_regex, rename_keys,
-    lower_keys, delete_list_of_keys, remove_value, remove_nones
+    lower_keys, delete_list_of_keys, get_list_of_keys, get_from_dict,
+    remove_value, remove_nones, remove_xml_notatation
 )
 
 
@@ -156,7 +156,7 @@ class Test_dict(TestCase):
         result = lower_keys( dict_test )
         self.assertEqual( result, dict_result_expected )
 
-    def test_lower_keys( self ):
+    def test_delete_list_of_keys( self ):
         dict_test = {
             "ID": 123, "ASDF": 234, "ZXCV": 345,
             "QWER": 456, "STUFF": 123
@@ -165,6 +165,24 @@ class Test_dict(TestCase):
             "ID": 123, "QWER": 456, "STUFF": 123
         }
         result = delete_list_of_keys( dict_test, 'ASDF', 'ZXCV' )
+        self.assertEqual( result, dict_result_expected )
+
+    def test_get_list_of_keys( self ):
+        dict_test = {
+            "ID": 123, "ASDF": 234, "ZXCV": 345,
+            "QWER": 456, "STUFF": 123
+        }
+        dict_result_expected = { "ASDF": 234, "ZXCV": 345, }
+        result = get_list_of_keys( dict_test, 'ASDF', 'ZXCV' )
+        self.assertEqual( result, dict_result_expected )
+
+    def test_get_from_dict( self ):
+        dict_test = {
+            "ID": 123, "ASDF": 234, "ZXCV": 345,
+            "QWER": 456, "STUFF": 123
+        }
+        dict_result_expected = { "a": 234, "b": 345, }
+        result = get_from_dict( dict_test, ASDF='a', ZXCV='b' )
         self.assertEqual( result, dict_result_expected )
 
     def test_remove_value( self ):
@@ -188,3 +206,33 @@ class Test_dict(TestCase):
         }
         result = remove_nones( dict_test )
         self.assertEqual( result, dict_result_expected )
+
+
+
+class Test_pipeline( TestCase ):
+    def setUp( self ):
+        self.example = {
+            'nmaprun': {
+                '@scanner': 'nmap', '@args': 'nmap',
+                '@start': '1556152447',
+                '@startstr': 'Wed Apr 24 19:34:07 2019',
+                '@version': '7.70',
+                '@xmloutputversion': '1.04',
+                'verbose': { '@level': '0' },
+                'debugging': { '@level': '0' }, }
+        }
+
+        self.expected = {
+            'nmaprun': {
+                'scanner': 'nmap', 'args': 'nmap',
+                'start': '1556152447',
+                'startstr': 'Wed Apr 24 19:34:07 2019',
+                'version': '7.70',
+                'xmloutputversion': '1.04',
+                'verbose': { 'level': '0' },
+                'debugging': { 'level': '0' }, }
+        }
+
+    def test_should_remove_xml_garbage( self ):
+        result = remove_xml_notatation( self.example )
+        self.assertEqual( self.expected, result )
