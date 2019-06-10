@@ -1,5 +1,6 @@
 from chibi.command import command
 from chibi.atlas import Chibi_atlas
+from chibi.net.network.interface import Network
 import re
 
 
@@ -15,6 +16,17 @@ class Interfaces:
 
     def to_dict( self ):
         return self._raw_interfaces.copy()
+
+
+def ip( *args, stdout=True ):
+    if stdout:
+        stdout = 'pipe'
+    return command( 'ip', *args, stdout=stdout )
+
+
+def ip_addr():
+    result, _, _ = ip( 'addr' )
+    return Network.load_from_string( result )
 
 
 def iwconfig():
