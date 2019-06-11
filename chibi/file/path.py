@@ -22,6 +22,16 @@ class Chibi_path( str ):
         if isinstance( other, str ):
             return self + self.__class__( other )
 
+    def __eq__( self, other ):
+        if isinstance( other, Chibi_path ):
+            return str( self ) == str( other )
+        if isinstance( other, str ):
+            return str( self ) == other
+        return False
+
+    def __hash__( self ):
+        return hash( str( self ) )
+
     @property
     def is_a_folder( self ):
         from chibi.file.snippets import is_a_folder

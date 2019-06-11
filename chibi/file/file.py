@@ -1,4 +1,5 @@
 import json
+import copy
 import mmap
 
 import fleep
@@ -6,7 +7,8 @@ import yaml
 
 from chibi.file.path import Chibi_path
 from chibi.file.snippets import (
-    exists, stat, check_sum_md5, read_in_chunks, copy, base_name, file_dir
+    exists, stat, check_sum_md5, read_in_chunks, base_name, file_dir,
+    copy as copy_file,
 )
 
 
@@ -97,7 +99,7 @@ class Chibi_file:
         open( self.path, 'a' ).close()
 
     def copy( self, dest, verbose=True, **kw ):
-        copy( self.path, dest, verbose=verbose, **kw )
+        copy_file( self.path, dest, verbose=verbose, **kw )
 
     def chunk( self, chunk_size=4096 ):
         return read_in_chunks( self.path, 'r', chunk_size=chunk_size )
@@ -118,3 +120,26 @@ class Chibi_file:
 
     def write_yaml( self, data ):
         self.write( yaml.dump( data ) )
+
+    def __copy__( self ):
+        return type( self )( self.path )
+
+    def __eq__( self, other ):
+        if isinstance( other, Chibi_file ):
+            return self.path == other.path
+        return False;
+
+    def __iadd__( self, other ):
+        if ( isinstance( other, str ) ):
+            self.append( other )
+            return self
+        if ( isinstance( other, Chibi_file ) ):
+            if self == other:
+                self += "".join( other.chunk() )
+                return self
+
+            other = copy.copy( other )
+            for chunk in other.chunk():
+                self += chunk
+            return self
+        self += str( other )
