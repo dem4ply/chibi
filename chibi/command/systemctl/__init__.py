@@ -41,6 +41,11 @@ def start( *services ):
     return command_result, error, return_code
 
 
+def stop( *services ):
+    command_result, error, return_code = systemctl( 'stop', *services )
+    return command_result, error, return_code
+
+
 def restart( *services ):
     command_result, error, return_code = systemctl( 'restart', *services )
     return command_result, error, return_code
