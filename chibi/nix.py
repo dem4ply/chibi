@@ -30,3 +30,24 @@ def get_group( gid=None, name=None ):
     elif name is not None:
         return _parse_group( grp.getgrnam( name ) )
     raise ValueError( "gid y name no pueden ser None" )
+
+
+def user_exists( uid=None, name=None ):
+    f = []
+    if uid is not None and name is None:
+        return any( filter( lambda x: x.pw_uid == uid, pwd.getpwall() ) )
+    elif uid is None and name is not None:
+        return any( filter( lambda x: x.pw_name == name, pwd.getpwall() ) )
+    else:
+        return any( filter(
+            lambda x: x.pw_name == name and x.pw_uid == uid, pwd.getpwall() ) )
+
+
+def group_exists( gid=None, name=None ):
+    if gid is not None and name is None:
+        return any( filter( lambda x: x.gr_gid == gid, grp.getgrall() ) )
+    elif gid is None and name is not None:
+        return any( filter( lambda x: x.gr_name == name, grp.getgrall() ) )
+    else:
+        return any( filter(
+            lambda x: x.gr_name == name and x.gr_gid == gid, grp.getgrall() ) )

@@ -1,6 +1,8 @@
 import pwd, grp
 from unittest import TestCase
-from chibi.nix import _parse_passwd, _parse_group, get_passwd, get_group
+from chibi.nix import (
+    _parse_passwd, _parse_group, get_passwd, get_group,
+    user_exists, group_exists )
 
 
 class Test_passwd( TestCase ):
@@ -76,3 +78,31 @@ class Test_group( TestCase ):
             name_passwd = get_group( name=raw_group.gr_name )
             gid_passwd = get_group( gid=raw_group.gr_gid )
             self.assertEqual( name_passwd, gid_passwd )
+
+
+class Test_exists( TestCase ):
+    def test_user_exists_only_name( self ):
+        self.assertTrue( user_exists( name='root' ) )
+
+    def test_user_exists_only_uid( self ):
+        self.assertTrue( user_exists( uid=0 ) )
+
+    def test_user_exists_name_and_uid( self ):
+        self.assertTrue( user_exists( uid=0, name='root' ) )
+
+    def test_user_exists_name_and_uid_if_one_no_exits_should_be_false( self ):
+        self.assertFalse( user_exists( uid=1, name='root' ) )
+        self.assertFalse( user_exists( uid=0, name='toor' ) )
+
+    def test_group_exists_only_name( self ):
+        self.assertTrue( group_exists( name='root' ) )
+
+    def test_group_exists_only_uid( self ):
+        self.assertTrue( group_exists( gid=0 ) )
+
+    def test_group_exists_name_and_uid( self ):
+        self.assertTrue( group_exists( gid=0, name='root' ) )
+
+    def test_group_exists_name_and_uid_if_one_no_exits_should_be_false( self ):
+        self.assertFalse( group_exists( gid=1, name='root' ) )
+        self.assertFalse( group_exists( gid=0, name='toor' ) )
