@@ -97,3 +97,22 @@ class Chibi_path( str ):
         prop.extension = info.extension[0] if info.extension else None
         prop.mime = info.mime[0] if info.mime else None
         return prop
+
+    @property
+    def extension( self ):
+        if self.is_a_file:
+            return self.properties.extension
+        else:
+            raise NotImplementedError
+
+    def replace_extensions( self, *extensions ):
+        file_name, ext = os.path.splitext( self )
+        extensions = ".".join( extensions )
+        file_name = ".".join( ( file_name, extensions ) )
+        return type( self )( file_name )
+
+    def add_extensions( self, *extensions ):
+        file_name, ext = os.path.splitext( self )
+        extensions = ".".join( extensions )
+        file_name = ".".join( ( file_name, ext + extensions ) )
+        return type( self )( file_name )

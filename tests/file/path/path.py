@@ -110,3 +110,17 @@ class Test_path_chmod( Test_with_files ):
         f.chmod( 0o755 )
         new_stat = f.properties
         self.assertNotEqual( current_stat.mode, new_stat.mode )
+
+
+class Test_path_extension( Test_with_files ):
+    def test_should_replace_the_extension( self ):
+        f = Chibi_path( self.files[0] )
+        self.assertFalse( f.endswith( '.ext' ) )
+        f = f.replace_extensions( 'ext' )
+        self.assertTrue( f.endswith( '.ext' ) )
+
+    def test_should_add_the_extension( self ):
+        f = Chibi_path( self.files[0] )
+        self.assertFalse( f.endswith( '.ext' ) )
+        f = f.add_extensions( 'ext' )
+        self.assertTrue( f.endswith( '.ext' ) )

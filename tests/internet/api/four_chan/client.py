@@ -10,7 +10,7 @@ from vcr_unittest import VCRTestCase
 class Test_threads( VCRTestCase ):
     def test_endpoint_for_threads_should_point_to_wallpapers( self ):
         self.assertEqual(
-            w.thread_endpoint.assigned_url,
+            w.thread_endpoint.format_url,
             'http://a.4cdn.org/w/threads.json' )
 
     def test_should_get_threads_from_wallpapers( self ):

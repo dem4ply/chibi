@@ -1,5 +1,6 @@
 import datetime
 from chibi.api import Endpoint
+from chibi.api.endpoint import GET
 from chibi.internet.api.four_chan.responses import (
     Thread_list as Thread_list_response,
     Post_list as Post_list_response,
@@ -7,13 +8,14 @@ from chibi.internet.api.four_chan.responses import (
 from chibi.net import download
 
 
-class Thread_list( Endpoint ):
-    def build_response( self, response ):
+class Thread_list( Endpoint, GET ):
+    url = 'http://a.4cdn.org/{board}/threads.json'
+    def build_response( self, response, method=None ):
         return Thread_list_response(
             response, board=self.parameters[ 'board' ])
 
 
-class Thread( Endpoint ):
+class Thread( Endpoint, GET ):
     url = 'http://a.4cdn.org/{board}/thread/{thread_number}.json'
 
     def __init__( self, *args, thread_number, last_modified, **kw ):
@@ -27,11 +29,11 @@ class Thread( Endpoint ):
         return "Thread( url={}, last_modifed={})".format(
             self.format_url, self.parameters[ 'last_modified' ] )
 
-    def build_response( self, response ):
+    def build_response( self, response, method=None ):
         return Post_list_response( response, board=self.parameters[ 'board' ] )
 
 
-class Download_image( Endpoint ):
+class Download_image( Endpoint, GET ):
     url = 'http://i.4cdn.org/{board}/{image}{ext}'
 
     def __repr__( self ):

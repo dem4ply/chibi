@@ -32,3 +32,6 @@ class Chibi_image( Chibi_file ):
             return type( self )( path )
         else:
             raise NotImplementedError
+
+    def show( self ):
+        return self._PIL.show()
