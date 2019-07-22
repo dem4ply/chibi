@@ -2,7 +2,7 @@ import pwd, grp
 from unittest import TestCase
 from chibi.nix import (
     _parse_passwd, _parse_group, get_passwd, get_group,
-    user_exists, group_exists )
+    user_exists, group_exists, mem_info )
 
 
 class Test_passwd( TestCase ):
@@ -106,3 +106,10 @@ class Test_exists( TestCase ):
     def test_group_exists_name_and_uid_if_one_no_exits_should_be_false( self ):
         self.assertFalse( group_exists( gid=1, name='root' ) )
         self.assertFalse( group_exists( gid=0, name='toor' ) )
+
+
+class Test_mem_info( TestCase ):
+    def test_mem_info( self ):
+        result = mem_info()
+        self.assertIn( 'mem_total', result )
+        self.assertGreater( result.mem_total, 1000 )

@@ -10,6 +10,7 @@ from chibi.net import download
 
 class Thread_list( Endpoint, GET ):
     url = 'http://a.4cdn.org/{board}/threads.json'
+
     def build_response( self, response, method=None ):
         return Thread_list_response(
             response, board=self.parameters[ 'board' ])

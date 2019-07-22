@@ -1,11 +1,11 @@
 from unittest import TestCase
 
 from chibi.snippet.string import (
-    replace_with_dict, get_the_number_of_parameters
+    replace_with_dict, get_the_number_of_parameters, split_in_table
 )
 
 
-class test_sp_random(TestCase):
+class Test_sp_random( TestCase ):
 
     def setUp( self ):
         pass
@@ -33,3 +33,18 @@ class test_sp_random(TestCase):
             self.assertEqual( r, e,
                 ( "\nfallo con la cadena {} regreso {} se esperaban {}"
                     ).format( s, r, e ) )
+
+
+class Test_split_table( TestCase ):
+    def setUp( self ):
+        self.table_1 = (
+            "Pipiru:     piru-piru        pipiru-pii\n"
+            "Pipiru:   piru-piru pipiru-pii\n" )
+        self.expected_1 = [
+            [ 'Pipiru:', 'piru-piru', 'pipiru-pii' ],
+            [ 'Pipiru:', 'piru-piru', 'pipiru-pii' ], [],
+        ]
+
+    def test_table_1( self ):
+        result = split_in_table( self.table_1 )
+        self.assertEqual( self.expected_1, result )

@@ -1,11 +1,7 @@
-
 from chibi.command import command
-from chibi.atlas import Chibi_atlas
-from chibi.net.network.interface import Network
-from chibi.madness.file import make_empty_file
 from chibi.command.nmcli import connection
 from chibi.file.image import Chibi_image
-import re
+from chibi.madness.file import make_empty_file
 
 
 def qr( *args ):
@@ -26,5 +22,5 @@ def wifi( ssid, s=3, f=None ):
         T=T
     )
 
-    qr( '-o', f, '-s', s, data )
+    qr( '-o', f, '-s', str( s ), data )
     return Chibi_image( f )

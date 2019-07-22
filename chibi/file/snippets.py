@@ -7,7 +7,6 @@ import shutil
 from chibi import b64
 from chibi.atlas import Chibi_atlas
 from chibi.file.path import Chibi_path
-from chibi.nix import get_passwd, get_group
 from chibi.snippet import regex
 
 
@@ -334,6 +333,7 @@ def delete( path ):
 def chown(
         *paths, verbose=True, user_name=None, group_name=None,
         recursive=False ):
+    from chibi.nix import get_passwd, get_group
     if user_name is None:
         user = None
         uid = -1
@@ -365,6 +365,7 @@ def chown(
 
 
 def stat( src ):
+    from chibi.nix import get_passwd, get_group
     s = os.stat( src )
     result = Chibi_atlas( dict(
         mode=s.st_mode, ino=s.st_ino, dev=s.st_dev,

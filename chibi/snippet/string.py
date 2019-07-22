@@ -94,3 +94,26 @@ def gzip( s ):
         f.write( s.encode() )
     result = out.getvalue()
     return result
+
+
+def split_in_table( s, separator_row='\n', separator=" " ):
+    """
+    divide una cadena con formato de tabla
+
+    Example
+    -------
+    >>>table=(
+        "Pipiru:     piru-piru        pipiru-pii\n"
+        "Pipiru:   piru-piru pipiru-pii\n" )
+    >>>split_in_table( table )
+    [ 'Pipiru:', 'piru-piru', 'pipiru-pii' ],
+    [ 'Pipiru:', 'piru-piru', 'pipiru-pii' ],
+    [],
+    """
+    result = []
+    rows = s.split( separator_row )
+    for row in rows:
+        colums = row.split( separator )
+        colums = [ c for c in colums if c ]
+        result.append( colums )
+    return result

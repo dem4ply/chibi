@@ -1,7 +1,5 @@
-from chibi.command import command
 from chibi.atlas import Chibi_atlas
-from chibi.net.network.interface import Network
-import re
+from chibi.command import command
 
 
 def nmcli( *args, stdout=True ):
@@ -51,8 +49,6 @@ class _Show:
 class _Connection:
     def __init__( self ):
         self.show = _Show()
-
-
 
 
 connection = _Connection()

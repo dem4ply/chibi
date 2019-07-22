@@ -1,6 +1,8 @@
 import pwd
 import grp
 from chibi.atlas import Chibi_atlas
+from chibi.file import Chibi_file
+from chibi.snippet.string import split_in_table, camel_to_snake
 
 
 def _parse_passwd( passwd ):
@@ -33,7 +35,6 @@ def get_group( gid=None, name=None ):
 
 
 def user_exists( uid=None, name=None ):
-    f = []
     if uid is not None and name is None:
         return any( filter( lambda x: x.pw_uid == uid, pwd.getpwall() ) )
     elif uid is None and name is not None:
@@ -51,3 +52,17 @@ def group_exists( gid=None, name=None ):
     else:
         return any( filter(
             lambda x: x.gr_name == name and x.gr_gid == gid, grp.getgrall() ) )
+
+
+def mem_info():
+    f = Chibi_file( "/proc/meminfo" )
+    content = f.read()
+    table = split_in_table( content )
+    result = Chibi_atlas()
+    for row in table:
+        if not row:
+            continue
+        key = camel_to_snake( row[0].replace( ':', '' ) )
+        value = row[1]
+        result[ key ] = int( value )
+    return result

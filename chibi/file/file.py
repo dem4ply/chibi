@@ -1,6 +1,5 @@
-import json
 import copy
-import mmap
+import json
 
 import fleep
 import yaml
@@ -62,13 +61,7 @@ class Chibi_file:
         return self.file.find( string_to_find )
 
     def reread( self ):
-        try:
-            with open( self.path, 'r' ) as f:
-                self.file = mmap.mmap(
-                    f.fileno(), 0, prot=mmap.PROT_READ )
-        except ValueError as e:
-            if not str( e ) == 'cannot mmap an empty file':
-                raise
+        self.file = open( self.path, 'r' )
 
     def __contains__( self, string ):
         return self.find( string ) >= 0
@@ -83,12 +76,22 @@ class Chibi_file:
             f.write( string )
         self.reread()
 
+    def read( self ):
+        result = self.file.read()
+        self.reread()
+        return result
+
     @property
     def file( self ):
         return self._file_content
 
     @file.setter
     def file( self, value ):
+        try:
+            old_file = self._file_content
+            old_file.close()
+        except AttributeError:
+            pass
         self._file_content = value
 
     @property
@@ -127,7 +130,7 @@ class Chibi_file:
     def __eq__( self, other ):
         if isinstance( other, Chibi_file ):
             return self.path == other.path
-        return False;
+        return False
 
     def __iadd__( self, other ):
         if ( isinstance( other, str ) ):
