@@ -123,10 +123,13 @@ class Chibi_file:
 
     def read_yaml( self ):
         self.reread()
-        return yaml.load( self.file )
+        return yaml.load( self.file, Loader=yaml.FullLoader )
 
-    def write_yaml( self, data ):
-        self.write( yaml.dump( data ) )
+    def write_yaml( self, data, is_safe=False ):
+        if is_safe:
+            self.write( yaml.safe_dump( data ) )
+        else:
+            self.write( yaml.dump( data ) )
 
     def __copy__( self ):
         return type( self )( self.path )
