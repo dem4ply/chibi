@@ -1,3 +1,4 @@
+import distutils.dir_util
 import os
 
 import fleep
@@ -67,7 +68,7 @@ class Chibi_path( str ):
             copy( self, dest, **kw )
             return Chibi_path( dest )
         elif self.is_a_folder:
-            copy_folder( self, dest )
+            distutils.dir_util.copy_tree( str( self ), str( dest ) )
             return Chibi_path( dest )
 
     def delete( self ):

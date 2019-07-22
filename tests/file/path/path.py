@@ -46,6 +46,12 @@ class Test_path( Test_with_files ):
         self.assertEqual(
             len( set( ls( source ) ) ), len( set( ls( dest ) ) ) )
 
+    def test_copy_to_a_existen_dir_should_override_the_current_files( self ):
+        dest = Chibi_path( self.root_dir ) + 'hola'
+        source = Chibi_path( self.folder_with_files_with_content )
+        source.copy( dest )
+        source.copy( dest )
+
     def test_copy_file_should_copy_the_file( self ):
         source = Chibi_path( random.choice( self.files_with_content ) )
         dest = Chibi_path( self.root_dir ) + faker.file_name()
