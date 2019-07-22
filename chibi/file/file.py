@@ -1,5 +1,6 @@
 import copy
 import json
+import mmap
 
 import fleep
 import yaml
@@ -58,7 +59,10 @@ class Chibi_file:
     def find( self, string_to_find ):
         if isinstance( string_to_find, str ):
             string_to_find = string_to_find.encode()
-        return self.file.find( string_to_find )
+        with mmap.mmap(
+                self.file.fileno(), 0, prot=mmap.PROT_READ ) as f:
+
+            return f.find( string_to_find )
 
     def reread( self ):
         self.file = open( self.path, 'r' )
