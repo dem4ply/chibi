@@ -8,7 +8,7 @@ except:
 
 setup(
     name='chibi',
-    version='0.4.8',
+    version='0.5.0',
     description='',
     # long_description=README,
     license='',
