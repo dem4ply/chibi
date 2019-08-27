@@ -1,5 +1,6 @@
+import tempfile
+
 from .path import Chibi_path
-import tempfile, shutil
 
 
 class Chibi_temp_path( Chibi_path ):

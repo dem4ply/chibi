@@ -1,12 +1,12 @@
 import distutils.dir_util
-import shutil
-import os
-import fleep
 import logging
+import os
+import shutil
+
+import fleep
 
 
 logger = logging.getLogger( "chibi.file.chibi_path" )
-
 
 
 class Chibi_path( str ):
@@ -114,7 +114,7 @@ class Chibi_path( str ):
         """
         copia el archivo o carpeta al destino
         """
-        from.snippets import copy, copy_folder
+        from.snippets import copy
         if self.is_a_file:
             copy( self, dest, **kw )
             return Chibi_path( dest )

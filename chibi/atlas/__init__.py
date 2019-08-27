@@ -1,10 +1,11 @@
-from collections import defaultdict
-import xmltodict
 import json
-import yaml
-from chibi.snippet.dict import hate_ordered_dict, remove_xml_notatation
-from chibi.snippet.xml import guaranteed_list
 import xml
+from collections import defaultdict
+
+import xmltodict
+import yaml
+
+from chibi.snippet.dict import hate_ordered_dict, remove_xml_notatation
 
 
 def loads( string ):
