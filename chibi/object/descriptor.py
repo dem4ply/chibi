@@ -1,6 +1,6 @@
 import datetime
 
-from chibi.atlas import Chibi_atlas_default
+from chibi.atlas import Chibi_atlas, Chibi_atlas_default
 from chibi.atlas.tree import Chibi_tree
 
 
@@ -106,12 +106,12 @@ class List_kind_strict( List ):
         super().append( item )
 
 
-class Dict( dict, Descriptor ):
+class Dict( Chibi_atlas, Descriptor ):
     def __set__( self, instance, value ):
         if value is None:
             super().__set__( instance, value )
         else:
-            super().__set__( instance, dict( value ))
+            super().__set__( instance, Chibi_atlas( value ) )
 
 
 class Dict_defaults( Chibi_atlas_default, Descriptor ):

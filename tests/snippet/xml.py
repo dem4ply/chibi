@@ -4,7 +4,7 @@ from chibi.snippet.string import (
     replace_with_dict, get_the_number_of_parameters
 )
 
-from chibi.snippet.xml import guaranteed_list
+from chibi.snippet.xml import guaranteed_list, compress_dummy_list
 
 
 class test_guaranteed_list(TestCase):
@@ -59,4 +59,40 @@ class test_guaranteed_list(TestCase):
 
     def test_should_convert_host_in_list( self ):
         result = guaranteed_list( self.example, 'host' )
+        self.assertEqual( self.expected, result )
+
+
+class test_compress_dummy_list(TestCase):
+
+    def setUp( self ):
+        self.example = {
+            'regions': { 'region': 'asdf' },
+            'attrs': { 'attr': { 'asdf': 'asdf' } },
+            'lists': [ '', [], [ { 'regions': { 'region': 'qq' } } ] ],
+            'list': [
+                '',
+                [ { 'regions': { 'region': 'qq' } } ],
+                [
+                    {
+                        'regions': {
+                            'region': [ { 'asdfs': { 'asdf': 1 } } ]
+                        }
+                    },
+                ],
+            ],
+        }
+
+        self.expected = {
+            'attrs': {'asdf': 'asdf'},
+            'list': [
+                '',
+                [ { 'regions': 'qq' } ],
+                [ { 'regions': [ { 'asdfs': 1 } ] } ] ],
+            'lists': [ '', [], [ { 'regions': 'qq' } ] ],
+            'regions': 'asdf', }
+
+
+
+    def test_should_convert_host_in_list( self ):
+        result = compress_dummy_list( self.example )
         self.assertEqual( self.expected, result )
