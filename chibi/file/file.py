@@ -5,6 +5,7 @@ import mmap
 import fleep
 import yaml
 
+from chibi.atlas import _wrap
 from chibi.file.path import Chibi_path
 from chibi.file.snippets import (
     exists, stat, check_sum_md5, read_in_chunks, base_name, file_dir,
@@ -19,6 +20,9 @@ class Chibi_file:
         if not self.exists:
             self.touch()
         self.reread()
+
+    def __str__( self ):
+        return "file: '{}'".format( self.path )
 
     @property
     def file_name( self ):
@@ -76,8 +80,12 @@ class Chibi_file:
         self.reread()
 
     def write( self, string ):
-        with open( self.path, 'w' ) as f:
-            f.write( string )
+        if isinstance( string, ( bytes, bytearray ) ):
+            with open( self.path, 'wb' ) as f:
+                f.write( string )
+        else:
+            with open( self.path, 'w' ) as f:
+                f.write( string )
         self.reread()
 
     def read( self ):
@@ -116,14 +124,15 @@ class Chibi_file:
 
     def read_json( self ):
         self.reread()
-        return json.load( self.file )
+        return _wrap( json.load( self.file ) )
 
     def write_json( self, data ):
         self.write( json.dumps( data ) )
 
     def read_yaml( self ):
         self.reread()
-        return yaml.load( self.file, Loader=yaml.FullLoader )
+        result = yaml.load( self.file, Loader=yaml.FullLoader )
+        return _wrap( result )
 
     def write_yaml( self, data, is_safe=False ):
         if is_safe:

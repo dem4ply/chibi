@@ -25,6 +25,21 @@ class Test_path( Test_with_files ):
             self.assertEqual(
                 result, join( str( self.path ), d ) )
 
+    def test_ls_work( self ):
+        dirs = list( self.path.ls() )
+        self.assertGreaterEqual( len( dirs ), 1 )
+
+    def test_ls_return_chibi_path( self ):
+        dirs = list( self.path.ls() )
+        self.assertGreaterEqual( len( dirs ), 1 )
+        for d in dirs:
+            self.assertIsInstance( d, Chibi_path )
+
+    def test_find_work( self ):
+        result = list( self.path.find() )
+        for l in self.path.ls():
+            self.assertIn( l, result )
+
     def test_mkdir_should_create_the_folder( self ):
         new_dir = Chibi_path( self.dirs[0] ) + 'asdf'
         if exists( new_dir ):
@@ -130,3 +145,46 @@ class Test_path_extension( Test_with_files ):
         self.assertFalse( f.endswith( '.ext' ) )
         f = f.add_extensions( 'ext' )
         self.assertTrue( f.endswith( '.ext' ) )
+
+
+class Test_move( Test_with_files ):
+    def test_when_move_a_empty_file_should_create_a_new_empty_file( self ):
+        file = Chibi_path( random.choice( self.files ) )
+        dest = Chibi_path( self.root_dir ) + faker.file_name()
+        self.assertFalse( dest.exists )
+
+        file.move( dest )
+
+        self.assertFalse( file.exists )
+        with open( str( dest ) ) as file_dest:
+            self.assertFalse( file_dest.read() )
+
+    def test_move_file_to_folder( self ):
+        file = Chibi_path( random.choice( self.files ) )
+        dest = Chibi_path( random.choice( self.dirs ) )
+
+        file.move( dest )
+
+        self.assertFalse( file.exists )
+        self.assertTrue( dest.exists )
+
+    def test_move_folder_to_another_another_name( self ):
+        folder = Chibi_path( random.choice( self.dirs ) )
+        dest = Chibi_path( self.root_dir ) + faker.name()
+
+        folder.move( dest )
+
+        self.assertFalse( folder.exists )
+        self.assertTrue( dest.exists )
+
+
+class Test_contains( Test_with_files ):
+    def test_child_path_parent_path_should_be_true( self ):
+        child = Chibi_path( random.choice( self.files ) )
+        parent = Chibi_path( self.root_dir )
+        self.assertIn( child, parent )
+
+    def test_parent_in_child_should_be_false( self ):
+        child = Chibi_path( random.choice( self.files ) )
+        parent = Chibi_path( self.root_dir )
+        self.assertNotIn( parent, child )
