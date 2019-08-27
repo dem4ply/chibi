@@ -1,4 +1,23 @@
 from collections import defaultdict
+import xmltodict
+import json
+import yaml
+from chibi.snippet.dict import hate_ordered_dict, remove_xml_notatation
+from chibi.snippet.xml import guaranteed_list
+import xml
+
+
+def loads( string ):
+    try:
+        return Chibi_atlas( json.loads( string ) )
+    except json.JSONDecodeError:
+        try:
+            result = xmltodict.parse( string )
+            result = hate_ordered_dict( result )
+            result = remove_xml_notatation( result )
+            return Chibi_atlas( result )
+        except xml.parsers.expat.ExpatError:
+            return Chibi_atlas( yaml.safe_load( string ) )
 
 
 class Chibi_atlas( dict ):
@@ -31,6 +50,9 @@ class Chibi_atlas( dict ):
 
     def __setitem__( self, name, value ):
         super().__setitem__( name, _wrap( value ) )
+
+    def __dir__( self ):
+        return list( self.keys() )
 
 
 class Chibi_atlas_ignore_case( Chibi_atlas ):
@@ -69,10 +91,21 @@ class Chibi_atlas_default( defaultdict, Chibi_atlas ):
     pass
 
 
+class __Chibi_atlas_list( list ):
+    def __getitem__( self, index ):
+        value = super().__getitem__( index, )
+        return _wrap( value )
+
+
 def _wrap( val, klass=None ):
     if type( val ) == dict:
         if klass is None:
             return Chibi_atlas( val )
+        else:
+            return klass( val )
+    elif type( val ) == list:
+        if klass is None:
+            return __Chibi_atlas_list( val )
         else:
             return klass( val )
     return val
