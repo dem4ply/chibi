@@ -360,8 +360,8 @@ def chown(
                 join( path, dir )
                 for dir in ls( inflate_dir( path ) ) )
             chown(
-                *inner_paths, user=user, group=group, verbose=verbose,
-                recursive=True )
+                *inner_paths, user_name=user_name, group_name=group_name,
+                verbose=verbose, recursive=True )
 
 
 def stat( src ):

@@ -13,6 +13,18 @@ class Chibi_image( Chibi_file ):
     def _PIL( self ):
         return Image.open( self.path )
 
+    def read_cv2( self ):
+        import cv2 as cv
+        return cv.imread( self.path, cv.IMREAD_COLOR )
+
+    def read_cv( self ):
+        import cv2 as cv
+        return cv.imread( self.path, cv.IMREAD_COLOR )
+
+    def read_cv_gray( self ):
+        import cv2 as cv
+        return cv.imread( self.path, cv.IMREAD_GRAYSCALE )
+
     def __eq__( self, other ):
         if not isinstance( other, Chibi_image ):
             return False
@@ -35,3 +47,12 @@ class Chibi_image( Chibi_file ):
 
     def show( self ):
         return self._PIL.show()
+
+    @property
+    def flatter( self, h, w ):
+        import cv2 as cv
+        row = cv.resize(
+            image,( h, w ), interpolation=cv.INTER_AREA ).flatten()
+        col = cv.resize(
+            image,( h, w ), interpolation=cv2.INTER_AREA ).flatten( 'F' )
+        return col, row

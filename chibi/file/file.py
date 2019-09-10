@@ -89,6 +89,9 @@ class Chibi_file:
         self.reread()
 
     def read( self ):
+        """
+        lee todo el archivo
+        """
         result = self.file.read()
         self.reread()
         return result

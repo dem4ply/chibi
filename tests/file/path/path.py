@@ -46,7 +46,7 @@ class Test_path( Test_with_files ):
             self.fail(
                 "el directiorio {} ya existe usar"
                 "otro nombre".format( new_dir ) )
-        new_dir.mkdir( verbose=False )
+        new_dir.mkdir()
         if not exists( new_dir ):
             self.fail(
                 "no se creo el directorio {} ".format( new_dir ) )

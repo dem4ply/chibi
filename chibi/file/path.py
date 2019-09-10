@@ -98,7 +98,8 @@ class Chibi_path( str ):
         except OSError:
             pass
         if kw:
-            logger.warning( "mkdir de chibi path recibio parametros" )
+            logger.warning(
+                "mkdir de chibi path recibio parametros {}".format( kw ) )
 
     def move( self, dest ):
         """
@@ -128,6 +129,7 @@ class Chibi_path( str ):
         """
         from.snippets import delete
         delete( str( self ) )
+        logger.info( 'delete "{}"'.format( self ) )
 
     def chown(
             self, verbose=True, user_name=None, group_name=None,
