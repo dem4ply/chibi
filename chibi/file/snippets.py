@@ -3,11 +3,15 @@ import hashlib
 import os
 import re
 import shutil
+import logging
 
 from chibi import b64
 from chibi.atlas import Chibi_atlas
 from chibi.file.path import Chibi_path
 from chibi.snippet import regex
+
+
+logger = logging.getLogger( "chibi.file.snippets" )
 
 
 def current_dir():
@@ -195,6 +199,7 @@ def join( *patch ):
     =======
     string
     """
+    logger.warning( "join de snippets siendo usado" )
     patch = tuple( str( a ) for a in patch )
     return Chibi_path( os.path.join( *patch ) )
 
@@ -230,7 +235,8 @@ def move( source, dest, verbose=False ):
     =======
     None
     """
-    g = glob.glob( source )
+    g = glob.glob( str( source ) )
+    dest = str( dest )
     if len( g ) > 1 and not is_a_folder( dest ):
         raise ValueError( "'{}' was expected be a dir".format( dest ) )
     for f in g:
@@ -349,16 +355,15 @@ def chown(
         gid = group.gid
 
     for path in paths:
+        path = Chibi_path( path )
         old_stat = stat( path )
         os.chown( path, uid, gid )
         current_stat = stat( path )
         if verbose:
             _print_verboce_chown( path, old_stat, current_stat )
 
-        if recursive and is_dir( path ):
-            inner_paths = (
-                join( path, dir )
-                for dir in ls( inflate_dir( path ) ) )
+        if recursive and path.is_a_folder:
+            inner_paths = list( path.ls() )
             chown(
                 *inner_paths, user_name=user_name, group_name=group_name,
                 verbose=verbose, recursive=True )

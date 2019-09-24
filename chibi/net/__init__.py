@@ -1,4 +1,5 @@
-from chibi.file.snippets import current_dir, join
+from chibi.file.snippets import current_dir
+from chibi.file import Chibi_path
 from urllib import request
 
 
@@ -27,8 +28,9 @@ def download( url, directory=None, file_name=None ):
 
     if file_name is None:
         file_name = url.rsplit( '/', 1 )[1]
+    directory = Chibi_path( directory )
+
     response = request.urlopen( url, timeout=30 )
-    patch = join( directory, file_name )
-    with open( patch, 'wb' ) as file:
-        file.write( response.read() )
+    patch = directory + file_name
+    patch.open().write( response.read() )
     return patch

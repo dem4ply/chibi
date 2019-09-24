@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from chibi.file.snippets import mkdir, join, exists
+from chibi.file.snippets import mkdir, exists
 from tests.snippet.files import Test_with_files
 
 
@@ -13,7 +13,7 @@ class Test_mkdir( Test_with_files ):
 
     def test_print_the_directory_name_when_is_verbose( self ):
         with patch( "chibi.file.snippets.print" ) as print:
-            new_dir = join( self.dirs[0], 'asdf' )
+            new_dir = self.dirs[0] + 'asdf'
             if exists( new_dir ):
                 self.fail(
                     "el directiorio {} ya existe usar"
@@ -29,7 +29,7 @@ class Test_mkdir( Test_with_files ):
         self.assertRegex( message_print, r".+'{}'".format( new_dir ) )
 
     def test_if_the_directory_no_exists_should_create( self ):
-        new_dir = join( self.dirs[0], 'asdf' )
+        new_dir = self.dirs[0] + 'asdf'
         if exists( new_dir ):
             self.fail(
                 "el directiorio {} ya existe usar"

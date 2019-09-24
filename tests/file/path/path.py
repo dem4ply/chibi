@@ -1,6 +1,7 @@
 import random
 from unittest import TestCase
 from unittest.mock import patch
+import os
 
 from faker import Factory as Faker_factory
 
@@ -23,7 +24,7 @@ class Test_path( Test_with_files ):
         for d in dirs:
             result = self.path + d
             self.assertEqual(
-                result, join( str( self.path ), d ) )
+                result, os.path.join( str( self.path ), str( d ) ) )
 
     def test_ls_work( self ):
         dirs = list( self.path.ls() )
@@ -96,7 +97,7 @@ class Test_path_with_files( Test_with_files ):
         for f in self.files:
             d = file_dir( f )
             p_f = Chibi_path( f )
-            self.assertEqual( p_f + "another", join( d, 'another' ) )
+            self.assertEqual( p_f + "another", os.path.join( d, 'another' ) )
 
 
 class Test_path_relative( TestCase ):

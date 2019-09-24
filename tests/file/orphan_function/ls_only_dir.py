@@ -1,5 +1,5 @@
 from tests.snippet.files import Test_with_files
-from chibi.file.snippets import ls_only_dir, is_dir, join
+from chibi.file.snippets import ls_only_dir, is_dir
 
 
 class Test_ls_only_dir( Test_with_files ):
@@ -7,7 +7,7 @@ class Test_ls_only_dir( Test_with_files ):
         result = list( ls_only_dir( self.root_dir ) )
         self.assertTrue( result, "cannot find dirs in the root dir" )
         for dir in result:
-            self.assertTrue( is_dir( join( self.root_dir, dir ) ) )
+            self.assertTrue( ( self.root_dir + dir ).is_a_folder )
 
 
     def test_should_return_a_empty_list( self ):
@@ -23,7 +23,7 @@ class Test_ls_only_dir( Test_with_files ):
                     .format( directories_in_sub_folder ) )
 
             for dir in directories_in_sub_folder:
-                abs_dir = join( dir_level_1, dir )
+                abs_dir = dir_level_1 + dir
                 self.assertTrue(
                     is_dir( abs_dir ),
                     "is was find the dir {} but is not a dir"

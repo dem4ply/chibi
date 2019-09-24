@@ -19,12 +19,22 @@ class Chibi_path( str ):
         return str.__new__( cls, *args_2, **kw )
 
     def __add__( self, other ):
-        from chibi.file.snippets import join
+        """
+        une el path con otro path o una cadena
+
+        Parameters
+        ==========
+        other: str or Chibi_path
+
+        Returns
+        =======
+        Chibi_path
+        """
         if isinstance( other, self.__class__ ):
             if self.is_a_file:
                 return self.dir_name + other
 
-            return self.__class__( join( str( self ), str( other ) ) )
+            return type( self )( os.path.join( str( self ), str( other ) ) )
         if isinstance( other, str ):
             return self + self.__class__( other )
 

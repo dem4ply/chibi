@@ -1,9 +1,10 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 
 from chibi.file.snippets import inflate_dir, join
 from chibi.file.snippets import Chibi_path
 
 
+@skip( "deprecated" )
 class Test_join( TestCase ):
 
     def setUp( self ):

@@ -304,10 +304,10 @@ def remove_xml_notatation( d ):
     if isinstance( d, dict ):
         result = {}
         for k, v in d.items():
-            if k.startswith( '#' ) or k.startswith( '@' ) or ':' in k:
-                new_k = k[1:]
-                new_k = new_k.replace( ':', '_' )
-                k = new_k
+            if k.startswith( '#' ) or k.startswith( '@' ):
+                k = k[1:]
+            if ':' in k:
+                k = k.replace( ':', '_' )
             result[ k ] = remove_xml_notatation( v )
         return result
     elif isinstance( d, list ):

@@ -2,7 +2,8 @@ from unittest import TestCase
 import tempfile, shutil
 from faker import Factory as Faker_factory
 from chibi.file.snippets import current_dir, cd, join, mkdir
-from chibi.file import Chibi_file
+from chibi.file import Chibi_file, Chibi_path
+from chibi.file.temp import Chibi_temp_path
 
 
 faker = Faker_factory.create()
@@ -18,40 +19,35 @@ class Test_with_files( TestCase ):
     defined_files = []
 
     def setUp(self):
-        self.root_dir = tempfile.mkdtemp()
-        self.empty_folder = tempfile.mkdtemp()
-        self.folder_with_files_with_content = tempfile.mkdtemp()
+        self.root_dir = Chibi_temp_path()
+        self.empty_folder = Chibi_temp_path()
+        self.folder_with_files_with_content = Chibi_temp_path()
+        self.files = [  ]
 
         self.files = [
-            tempfile.mkstemp( dir=self.root_dir )[1]
+            self.root_dir.temp_file()
             for i in range( self.amount_of_files ) ]
         self.dirs = [
-            tempfile.mkdtemp( dir=self.root_dir )
+            self.root_dir.temp_dir()
             for i in range( self.amount_of_dirs ) ]
+
         for dir_level_1 in self.dirs:
             for i in range( self.amount_of_inner_dirs ):
-                tempfile.mkdtemp( dir=dir_level_1 )
+                tempfile.mkdtemp( dir=str( dir_level_1 ) )
 
         self.files_with_content = []
         for i in range( self.amount_of_files_with_content ):
-            file_path = tempfile.mkstemp(
-                dir=self.folder_with_files_with_content )[1]
-            with open( file_path, 'w' ) as new_file:
-                new_file.write(
-                    faker.text(max_nb_chars=200, ext_word_list=None) )
+            file_path = self.folder_with_files_with_content.temp_file()
+            file_path.open().write(
+                faker.text(max_nb_chars=200, ext_word_list=None) )
             self.files_with_content.append( file_path )
 
 
         for f in self.defined_folders:
-            mkdir( join( self.root_dir, f ), verbose=False )
+            ( self.root_dir + f ).mkdir()
 
         for f in self.defined_files:
-            Chibi_file( join( self.root_dir, f ) )
-
-    def tearDown(self):
-        shutil.rmtree( self.root_dir )
-        shutil.rmtree( self.empty_folder )
-        shutil.rmtree( self.folder_with_files_with_content )
+            Chibi_file( self.root_dir + f )
 
 
 class Test_moving_dir( TestCase ):
