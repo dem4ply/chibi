@@ -48,6 +48,7 @@ class Chibi_image( Chibi_file ):
     def show( self ):
         return self._PIL.show()
 
+    '''
     @property
     def flatter( self, h, w ):
         import cv2 as cv
@@ -56,3 +57,4 @@ class Chibi_image( Chibi_file ):
         col = cv.resize(
             image,( h, w ), interpolation=cv2.INTER_AREA ).flatten( 'F' )
         return col, row
+    '''

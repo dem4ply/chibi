@@ -1,6 +1,7 @@
+from urllib.parse import urlparse, urlencode, parse_qs, urlunparse
+
 from chibi.atlas import Chibi_atlas
-from urllib.parse import (
-    urljoin, urlparse, urlencode, parse_qs, urlunparse, unquote )
+
 
 class Chibi_url( str ):
     def __add__( self, other ):
