@@ -189,3 +189,23 @@ class Test_contains( Test_with_files ):
         child = Chibi_path( random.choice( self.files ) )
         parent = Chibi_path( self.root_dir )
         self.assertNotIn( parent, child )
+
+
+class Test_made_safe( Test_with_files ):
+    def test_should_clean_the_characters( self ):
+        path = Chibi_path( 'asdf*asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf<asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf>asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf:asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf"asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf|asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf?asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )
+        path = Chibi_path( 'asdf?*<>asdf' ).made_safe()
+        self.assertEqual( 'asdfasdf', path )

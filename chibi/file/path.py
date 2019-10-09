@@ -2,6 +2,7 @@ import distutils.dir_util
 import logging
 import os
 import shutil
+import re
 
 import fleep
 
@@ -244,3 +245,6 @@ class Chibi_path( str ):
 
     def replace( self, *args, **kw ):
         return Chibi_path( super().replace( *args, **kw ) )
+
+    def made_safe( self ):
+        return Chibi_path( re.sub( r'[<>:"|?*]', '', str( self ) ) )

@@ -1,16 +1,17 @@
+import os
 try:
     from setuptools import setup, find_packages
 except:
     from distutils.core import setup, find_packages
 
-# here = os.path.abspath( os.path.dirname( __file__ ) )
-# README = open(os.path.join( here, 'README.rst' ) ).read()
+here = os.path.abspath( os.path.dirname( __file__ ) )
+README = open(os.path.join( here, 'README.rst' ) ).read()
 
 setup(
     name='chibi',
-    version='0.5.2',
+    version='0.5.3',
     description='',
-    # long_description=README,
+    long_description=README,
     license='',
     author='dem4ply',
     author_email='',
@@ -20,6 +21,7 @@ setup(
         'Pillow>=5.3.0', 'dateutils>=0.6.6', 'xmltodict>=0.12.0'
     ],
     dependency_links = [],
+    url='https://github.com/dem4ply/chibi',
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Developers',
