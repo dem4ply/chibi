@@ -36,6 +36,12 @@ class Test_path( Test_with_files ):
         for d in dirs:
             self.assertIsInstance( d, Chibi_path )
 
+    def test_ls_should_return_the_path_when_use_glob( self ):
+        all_tmps = self.root_dir + 'tmp*'
+        ls = all_tmps.ls()
+        for l in ls:
+            self.assertNotIn( '*', l )
+
     def test_find_work( self ):
         result = list( self.path.find() )
         for l in self.path.ls():

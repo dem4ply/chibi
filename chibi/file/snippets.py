@@ -113,7 +113,7 @@ def ls( src=None, recursive=False ):
         for d in dirs:
             try:
                 for name in os.listdir( d ):
-                    yield src + name
+                    yield Chibi_path( d ) + name
             except NotADirectoryError:
                 yield d
     else:
