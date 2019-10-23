@@ -1,5 +1,7 @@
 from chibi.request import Chibi_url
+from chibi.atlas import Chibi_atlas
 from unittest import TestCase
+from chibi.request.response import Response
 
 
 class Test_url( TestCase ):
@@ -43,3 +45,32 @@ class Test_url_add( Test_url ):
         result = self.url + { 'param1': 'value1', 'param2': 'value2' }
         self.assertEqual(
             { 'param1': 'value1', 'param2': 'value2' }, result.params )
+
+
+class Test_property( Test_url ):
+    def test_host_should_return_host( self ):
+        host = self.url.host
+        self.assertEqual( "google.com", host )
+
+    def test_schema_should_return_schema( self ):
+        schema = self.url.schema
+        self.assertEqual( "https", schema )
+
+
+class Test_methods( Test_url ):
+    def setUp( self ):
+        self.url = Chibi_url( 'http://ifconfig.me' )
+
+    def test_get( self ):
+        response = self.url.get()
+        self.assertTrue( response )
+        self.assertIsInstance( response, Response )
+        self.assertIsInstance( response.native, str )
+        self.assertTrue( response.native )
+
+    def test_post( self ):
+        response = self.url.post()
+        self.assertTrue( response )
+        self.assertIsInstance( response, Response )
+        self.assertIsInstance( response.native, Chibi_atlas )
+        self.assertTrue( response.native )

@@ -1,69 +1,10 @@
 from urllib import parse
+from chibi.request.response import Response
 
 import requests
 
 from chibi.atlas import Chibi_atlas_ignore_case
 from collections.abc import Iterable
-
-
-class Response:
-    def __init__( self, response ):
-        self._response = response
-
-    @property
-    def headers( self ):
-        try:
-            return self._headers
-        except AttributeError:
-            self._headers = Chibi_atlas_ignore_case( self._response.headers )
-            return self._headers
-
-    @property
-    def body( self ):
-        return self._response.text
-
-    @property
-    def native( self ):
-        try:
-            return self._native
-        except AttributeError:
-            self._native = self.parse_native()
-            return self._native
-
-    @property
-    def content_type( self ):
-        return self.headers[ 'Content-Type' ]
-
-    @property
-    def is_json( self ):
-        return 'application/json' in self.content_type
-
-    @property
-    def is_xml( self ):
-        return self.content_type == 'application/xml'
-
-    @property
-    def status_code( self ):
-        return self._response.status_code
-
-    def parse_like_json( self ):
-        json_result = self._response.json()
-        if isinstance( json_result, list ):
-            result = list( json_result )
-        elif isinstance( json_result, dict ):
-            result = dict( json_result )
-        return result
-
-    def parse_like_xml( self ):
-        raise NotImplementedError
-
-    def parse_native( self ):
-        if self.is_json:
-            return self.parse_like_json()
-        elif self.is_xml:
-            return self.parse_like_xml()
-        else:
-            raise NotImplementedError
 
 
 class Endpoint():
