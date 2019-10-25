@@ -146,8 +146,6 @@ __pycache__
 
 venv
 .coverage
-.coveragerc
-*.py,cover
 
 .coverage_html_report/
 
