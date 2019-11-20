@@ -1,5 +1,5 @@
-from tests.snippet.files import Test_with_files
 from chibi.file import Chibi_file
+from tests.snippet.files import Test_with_files
 
 
 class Test_chibi_file_properties( Test_with_files ):
@@ -12,5 +12,5 @@ class Test_chibi_file_properties( Test_with_files ):
         self.assertNotEqual( self.chibi_file.file_name, self.chibi_file.path )
 
     def test_dir( self ):
-        self.assertIn( self.chibi_file.dir , self.chibi_file.path )
-        self.assertNotEqual( self.chibi_file.dir , self.chibi_file.path )
+        self.assertIn( self.chibi_file.dir, self.chibi_file.path )
+        self.assertNotEqual( self.chibi_file.dir, self.chibi_file.path )

@@ -1,6 +1,8 @@
+from unittest.mock import patch
+
 from chibi.file.snippets import chown, stat
 from tests.snippet.files import Test_with_files
-from unittest.mock import patch
+
 
 class Test_chown_to_file( Test_with_files ):
     amount_of_files = 3

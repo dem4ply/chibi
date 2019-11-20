@@ -1,8 +1,10 @@
+import tempfile
 from unittest import TestCase
-import tempfile, shutil
+
 from faker import Factory as Faker_factory
-from chibi.file.snippets import current_dir, cd, join, mkdir
-from chibi.file import Chibi_file, Chibi_path
+
+from chibi.file import Chibi_file
+from chibi.file.snippets import current_dir, cd
 from chibi.file.temp import Chibi_temp_path
 
 
@@ -41,7 +43,6 @@ class Test_with_files( TestCase ):
             file_path.open().write(
                 faker.text(max_nb_chars=200, ext_word_list=None) )
             self.files_with_content.append( file_path )
-
 
         for f in self.defined_folders:
             ( self.root_dir + f ).mkdir()

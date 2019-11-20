@@ -1,8 +1,8 @@
 from unittest import TestCase
 from chibi.snippet import is_type
 
-class Test_is_type(TestCase):
 
+class Test_is_type(TestCase):
     def setUp( self ):
         pass
 

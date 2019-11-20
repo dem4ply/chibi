@@ -2,7 +2,7 @@ import random
 
 from faker import Factory as Faker_factory
 
-from chibi.file.snippets import copy, exists, copy_folder, delete, ls
+from chibi.file.snippets import copy, exists, copy_folder, ls
 from tests.snippet.files import Test_with_files
 
 

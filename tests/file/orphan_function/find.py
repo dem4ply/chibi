@@ -1,8 +1,8 @@
-from tests.snippet.files import Test_with_files
 from chibi.file.snippets import (
     ls, find, base_name, is_a_file, is_a_folder, find_only_files,
     find_only_folders,
 )
+from tests.snippet.files import Test_with_files
 
 
 class Test_find( Test_with_files ):

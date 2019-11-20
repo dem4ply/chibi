@@ -1,4 +1,5 @@
 from unittest import TestCase
+
 from chibi.file.snippets import current_dir, inflate_dir
 
 

@@ -15,5 +15,5 @@ class Test_to_bool( TestCase ):
             result = to_bool( value )
             self.assertEqual(
                 result, expected,
-                "se esperaba {} con el valor de {} pero se obtubo {}"
-                    .format( expected, value, result ) )
+                "se esperaba {} con el valor de {} pero se obtubo {}".format(
+                    expected, value, result ) )

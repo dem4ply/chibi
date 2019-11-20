@@ -1,10 +1,6 @@
-import random
-
-from faker import Factory as Faker_factory
-
-from chibi.file.snippets import copy, exists, common_root, get_relative_path
-from tests.snippet.files import Test_with_files
 from unittest import TestCase
+
+from chibi.file.snippets import get_relative_path
 
 
 class Test_get_relative_path( TestCase ):
@@ -14,4 +10,4 @@ class Test_get_relative_path( TestCase ):
 
     def test_should_return_the_relative_path( self ):
         result = get_relative_path( '/usr/var/log', root='/usr/var' )
-        self.assertEqual( 'log' , result  )
+        self.assertEqual( 'log', result  )

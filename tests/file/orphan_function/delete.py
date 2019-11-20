@@ -1,7 +1,9 @@
-from tests.snippet.files import Test_with_files
-from chibi.file.snippets import delete, exists, join
-from faker import Factory as Faker_factory
 import random
+
+from faker import Factory as Faker_factory
+
+from chibi.file.snippets import delete, exists
+from tests.snippet.files import Test_with_files
 
 
 faker = Faker_factory.create()

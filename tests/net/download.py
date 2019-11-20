@@ -1,9 +1,10 @@
-import tempfile, shutil
+import shutil
+import tempfile
+
+from vcr_unittest import VCRTestCase
 
 from chibi.file.snippets import exists
 from chibi.net import download
-from unittest import TestCase
-from vcr_unittest import VCRTestCase
 
 
 class Test_download_lenna( VCRTestCase ):

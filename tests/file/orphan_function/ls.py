@@ -1,5 +1,5 @@
-from tests.snippet.files import Test_with_files
 from chibi.file.snippets import ls
+from tests.snippet.files import Test_with_files
 
 
 class Test_ls( Test_with_files ):
@@ -12,6 +12,7 @@ class Test_ls( Test_with_files ):
         result = list( ls( self.empty_folder ) )
         self.assertFalse( result )
 
+
 class Test_ls_recursive( Test_with_files ):
     def test_should_all_the_folders_and_internal_stuff( self ):
         result = set( ls( self.root_dir, recursive=True ) )
@@ -21,7 +22,6 @@ class Test_ls_recursive( Test_with_files ):
         for r in root:
             rr = set( ls( r ) )
             self.assertFalse( rr.difference( result ) )
-
 
     def test_should_return_a_empty_list( self ):
         result = list( ls( self.empty_folder, recursive=True ) )

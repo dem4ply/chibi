@@ -1,8 +1,8 @@
 from unittest import TestCase
-from chibi.snippet import is_type
+
 from chibi.pipeline import Pipeline
 from chibi.pipeline.pipeline import Pipeline_manager
-import copy
+
 
 class Test_pipeline( TestCase ):
 

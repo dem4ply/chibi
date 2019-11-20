@@ -14,11 +14,11 @@ class Test_iwconfig( TestCase ):
             'Retry short limit:7   RTS thr:off   Fragment thr:off\n          '
             'Encryption key:off\n          Power Management:on\n          '
             'Link Quality=66/70  Signal level=-44 dBm  \n          '
-            'Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0\n        '
-            '  Tx excessive retries:0  Invalid misc:0   Missed beacon:0\n\n'
+            'Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0\n       '
+            '   Tx excessive retries:0  Invalid misc:0   Missed beacon:0\n\n'
             'wlan1mon  IEEE 802.11bgn  Mode:Monitor  Frequency:2.457 GHz  '
-            'Tx-Power=20 dBm   \n          Retry short limit:7   RTS thr:off   '
-            'Fragment thr:off\n          Power Management:off\n          \n',
+            'Tx-Power=20 dBm   \n          Retry short limit:7   RTS thr:off  '
+            ' Fragment thr:off\n          Power Management:off\n          \n',
             None, 0 )
         self.expected_iwconfig_result = {
             'wlan0': {

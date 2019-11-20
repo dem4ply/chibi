@@ -1,6 +1,5 @@
-from chibi.units.si import Metre, Gram
-from unittest import TestCase
 from .base import Test_unit
+from chibi.units.si import Metre, Gram
 
 
 class Test_Metre( Test_unit ):

@@ -1,9 +1,5 @@
 from unittest import TestCase
 
-from chibi.snippet.string import (
-    replace_with_dict, get_the_number_of_parameters
-)
-
 from chibi.snippet.xml import guaranteed_list, compress_dummy_list
 
 
@@ -56,7 +52,6 @@ class test_guaranteed_list(TestCase):
             'startstr': 'Thu May  2 15:24:31 2019', 'verbose': {'level': '0'},
             'version': '7.70', 'xmloutputversion': '1.04'}
 
-
     def test_should_convert_host_in_list( self ):
         result = guaranteed_list( self.example, 'host' )
         self.assertEqual( self.expected, result )
@@ -90,8 +85,6 @@ class test_compress_dummy_list(TestCase):
                 [ { 'regions': [ { 'asdfs': 1 } ] } ] ],
             'lists': [ '', [], [ { 'regions': 'qq' } ] ],
             'regions': 'asdf', }
-
-
 
     def test_should_convert_host_in_list( self ):
         result = compress_dummy_list( self.example )

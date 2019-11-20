@@ -1,7 +1,8 @@
 from unittest import TestCase
-from tests.snippet.files import Test_with_files
 
 from chibi.file.image import Chibi_image
+from tests.snippet.files import Test_with_files
+
 
 class Test_images( TestCase ):
     def setUp( self ):

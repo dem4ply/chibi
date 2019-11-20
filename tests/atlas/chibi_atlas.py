@@ -32,8 +32,8 @@ class Test_chibi_atlas( TestCase ):
 class Test_chibi_atlas_deeper( TestCase ):
     def setUp( self ):
         self.d = Chibi_atlas( dict(
-            a = 'a',
-            b = dict( b=dict( bb='bb' ) )
+            a='a',
+            b=dict( b=dict( bb='bb' ) )
         ) )
 
     def test_the_inner_dicts_should_be_chibi_atlas( self ):
@@ -52,8 +52,8 @@ class Test_chibi_atlas_deeper( TestCase ):
 class Test_chibi_atlas_kw( TestCase ):
     def setUp( self ):
         self.d = Chibi_atlas( **dict(
-            a = 'a',
-            b = dict( b=dict( bb='bb' ) )
+            a='a',
+            b=dict( b=dict( bb='bb' ) )
         ) )
 
     def test_the_inner_dicts_should_be_chibi_atlas( self ):
@@ -72,8 +72,8 @@ class Test_chibi_atlas_kw( TestCase ):
 class Test_chibi_atlas_deeper_with_list( TestCase ):
     def setUp( self ):
         self.d = Chibi_atlas( dict(
-            a = 'a',
-            b = dict( b=dict( bb='bb' ) )
+            a='a',
+            b=dict( b=dict( bb='bb' ) )
         ) )
         self.d.l = [
             dict( q=1, w=2 ),

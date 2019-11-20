@@ -1,6 +1,5 @@
 from unittest import TestCase
-from chibi.snippet.iter import cut_until, chunk_each
-from chibi.command.network import ip_addr
+
 from chibi.net.network.interface import Network
 
 
@@ -35,7 +34,6 @@ class Test_load_interface_from_ip( TestCase ):
             'group default qlen 1000\n    '
             'link/ether 0a:00:27:00:00:01 brd ff:ff:ff:ff:ff:ff\n'
         )
-
 
     def test_should_return_4_interfaces( self ):
         result = Network.load_from_string( self.example )

@@ -1,5 +1,5 @@
 from unittest import TestCase
-import copy
+
 from chibi.atlas.tree import Chibi_tree, build_tree
 
 

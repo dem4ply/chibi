@@ -1,4 +1,3 @@
-from unittest import TestCase
 from chibi.file.snippets import is_dir
 from tests.snippet.files import Test_with_files
 

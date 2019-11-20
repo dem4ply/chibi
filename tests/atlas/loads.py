@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from chibi.atlas import loads, Chibi_atlas
 
+
 class Test_loads_json( TestCase ):
     def setUp( self ):
         self.string = """

@@ -2,7 +2,6 @@ from unittest import TestCase
 from chibi.atlas import Chibi_atlas_ignore_case
 
 
-
 class Test_ignore_case:
     def test_can_retrive_upperkeys_and_are_equal_to_lower( self ):
         self.assertEqual( self.simple_dict.A, self.simple_dict.a )

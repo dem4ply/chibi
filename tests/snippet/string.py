@@ -30,9 +30,10 @@ class Test_sp_random( TestCase ):
         expected = [ 1, 1, 2 ]
         for s, e in zip( strings, expected ):
             r = get_the_number_of_parameters( s )
-            self.assertEqual( r, e,
-                ( "\nfallo con la cadena {} regreso {} se esperaban {}"
-                    ).format( s, r, e ) )
+            self.assertEqual(
+                r, e,
+                "\nfallo con la cadena {} regreso {} se esperaban {}".format(
+                    s, r, e ) )
 
 
 class Test_split_table( TestCase ):

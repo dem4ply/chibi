@@ -1,5 +1,5 @@
 from unittest import TestCase
-from chibi.object import Chibi_object
+
 from chibi.object.descriptor import Descriptor
 
 

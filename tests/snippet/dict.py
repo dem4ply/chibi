@@ -22,8 +22,8 @@ class Test_keys_to_snake_case( TestCase ):
         result = keys_to_snake_case( self.d )
         self.assertEqual( result, self.expected )
 
-class Test_dict(TestCase):
 
+class Test_dict(TestCase):
     def setUp( self ):
         pass
 
@@ -206,7 +206,6 @@ class Test_dict(TestCase):
         }
         result = remove_nones( dict_test )
         self.assertEqual( result, dict_result_expected )
-
 
 
 class Test_pipeline( TestCase ):

@@ -1,8 +1,11 @@
-import pwd, grp
+import grp
+import pwd
 from unittest import TestCase
+
 from chibi.nix import (
     _parse_passwd, _parse_group, get_passwd, get_group,
-    user_exists, group_exists, mem_info )
+    user_exists, group_exists, mem_info
+)
 
 
 class Test_passwd( TestCase ):
@@ -13,7 +16,7 @@ class Test_passwd( TestCase ):
         for raw_passwd in self.all_passwd:
             passwd = _parse_passwd( raw_passwd )
 
-            self.assertEqual( passwd.name,raw_passwd.pw_name )
+            self.assertEqual( passwd.name, raw_passwd.pw_name )
             self.assertEqual( passwd.passwd, raw_passwd.pw_passwd )
             self.assertEqual( passwd.uid, raw_passwd.pw_uid )
             self.assertEqual( passwd.gid, raw_passwd.pw_gid )
@@ -52,7 +55,7 @@ class Test_group( TestCase ):
         for raw_group in self.all_group:
             group = _parse_group( raw_group )
 
-            self.assertEqual( group.name,raw_group.gr_name )
+            self.assertEqual( group.name, raw_group.gr_name )
             self.assertEqual( group.passwd, raw_group.gr_passwd )
             self.assertEqual( group.gid, raw_group.gr_gid )
             self.assertEqual( group.mem, raw_group.gr_mem )

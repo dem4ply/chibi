@@ -1,6 +1,6 @@
-from tests.snippet.files import Test_with_files
-from chibi.file.snippets import add_extensions
 from chibi.file.path import Chibi_path
+from chibi.file.snippets import add_extensions
+from tests.snippet.files import Test_with_files
 
 
 class Test_add_extensions( Test_with_files ):

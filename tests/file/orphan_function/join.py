@@ -1,7 +1,6 @@
 from unittest import TestCase, skip
 
-from chibi.file.snippets import inflate_dir, join
-from chibi.file.snippets import Chibi_path
+from chibi.file.snippets import inflate_dir, join, Chibi_path
 
 
 @skip( "deprecated" )
