@@ -15,8 +15,9 @@ class Chibi_temp_path( Chibi_path ):
     def __add__( self, other ):
         return Chibi_path( str( self ) ) + other
 
-    def temp_file( self ):
-        file_name = tempfile.mkstemp( dir=str( self ) )[1]
+    def temp_file( self, extension='' ):
+        subffix = f'.{extension}' if extension else extension
+        file_name = tempfile.mkstemp( suffix=subffix, dir=str( self ) )[1]
         return Chibi_path( file_name )
 
     def temp_dir( self ):

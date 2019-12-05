@@ -18,3 +18,12 @@ class Test_path_temp( Test_with_files ):
         self.assertIsInstance( result, Chibi_path )
         self.assertIn( str( path ), result )
         self.assertIn( "hello", result )
+
+    def test_should_create_a_file( self ):
+        f = self.root_dir.temp_file()
+        self.assertIsInstance( f, Chibi_path )
+        self.assertTrue( f.exists )
+
+    def test_should_create_a_file_with_extencion( self ):
+        f = self.root_dir.temp_file( extension='temp' )
+        self.assertEqual( 'temp', f.extension )

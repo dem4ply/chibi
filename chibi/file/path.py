@@ -168,7 +168,10 @@ class Chibi_path( str ):
             info = fleep.get( f.read( 128 ) )
 
         prop.type = info.type[0] if info.type else None
-        prop.extension = info.extension[0] if info.extension else None
+        if info.extension:
+            prop.extension = info.extension[0]
+        else:
+            prop.extension = os.path.splitext( self )[1][1:]
         prop.mime = info.mime[0] if info.mime else None
         return prop
 
