@@ -1,5 +1,6 @@
 import copy
 import json
+import logging
 import mmap
 
 import fleep
@@ -13,7 +14,16 @@ from chibi.file.snippets import (
 )
 
 
+logger = logging.getLogger( 'chibi.file.chibi_file' )
+
+
 class Chibi_file:
+    def __new__( cls, path, *args, **kw ):
+        from .other import find_correct_class
+        cls = find_correct_class( path, cls )
+        obj = super().__new__( cls )
+        return obj
+
     def __init__( self, file_name ):
         self._file_name = file_name
         self._current_dir = file_dir( file_name )
@@ -133,11 +143,13 @@ class Chibi_file:
         self.write( json.dumps( data ) )
 
     def read_yaml( self ):
+        logger.warning( 'deprecated' )
         self.reread()
         result = yaml.load( self.file, Loader=yaml.FullLoader )
         return _wrap( result )
 
     def write_yaml( self, data, is_safe=False ):
+        logger.warning( 'deprecated' )
         if is_safe:
             self.write( yaml.safe_dump( data ) )
         else:

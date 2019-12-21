@@ -1,4 +1,15 @@
-from .chibi_csv import * # noqa
+from .chibi_csv import Chibi_csv
+import os
+from .chibi_yaml import Chibi_yaml
 
 
-__all__ = chibi_csv.__all__
+__all__ = [ 'Chibi_csv', 'Chibi_yaml' ]
+
+
+def find_correct_class( path, cls ):
+    file_name, ext = os.path.splitext( path )
+    if ext == '.csv':
+        return Chibi_csv
+    elif ext in ( '.yml', '.yaml' ):
+        return Chibi_yaml
+    return cls
