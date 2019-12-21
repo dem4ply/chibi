@@ -15,6 +15,7 @@ class Book:
         self.min_page = min_page
         if not offset_dict:
             offset_dict = { 'page': 'page', 'page_size': 'page_size' }
+        self.offset_dict = offset_dict
 
     def next( self ):
         if self.page >= self.total_pages:
@@ -29,3 +30,8 @@ class Book:
     @property
     def total_pages( self ):
         return math.ceil( self.total_elements / self.page_size )
+
+    @property
+    def offset( self ):
+        return {
+            v: getattr( self, k, None ) for k, v in self.offset_dict.items() }
