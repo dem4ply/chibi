@@ -136,10 +136,12 @@ class Chibi_file:
         return check_sum_md5( self.path, check_sum )
 
     def read_json( self ):
+        logger.warning( 'deprecated' )
         self.reread()
         return _wrap( json.load( self.file ) )
 
     def write_json( self, data ):
+        logger.warning( 'deprecated' )
         self.write( json.dumps( data ) )
 
     def read_yaml( self ):

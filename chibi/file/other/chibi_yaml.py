@@ -1,5 +1,6 @@
 import yaml
 from chibi.file import Chibi_file
+from chibi.atlas import _wrap
 
 
 __all__ = [ 'Chibi_yaml' ]
@@ -13,6 +14,6 @@ class Chibi_yaml( Chibi_file ):
 
     def write( self, data, is_safe=False ):
         if is_safe:
-            self.write( yaml.safe_dump( data ) )
+            super().write( yaml.safe_dump( data ) )
         else:
-            self.write( yaml.dump( data ) )
+            super().write( yaml.dump( data ) )
