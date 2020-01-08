@@ -29,3 +29,20 @@ class Test_chibi_csv( TestCase ):
             self.assertIsInstance( r, dict  )
             self.assertTrue( r )
             self.assertEqual( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' }, r )
+
+    def test_should_read_the_file_using_x_y_index( self ):
+        csv = Chibi_csv( self.file_csv )
+        csv.append( range( 10 ) )
+        csv.append( range( 10, 20 ) )
+        csv.append( range( 20, 30 ) )
+        csv.append( range( 30, 40 ) )
+        self.assertEqual( csv[0], list( str( i ) for i in range( 10 ) ) )
+        self.assertEqual( csv[1], list( str( i ) for i in range( 10, 20  ) ) )
+        self.assertEqual( csv[2], list( str( i ) for i in range( 20, 30  ) ) )
+        self.assertEqual( csv[3], list( str( i ) for i in range( 30, 40  ) ) )
+
+    def test_should_raise_a_exception_when_out_of_range( self ):
+        csv = Chibi_csv( self.file_csv )
+        csv.append( range( 10 ) )
+        with self.assertRaises( IndexError ):
+            csv[1]

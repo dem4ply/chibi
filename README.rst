@@ -19,26 +19,28 @@ and files
 
 	import chibi.file import Chibi_path
 
-	p = Chibi_path( '/tmp/folder' )
+	tmp = Chibi_path( '/tmp/folder' )
 	isintance( p, str ) == true
 	# return a generator with all the files and folders in
 	# the path
-	p.ls()
-	p = p + 'file'
-	str( p ) == '/tmp/folder/file'
+	ls = list( p.ls() )
+	print( ls )
+	p = tmp + 'file.json'
+	str( p ) == '/tmp/folder/file.json'
 	f = p.open()
 	# check the file for see is containt the string
 	'some string' in f
 
 	# write a dict like json in the file
-	f.write_json( { 'stuff': 'str' } )
+	f.write( { 'stuff': 'str' } )
 	# read the json and transform the dict in a Chibi_atlas
-	json = f.read_json()
+	json = f.read()
 	json.stuff == 'str'
 
-	# the dame but in yaml
-	f.write_yaml( { 'stuff': 'str' } )
-	yaml = f.read_yaml()
+	# the same but in yaml
+	f = p + 'file.yaml'
+	f.write( { 'stuff': 'str' } )
+	yaml = f.read()
 	yaml.stuff == 'str'
 
 

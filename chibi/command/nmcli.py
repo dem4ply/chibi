@@ -20,14 +20,12 @@ class _Show:
             return self( *names )
 
         result = Chibi_atlas()
-        connections_atlas = []
         for connection in connections:
             output, error, code = nmcli(
                 'connection', 'show', '--show-secrets', connection )
             rows = output.split( '\n' )
             d = dict( ( tuple( r.rsplit( ':', 1 ) ) for r in rows if r ) )
             d = Chibi_atlas( d )
-            connections_atlas.append( d )
             result[ connection ] = d
         return result
 
