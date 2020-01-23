@@ -17,6 +17,13 @@ class Book:
             offset_dict = { 'page': 'page', 'page_size': 'page_size' }
         self.offset_dict = offset_dict
 
+    def __repr__( self ):
+        return (
+            f"{self.__class__.__name__}( page={self.page}, "
+            f"page_size={self.page_size}, "
+            f"total_elements={self.total_elements} )"
+        )
+
     def next( self ):
         if self.page >= self.total_pages:
             raise End_book

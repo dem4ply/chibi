@@ -1,3 +1,4 @@
+import copy
 from unittest import TestCase
 from chibi.metaphors import Book
 from chibi.metaphors.book import End_book
@@ -71,3 +72,21 @@ class Test_book( TestCase ):
         self.assertEqual(
             book.offset,
             { 'other_name': book.page, 'another_page_size': book.page_size } )
+
+
+class Test_copy_book( TestCase ):
+    def test_shoudl_copy_the_parameters( self ):
+        book = Book( total_elements=10, page_size=3, page=4 )
+        copy_book = copy.copy( book )
+        self.assertIsNot( book, copy_book )
+        self.assertEqual( vars( book ), vars( copy_book ) )
+
+    def test_should_copy_the_offset_dict( self ):
+        book = Book(
+            total_elements=10, page_size=3,
+            offset_dict={
+                'page': 'other_name', 'page_size': 'another_page_size' } )
+
+        copy_book = copy.copy( book )
+        self.assertIsNot( book, copy_book )
+        self.assertEqual( book.offset, copy_book.offset )
