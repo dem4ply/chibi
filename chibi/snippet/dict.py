@@ -49,14 +49,16 @@ def replace_keys( d, dr ):
         for v in d:
             replace_keys( v, dr )
     elif isinstance( d, dict ):
-        for k, value in d.items():
+        keys = tuple( d.keys() )
+        for k in keys:
             try:
                 new_key = dr[k]
+                d[ new_key ] = d[k]
                 del d[k]
-                d[ new_key ] = value
+                k = new_key
             except KeyError as e:
                 pass
-            replace_keys( value, dr )
+            replace_keys( d[k], dr )
 
 
 def rename_keys( d, func ):
