@@ -46,3 +46,17 @@ class Test_chibi_csv( TestCase ):
         csv.append( range( 10 ) )
         with self.assertRaises( IndexError ):
             csv[1]
+
+    def test_when_append_dict_should_be_marked_like_has_headers( self ):
+        self.fail( 'incomplreto' )
+        csv = Chibi_csv( self.file_csv )
+        self.assertFalse( csv.has_headers )
+        csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
+        csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9', 'cosa4': 'a' } )
+        csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
+        result = list( csv.read_as_dict() )
+        self.assertEqual( len( result ), 3 )
+        for r in result:
+            self.assertIsInstance( r, dict  )
+            self.assertTrue( r )
+            self.assertEqual( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' }, r )
