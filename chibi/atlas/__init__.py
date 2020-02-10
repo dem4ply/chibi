@@ -8,6 +8,11 @@ import yaml
 from chibi.snippet.dict import hate_ordered_dict, remove_xml_notatation
 
 
+class Atlas:
+    def __new__( cls, item, *args, **kw  ):
+        return _wrap( item )
+
+
 def loads( string ):
     try:
         return Chibi_atlas( json.loads( string ) )
@@ -96,6 +101,9 @@ class __Chibi_atlas_list( list ):
     def __getitem__( self, index ):
         value = super().__getitem__( index, )
         return _wrap( value )
+
+    def __iter__( self ):
+        return map( _wrap, super().__iter__() )
 
 
 def _wrap( val, klass=None ):
