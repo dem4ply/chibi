@@ -86,6 +86,14 @@ class Chibi_path( str ):
         """
         return Chibi_path( os.path.basename( self ) )
 
+    @property
+    def file_name( self ):
+        """
+        regresa el nombre del archivo sin la extencion
+        """
+        file_name, ext = os.path.splitext( self.base_name )
+        return file_name
+
     def open( self ):
         """
         abre el archivo usando un chibi file

@@ -118,3 +118,11 @@ def _wrap( val, klass=None ):
         else:
             return klass( val )
     return val
+
+
+yaml.add_representer(
+    Chibi_atlas, yaml.representer.SafeRepresenter.represent_dict )
+
+
+yaml.add_representer(
+    __Chibi_atlas_list, yaml.representer.SafeRepresenter.represent_list )

@@ -154,6 +154,16 @@ class Test_path_extension( Test_with_files ):
         self.assertTrue( f.endswith( '.ext' ) )
 
 
+class Test_path_file_name( Test_with_files ):
+    def test_should_only_return_the_file_name( self ):
+        f = Chibi_path( self.files[0] )
+        self.assertFalse( f.endswith( '.ext' ) )
+        expected = f.base_name
+        f = f.replace_extensions( 'ext' )
+        result = f.file_name
+        self.assertEqual( expected, result )
+
+
 class Test_move( Test_with_files ):
     def test_when_move_a_empty_file_should_create_a_new_empty_file( self ):
         file = Chibi_path( random.choice( self.files ) )
