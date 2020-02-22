@@ -259,3 +259,14 @@ class Chibi_path( str ):
 
     def made_safe( self ):
         return Chibi_path( re.sub( r'[<>:"|?*]', '', str( self ) ) )
+
+    @classmethod
+    def current_dir( cls ):
+        """
+        regresa el directorio actual de trabajo
+
+        Returns
+        =======
+        py:class:`chibi.file.Chibi_path`
+        """
+        return Chibi_path( os.getcwd() )

@@ -3,8 +3,8 @@ from unittest import TestCase
 
 from faker import Factory as Faker_factory
 
-from chibi.file import Chibi_file
-from chibi.file.snippets import current_dir, cd
+from chibi.file import Chibi_file, Chibi_path
+from chibi.file.snippets import cd
 from chibi.file.temp import Chibi_temp_path
 
 
@@ -53,7 +53,7 @@ class Test_with_files( TestCase ):
 
 class Test_moving_dir( TestCase ):
     def setUp( self ):
-        self.origin_dir = current_dir()
+        self.origin_dir = Chibi_path.current_dir()
 
     def tearDown(self):
         cd( self.origin_dir )

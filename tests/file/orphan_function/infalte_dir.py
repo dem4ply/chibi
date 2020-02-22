@@ -1,12 +1,13 @@
 from unittest import TestCase
 
-from chibi.file.snippets import current_dir, inflate_dir
+from chibi.file import Chibi_path
+from chibi.file.snippets import inflate_dir
 
 
 class Test_inflate_dir( TestCase ):
     def test_inflate_dir_should_inflate_current_dir( self ):
         result = inflate_dir( '.' )
-        expected = current_dir()
+        expected = Chibi_path.current_dir()
 
         self.assertEqual( result, expected )
 

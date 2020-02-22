@@ -22,6 +22,7 @@ def current_dir():
     =======
     py:class:`chibi.file.Chibi_path`
     """
+    logger.warning( "current_dir de snippets siendo usado" )
     return Chibi_path( os.getcwd() )
 
 
