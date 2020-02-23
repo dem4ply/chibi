@@ -116,13 +116,13 @@ def ls( src=None, recursive=False ):
                 for name in os.listdir( d ):
                     yield Chibi_path( d ) + name
             except NotADirectoryError:
-                yield d
+                yield Chibi_path( d )
     else:
         for r in ls( src ):
-            yield r
+            yield Chibi_path( r )
             if is_a_folder( r ):
                 for rr in ls( r, recursive=True ):
-                    yield rr
+                    yield Chibi_path( rr )
 
 
 def find( src=None, search_term=r'.*' ):
@@ -220,7 +220,7 @@ def exists( file_name ):
     return os.path.exists( file_name )
 
 
-def move( source, dest, verbose=False ):
+def move( source, dest, verbose=True ):
     """
     mueve archivos
 
@@ -254,7 +254,7 @@ def is_a_file( f ):
     return os.path.isfile( f )
 
 
-def copy( source, dest, verbose=False ):
+def copy( source, dest, verbose=True ):
     """
     copia el contenido de un archivo al destino
 

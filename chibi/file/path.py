@@ -1,3 +1,4 @@
+import glob
 import distutils.dir_util
 import logging
 import os
@@ -72,6 +73,10 @@ class Chibi_path( str ):
         return is_a_file( self )
 
     @property
+    def is_glob( self ):
+        return glob.has_magic( self )
+
+    @property
     def dir_name( self ):
         """
         regresa la carpeta padre
@@ -141,6 +146,19 @@ class Chibi_path( str ):
         elif self.is_a_folder:
             distutils.dir_util.copy_tree( str( self ), str( dest ) )
             return Chibi_path( dest )
+        elif self.is_glob:
+            if not dest.exists:
+                dest.mkdir()
+            if dest.is_a_folder:
+                return [ f.copy( dest ) for f in self.ls() ]
+            else:
+                raise NotImplementedError(
+                    "el destino no es un folder y la src "
+                    "es un glob '{self}'" )
+        else:
+            raise NotImplementedError(
+                "no esta implementado el copy si "
+                f"no es un archivo o folder '{self}'" )
 
     def delete( self ):
         """
@@ -270,3 +288,10 @@ class Chibi_path( str ):
         py:class:`chibi.file.Chibi_path`
         """
         return Chibi_path( os.getcwd() )
+
+    @property
+    def expand( self ):
+        if self.is_glob:
+            return ( type( self )( f ) for f in glob.iglob( self ) )
+        else:
+            raise NotImplementedError( "no se que deberia de hacer" )

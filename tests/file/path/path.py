@@ -36,12 +36,6 @@ class Test_path( Test_with_files ):
         for d in dirs:
             self.assertIsInstance( d, Chibi_path )
 
-    def test_ls_should_return_the_path_when_use_glob( self ):
-        all_tmps = self.root_dir + 'tmp*'
-        ls = all_tmps.ls()
-        for l in ls:
-            self.assertNotIn( '*', l )
-
     def test_find_work( self ):
         result = list( self.path.find() )
         for l in self.path.ls():
@@ -67,6 +61,25 @@ class Test_path( Test_with_files ):
 
         self.assertEqual(
             len( set( ls( source ) ) ), len( set( ls( dest ) ) ) )
+
+    def test_copy_folder_on_exist_folder_should_copy_the_files( self ):
+        dest = Chibi_path( self.root_dir ) + 'hola'
+        self.assertFalse( exists( dest ) )
+        source = Chibi_path( self.folder_with_files_with_content )
+        source.copy( dest )
+        self.assertEqual(
+            set( f.base_name for f in source.ls() ),
+            set( f.base_name for f in dest.ls() ) )
+        for d in ( dest + '*' ).ls():
+            d.delete()
+
+        items = list( dest.ls() )
+        self.assertFalse( items )
+        source.copy( dest )
+        self.assertEqual(
+            set( f.base_name for f in source.ls() ),
+            set( f.base_name for f in dest.ls() ) )
+
 
     def test_copy_to_a_existen_dir_should_override_the_current_files( self ):
         dest = Chibi_path( self.root_dir ) + 'hola'
