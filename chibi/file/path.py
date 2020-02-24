@@ -150,7 +150,7 @@ class Chibi_path( str ):
             if not dest.exists:
                 dest.mkdir()
             if dest.is_a_folder:
-                return [ f.copy( dest ) for f in self.ls() ]
+                return [ f.copy( dest + f.base_name ) for f in self.expand ]
             else:
                 raise NotImplementedError(
                     "el destino no es un folder y la src "

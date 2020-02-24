@@ -1,4 +1,10 @@
+import warnings
+import logging
 from subprocess import Popen, PIPE
+
+logger = logging.getLogger( 'chibi.command' )
+warnings.warn(
+    "chibi.command esta deprecado usa chibi_command", DeprecationWarning )
 
 
 def build_popen( str_command, *args, stdout=None, stderr=None ):
