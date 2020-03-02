@@ -17,7 +17,7 @@ requirements = [
 setup(
     name='chibi',
     keywords='chibi',
-    version='0.7.4',
+    version='0.7.5',
     description='',
     long_description=readme + '\n\n' + history,
     license="WTFPL",
