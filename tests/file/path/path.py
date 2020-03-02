@@ -127,14 +127,12 @@ class Test_path_relative( TestCase ):
 
 
 class Test_path_chown( Test_with_files ):
-    @patch( 'chibi.file.snippets.print' )
-    def test_verbose_when_no_change_the_owners( self, print ):
+    def test_verbose_when_no_change_the_owners( self ):
         f = Chibi_path( self.files[0] )
         current_stat = f.properties
-
-        f.chown()
-
-        output = print.call_args_list[0][0][0]
+        with self.assertLogs( level='INFO' ) as cm:
+            f.chown()
+        output = cm.output[0]
 
         self.assertIn( 'permanece', output )
         self.assertIn(

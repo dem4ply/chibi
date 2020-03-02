@@ -13,7 +13,7 @@ class Test_mkdir( Test_with_files ):
             mkdir( self.dirs[0], False )
 
     def test_print_the_directory_name_when_is_verbose( self ):
-        with patch( "chibi.file.snippets.print" ) as print:
+        with self.assertLogs( level='INFO' ) as cm:
             new_dir = self.dirs[0] + 'asdf'
             if exists( new_dir ):
                 self.fail(
@@ -25,8 +25,7 @@ class Test_mkdir( Test_with_files ):
                 self.fail(
                     "no se creo el directorio {} ".format( new_dir ) )
 
-        print.assert_called()
-        message_print = print.call_args_list[0][0][0]
+        message_print = cm.output[0]
         self.assertRegex( message_print, r".+'{}'".format( new_dir ) )
 
     def test_if_the_directory_no_exists_should_create( self ):

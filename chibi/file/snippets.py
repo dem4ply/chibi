@@ -182,7 +182,7 @@ def mkdir( new_dir, is_ok_exists=True, verbose=True ):
     try:
         os.makedirs( inflate_dir( new_dir ), )
         if verbose:
-            print( "se creo el directorio '{}'".format( new_dir ) )
+            logger.info( "se creo el directorio '{}'".format( new_dir ) )
     except OSError:
         if not is_ok_exists:
             raise
@@ -243,7 +243,7 @@ def move( source, dest, verbose=True ):
     for f in g:
         shutil.move( f, dest )
         if verbose:
-            print( f, '->', dest )
+            logger.info( f, '->', dest )
 
 
 def is_a_folder( dir ):
@@ -276,7 +276,7 @@ def copy( source, dest, verbose=True ):
     for f in g:
         shutil.copy( f, dest )
         if verbose:
-            print( f, '->', dest )
+            logger.info( f, '->', dest )
 
 
 def copy_folder( source, dest ):
@@ -286,7 +286,7 @@ def copy_folder( source, dest ):
 def ln( source, dest, verbose=True ):
     os.symlink( source, dest )
     if verbose:
-        print( source, '->', dest )
+        logger.info( source, '->', dest )
 
 
 def _print_verboce_chown( path, old_stat, current_stat ):
@@ -294,7 +294,7 @@ def _print_verboce_chown( path, old_stat, current_stat ):
     group_change = old_stat.group.name != current_stat.group.name
 
     if user_change or group_change:
-        print(
+        logger.info(
             "el propietario de '{path}' cambio de '{old}' a '{new}'"
             .format(
                 path=path, new="{user}:{group}".format(
@@ -303,7 +303,7 @@ def _print_verboce_chown( path, old_stat, current_stat ):
                 old="{user}:{group}".format(
                     user=old_stat.user.name, group=old_stat.group.name ) ) )
     else:
-        print(
+        logger.info(
             "el propietario de '{path}' permanece '{old}'"
             .format(
                 path=path, new="{user}:{group}".format(

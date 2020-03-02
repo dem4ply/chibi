@@ -140,7 +140,10 @@ class Chibi_path( str ):
         copia el archivo o carpeta al destino
         """
         from.snippets import copy
+        dest = Chibi_path( dest )
         if self.is_a_file:
+            if dest.is_a_folder:
+                dest += self.base_name
             copy( self, dest, **kw )
             return Chibi_path( dest )
         elif self.is_a_folder:
@@ -157,7 +160,7 @@ class Chibi_path( str ):
                     "es un glob '{self}'" )
         else:
             raise NotImplementedError(
-                "no esta implementado el copy si "
+                f"no esta implementado el copy si "
                 f"no es un archivo o folder '{self}'" )
 
     def delete( self ):
