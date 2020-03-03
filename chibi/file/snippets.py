@@ -182,7 +182,7 @@ def mkdir( new_dir, is_ok_exists=True, verbose=True ):
     try:
         os.makedirs( inflate_dir( new_dir ), )
         if verbose:
-            logger.info( "se creo el directorio '{}'".format( new_dir ) )
+            logger.info( f"se creo el directorio '{new_dir}'" )
     except OSError:
         if not is_ok_exists:
             raise
@@ -243,7 +243,7 @@ def move( source, dest, verbose=True ):
     for f in g:
         shutil.move( f, dest )
         if verbose:
-            logger.info( f, '->', dest )
+            logger.info( f"{f} -> {dest}" )
 
 
 def is_a_folder( dir ):
@@ -276,7 +276,7 @@ def copy( source, dest, verbose=True ):
     for f in g:
         shutil.copy( f, dest )
         if verbose:
-            logger.info( f, '->', dest )
+            logger.info( f"{f} -> {dest}" )
 
 
 def copy_folder( source, dest ):
@@ -286,7 +286,7 @@ def copy_folder( source, dest ):
 def ln( source, dest, verbose=True ):
     os.symlink( source, dest )
     if verbose:
-        logger.info( source, '->', dest )
+        logger.info( f"{source} -> {dest}" )
 
 
 def _print_verboce_chown( path, old_stat, current_stat ):
