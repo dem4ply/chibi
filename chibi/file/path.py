@@ -301,3 +301,9 @@ class Chibi_path( str ):
             return ( type( self )( f ) for f in glob.iglob( self ) )
         else:
             raise NotImplementedError( "no se que deberia de hacer" )
+
+    def __enter__( self ):
+        return self.open()
+
+    def __exit__( self, exc_type, exc_value, traceback ):
+        pass

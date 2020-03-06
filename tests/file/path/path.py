@@ -218,6 +218,17 @@ class Test_contains( Test_with_files ):
         self.assertNotIn( parent, child )
 
 
+class Test_context_manager( Test_with_files ):
+    def test_when_enter_should_return_a_chibi_file( self ):
+        with self.root_dir.temp_file() as f:
+            self.assertIsInstance( f, Chibi_file )
+
+    def test_when_enter_raise_a_exception_should_do_nothing( self ):
+        with self.assertRaises( ZeroDivisionError ):
+            with self.root_dir.temp_file() as f:
+                0 / 0
+
+
 class Test_made_safe( Test_with_files ):
     def test_should_clean_the_characters( self ):
         path = Chibi_path( 'asdf*asdf' ).made_safe()
