@@ -1,16 +1,12 @@
-from chibi.atlas import Chibi_atlas
+from .config import __all__ as config_all, Configuration
 from .logger import *  # noqa
 
 
-__all__ = logger.__all__ + [ 'Configuration' ]
-
-
-class Configuration( Chibi_atlas ):
-    def __getitem__( self, name ):
-        return super().__getitem__( name )
-
-    def __setitem__( self, name, value ):
-        return super().__setitem__( name, value )
+__all__ = config_all + logger.__all__
 
 
 configuration = Configuration()
+
+
+def load( path ):
+    configuration.load( path )
