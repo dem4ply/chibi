@@ -31,11 +31,6 @@ class Test_eq( Test_images ):
         self.assertEqual( self.png.dimension, ( 418, 498 ) )
         self.assertEqual( self.gif.dimension, ( 728, 720 ) )
 
-    def test_should_get_the_correct_type( self ):
-        self.assertEqual( self.jpg.properties.type, 'raster-image' )
-        self.assertEqual( self.png.properties.type, 'raster-image' )
-        self.assertEqual( self.gif.properties.type, 'raster-image' )
-
     def test_should_get_the_correct_mime( self ):
         self.assertEqual( self.jpg.properties.mime, 'image/jpeg' )
         self.assertEqual( self.png.properties.mime, 'image/png' )

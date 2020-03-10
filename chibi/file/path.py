@@ -5,7 +5,7 @@ import os
 import shutil
 import re
 
-import fleep
+import magic
 
 
 logger = logging.getLogger( "chibi.file.chibi_path" )
@@ -196,15 +196,8 @@ class Chibi_path( str ):
         from chibi.file.snippets import stat
 
         prop = stat( self )
-        with open( self, 'rb' ) as f:
-            info = fleep.get( f.read( 128 ) )
-
-        prop.type = info.type[0] if info.type else None
-        if info.extension:
-            prop.extension = info.extension[0]
-        else:
-            prop.extension = os.path.splitext( self )[1][1:]
-        prop.mime = info.mime[0] if info.mime else None
+        prop.mime = magic.Magic( mime=True ).from_file( self )
+        prop.extension = os.path.splitext( self )[1][1:]
         return prop
 
     @property

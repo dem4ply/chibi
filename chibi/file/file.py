@@ -1,10 +1,11 @@
+import os
 import copy
 import json
 import logging
 import mmap
 
-import fleep
 import yaml
+import magic
 
 from chibi.atlas import _wrap
 from chibi.file.path import Chibi_path
@@ -53,12 +54,8 @@ class Chibi_file:
     @property
     def properties( self ):
         prop = stat( self.path )
-        with open( self.path, 'rb' ) as f:
-            info = fleep.get( f.read( 128 ) )
-
-        prop.type = info.type[0] if info.type else None
-        prop.extension = info.extension[0] if info.extension else None
-        prop.mime = info.mime[0] if info.mime else None
+        prop.mime = magic.Magic( mime=True ).from_file( self.path )
+        prop.extension = os.path.splitext( self.path )[1][1:]
         return prop
 
     def __del__( self ):
@@ -85,8 +82,12 @@ class Chibi_file:
         return self.find( string ) >= 0
 
     def append( self, string ):
-        with open( self.path, 'a' ) as f:
-            f.write( string )
+        if isinstance( string, ( bytes, bytearray ) ):
+            with open( self.path, 'ab' ) as f:
+                f.write( string )
+        else:
+            with open( self.path, 'a' ) as f:
+                f.write( string )
         self.reread()
 
     def write( self, string ):
@@ -102,7 +103,12 @@ class Chibi_file:
         """
         lee todo el archivo
         """
-        result = self.file.read()
+        try:
+            result = self.file.read()
+        except Exception as e:
+            import pdb
+            pdb.set_trace()
+            pass
         self.reread()
         return result
 
