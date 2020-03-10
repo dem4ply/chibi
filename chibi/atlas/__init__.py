@@ -16,7 +16,7 @@ class Atlas:
 def loads( string ):
     try:
         return Chibi_atlas( json.loads( string ) )
-    except json.JSONDecodeError:
+    except ( json.JSONDecodeError, TypeError ):
         try:
             result = xmltodict.parse( string )
             result = hate_ordered_dict( result )
@@ -44,15 +44,21 @@ class Chibi_atlas( dict ):
 
     def __getattr__( self, name ):
         try:
-            return self[ name ]
-        except KeyError as e:
+            return super().__getattribute__( name )
+        except AttributeError as e:
             try:
-                return super().__getattribute__( name )
-            except AttributeError as e:
-                raise
+                return self[ name ]
+            except KeyError:
+                raise e
 
     def __setattr__( self, name, value ):
-        self[ name ] = _wrap( value )
+        try:
+            if getattr( type( self ), name, False ):
+                super().__setattr__( name, value )
+            else:
+                self[ name ] = _wrap( value )
+        except TypeError:
+            self[ name ] = _wrap( value )
 
     def __setitem__( self, name, value ):
         super().__setitem__( name, _wrap( value ) )
