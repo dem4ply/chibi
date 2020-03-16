@@ -300,3 +300,14 @@ class Chibi_path( str ):
 
     def __exit__( self, exc_type, exc_value, traceback ):
         pass
+
+    def touch( self ):
+        if not self.exists or self.is_a_file:
+            self.open().touch()
+        elif self.is_a_folder:
+            raise NotADirectoryError(
+                f"no implementado touch a un folder '{self}'" )
+        else:
+            raise NotADirectoryError(
+                f"no implementado touch cuando no es un "
+                f"archivo o folder'{self}'" )
