@@ -11,7 +11,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'GitPython>=2.1.5', 'requests>=2.19.1', 'pika>=0.12.0',
-    'python-magic>=0.4.15' 'Pillow>=5.3.0', 'dateutils>=0.6.6',
+    'python-magic>=0.4.15', 'Pillow>=5.3.0', 'dateutils>=0.6.6',
     'xmltodict>=0.12.0', 'pyyaml>=5.1.2' ]
 
 setup(
