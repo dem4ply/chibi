@@ -96,6 +96,10 @@ def gzip( s ):
     return result
 
 
+def remove_inner_space( s ):
+    return " ".join( s.split() )
+
+
 def split_in_table( s, separator_row='\n', separator=" " ):
     """
     divide una cadena con formato de tabla

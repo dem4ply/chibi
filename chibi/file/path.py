@@ -161,6 +161,8 @@ class Chibi_path( str ):
                 raise NotImplementedError(
                     "el destino no es un folder y la src "
                     "es un glob '{self}'" )
+        if not self.exists:
+            raise OSError( f"the file '{self}' not exists" )
         else:
             raise NotImplementedError(
                 f"no esta implementado el copy si "

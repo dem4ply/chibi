@@ -1,12 +1,12 @@
 from unittest import TestCase
 
 from chibi.snippet.string import (
-    replace_with_dict, get_the_number_of_parameters, split_in_table
+    replace_with_dict, get_the_number_of_parameters, split_in_table,
+    remove_inner_space
 )
 
 
 class Test_sp_random( TestCase ):
-
     def setUp( self ):
         pass
 
@@ -49,3 +49,11 @@ class Test_split_table( TestCase ):
     def test_table_1( self ):
         result = split_in_table( self.table_1 )
         self.assertEqual( self.expected_1, result )
+
+
+class Test_remove_inner_space( TestCase ):
+    def test_should_remove_inner_spaces( self ):
+        self.assertEqual( "asdf asdf", remove_inner_space( "asdf   asdf" ) )
+
+    def test_should_remove_inner_spaces( self ):
+        self.assertEqual( "asdf asdf", remove_inner_space( "asdf \n  asdf" ) )
