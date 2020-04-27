@@ -11,6 +11,10 @@ from chibi.file.snippets import exists, ls, file_dir
 from tests.snippet.files import Test_with_files
 
 
+class Dump_chibi_file( Chibi_file ):
+    pass
+
+
 faker = Faker_factory.create()
 
 
@@ -247,3 +251,18 @@ class Test_made_safe( Test_with_files ):
         self.assertEqual( 'asdfasdf', path )
         path = Chibi_path( 'asdf?*<>asdf' ).made_safe()
         self.assertEqual( 'asdfasdf', path )
+
+
+class Test_path_open( Test_with_files ):
+    def test_when_open_a_file_should_retunr_a_chibi_file( self ):
+        f = self.files[0]
+        self.assertIsInstance( f.open(), Chibi_file )
+
+    def test_when_pass_the_class_should_return_the_expected_class( self ):
+        f = self.files[0]
+        self.assertIsInstance(
+            f.open( chibi_file_class=Dump_chibi_file ), Dump_chibi_file )
+
+    def test_the_chibi_path_can_carrie_the_chibi_file_whant_to_be_used( self ):
+        f = Chibi_path( self.files[0], chibi_file_class=Dump_chibi_file )
+        self.assertIsInstance( f.open(), Dump_chibi_file )

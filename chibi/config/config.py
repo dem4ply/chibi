@@ -1,3 +1,4 @@
+import sys
 import logging
 from chibi.atlas import Chibi_atlas, Chibi_atlas_default
 from chibi.file import Chibi_path
@@ -8,6 +9,9 @@ logger = logging.getLogger( 'chibi.config.Configuration' )
 
 
 __all__ = [ 'Configuration' ]
+
+
+sys.path.append( './' )
 
 
 def _default_factory():
@@ -27,10 +31,8 @@ class Configuration( Chibi_atlas_default ):
                 for k, v in f.read().items():
                     self[ k ] = v
             elif isinstance( f, Chibi_python ):
-                value = f.read()
                 logger.info( f"ejecutanto archivo python {f}" )
-                logger.debug( value )
-                exec( value )
+                module = f.import_()
             else:
                 raise NotImplementedError(
                     "no esta implementado la carga de configuracion de los "

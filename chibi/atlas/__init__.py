@@ -96,20 +96,32 @@ class Chibi_atlas_ignore_case( Chibi_atlas ):
         return super().__setitem__( key, value )
 
 
+def _default_factory():
+    return Chibi_atlas_default()
+
+
 class Chibi_atlas_default( defaultdict, Chibi_atlas ):
     """
     chibi atlas que emula `py:class:collections.defaultdict`
     """
-    pass
+    def __init__( self, default_factory=None, *args, **kw ):
+        if default_factory is None:
+            default_factory = _default_factory
+        super().__init__( default_factory, *args, **kw )
 
 
 class __Chibi_atlas_list( list ):
     def __getitem__( self, index ):
         value = super().__getitem__( index, )
-        return _wrap( value )
+        value = _wrap( value )
+        self[ index ] = value
+        return value
 
     def __iter__( self ):
-        return map( _wrap, super().__iter__() )
+        for i, v in enumerate( super().__iter__() ):
+            value = _wrap( v )
+            self[ i ] = value
+            yield value
 
 
 def _wrap( val, klass=None ):

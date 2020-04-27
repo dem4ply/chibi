@@ -3,6 +3,7 @@ from .chibi_csv import Chibi_csv
 from .chibi_yaml import Chibi_yaml
 from .chibi_json import Chibi_json
 from .chibi_python import Chibi_python
+from .chibi_systemd import Chibi_systemd
 
 
 __all__ = [ 'Chibi_csv', 'Chibi_yaml', 'Chibi_json', 'Chibi_python' ]

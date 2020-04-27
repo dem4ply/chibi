@@ -12,13 +12,15 @@ logger = logging.getLogger( "chibi.file.chibi_path" )
 
 
 class Chibi_path( str ):
-    def __new__( cls, *args, **kw ):
+    def __new__( cls, *args, chibi_file_class=None, **kw ):
         args_2 = []
         for a in args:
             if '~' in a:
                 a = os.path.expanduser( a )
             args_2.append( a )
-        return str.__new__( cls, *args_2, **kw )
+        result = str.__new__( cls, *args_2, **kw )
+        result._chibi_file_class = chibi_file_class
+        return result
 
     def __add__( self, other ):
         """
@@ -61,8 +63,7 @@ class Chibi_path( str ):
         """
         es una carpeta
         """
-        from chibi.file.snippets import is_a_folder
-        return is_a_folder( self )
+        return os.path.isdir( self )
 
     @property
     def is_a_file( self ):
@@ -82,6 +83,7 @@ class Chibi_path( str ):
         regresa la carpeta padre
         """
         from chibi.file.snippets import file_dir
+        return type( self )( os.path.dirname( str( self ) ) )
         return self.__class__( file_dir( self ) )
 
     @property
@@ -99,14 +101,19 @@ class Chibi_path( str ):
         file_name, ext = os.path.splitext( self.base_name )
         return file_name
 
-    def open( self ):
+    def open( self, chibi_file_class=None ):
         """
         abre el archivo usando un chibi file
         """
         if self.is_a_folder:
             raise NotImplementedError
-        from . import Chibi_file
-        return Chibi_file( self )
+        if chibi_file_class is None:
+            if self._chibi_file_class is None:
+                from .file import Chibi_file
+                chibi_file_class = Chibi_file
+            else:
+                chibi_file_class = self._chibi_file_class
+        return chibi_file_class( self )
 
     def relative_to( self, root ):
         from .snippets import get_relative_path
@@ -129,11 +136,25 @@ class Chibi_path( str ):
         """
         move the chibi path al destino
         """
+        dest = Chibi_path( dest )
         if self.is_a_file:
             if dest.is_a_folder:
                 dest += self.base_name
-        shutil.move( str( self ), str( dest ) )
-        logger.info( "{} -> {}".format( self, dest ) )
+            shutil.move( str( self ), str( dest ) )
+            logger.info( "{} -> {}".format( self, dest ) )
+        elif self.is_a_folder:
+            shutil.move( str( self ), str( dest ) )
+            logger.info( "{} -> {}".format( self, dest ) )
+        elif self.is_glob:
+            if not dest.exists:
+                dest.mkdir()
+            if dest.is_a_folder:
+                return [
+                    f.move( dest + f.base_name ) for f in self.expand ]
+            else:
+                raise NotImplementedError(
+                    "el destino no es un folder y la src "
+                    "es un glob '{self}'" )
 
     def copy( self, dest, **kw ):
         """
@@ -313,3 +334,10 @@ class Chibi_path( str ):
             raise NotADirectoryError(
                 f"no implementado touch cuando no es un "
                 f"archivo o folder'{self}'" )
+
+    @property
+    def inflate( self ):
+        if '~' in self:
+            return os.path.expanduser( self )
+        else:
+            return os.path.abspath( self )

@@ -41,3 +41,13 @@ class Test_glob( Test_with_files ):
         self.assertEqual(
             set( f.base_name for f in source.ls() ),
             set( f.base_name for f in dest.ls() ) )
+
+    def test_move( self ):
+        dest = Chibi_path( self.root_dir ) + 'hola'
+        self.assertFalse( exists( dest ) )
+        source = Chibi_path( self.folder_with_files_with_content ) + '*'
+        files = set( f.base_name for f in source.ls() )
+        source.move( dest )
+        self.assertEqual(
+            files, set( f.base_name for f in dest.ls() ) )
+        self.assertFalse( set( f.base_name for f in source.ls() ) )
