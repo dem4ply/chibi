@@ -48,3 +48,10 @@ class Test_chibi_service( TestCase ):
         service = Chibi_systemd( self.file_service )
         result = service.read()
         self.assertIsInstance( result, dict )
+
+    def test_should_have_the_3_sections( self ):
+        service = Chibi_systemd( self.file_service )
+        result = service.read()
+        self.assertIn( 'unit', result )
+        self.assertIn( 'service', result )
+        self.assertIn( 'install', result )
