@@ -1,17 +1,15 @@
-import sys
+import os
 import logging
 from chibi.atlas import Chibi_atlas, Chibi_atlas_default
 from chibi.file import Chibi_path
 from chibi.file.other import Chibi_json, Chibi_yaml, Chibi_python
+import chibi_donkey as donkey
 
 
 logger = logging.getLogger( 'chibi.config.Configuration' )
 
 
 __all__ = [ 'Configuration' ]
-
-
-sys.path.append( './' )
 
 
 def _default_factory():
@@ -78,3 +76,11 @@ class Logger( Chibi_atlas ):
     @property
     def logger( self ):
         return logging.getLogger( self.name )
+
+
+class Env_vars( Configuration ):
+    def __init__( self, default_factory=None, *args, **kw ):
+        if default_factory is None:
+            default_factory = str
+        d = donkey.inflate( os.environ )
+        super().__init__( default_factory, d, *args, **kw )

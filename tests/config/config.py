@@ -69,3 +69,13 @@ class Test_logger( unittest.TestCase ):
         logger.level = logging.INFO
         self.assertEqual( logger.level, self.logger.level )
         logger.level = current_level
+
+
+class Test_envars( unittest.TestCase ):
+    def setUp( self ):
+        super().setUp()
+        from chibi.config import configuration
+        self.config = configuration
+
+    def test_envars_should_no_be_empty( self ):
+        self.assertTrue( self.config.env_vars )
