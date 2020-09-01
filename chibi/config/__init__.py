@@ -15,6 +15,10 @@ configuration = Configuration(
 
 
 def default_file_load():
+    config_home = configuration.env_vars.HOME
+    if not config_home:
+        return
+
     config_home = Chibi_path( configuration.env_vars.XDG_CONFIG_HOME )
     if not config_home:
         config_home = Chibi_path( '~/.config' )
