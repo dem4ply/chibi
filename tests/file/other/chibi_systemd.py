@@ -55,3 +55,23 @@ class Test_chibi_service( TestCase ):
         self.assertIn( 'unit', result )
         self.assertIn( 'service', result )
         self.assertIn( 'install', result )
+
+    def test_unit_should_have_the_expected_keys( self ):
+        service = Chibi_systemd( self.file_service )
+        result = service.read()
+        expected = dict(
+            Description='Network Manager',
+            Documentation='man:NetworkManager(8)',
+            Wants='network.target',
+            After='network-pre.target dbus.service',
+            Before='network.target' )
+        self.assertIn( 'unit', result )
+        self.assertEqual( result.unit, expected )
+
+    def test_write_should_write_update_the_file_using_systemd_format( self ):
+        service = Chibi_systemd( self.file_service )
+        result = service.read()
+        result.service.TimeoutSec = '900'
+        service.write( result )
+        result_after_save = service.read()
+        self.assertEqual( result, result_after_save )

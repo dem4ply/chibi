@@ -1,3 +1,4 @@
+import copy
 import math
 
 
@@ -42,3 +43,13 @@ class Book:
     def offset( self ):
         return {
             v: getattr( self, k, None ) for k, v in self.offset_dict.items() }
+
+    def __iter__( self ):
+        temp_book = copy.copy( self )
+        yield temp_book
+        try:
+            while True:
+                temp_book.next()
+                yield temp_book
+        except End_book:
+            pass

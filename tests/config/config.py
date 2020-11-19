@@ -1,3 +1,4 @@
+import os
 import logging
 import unittest
 from tests.snippet.files import Test_with_files

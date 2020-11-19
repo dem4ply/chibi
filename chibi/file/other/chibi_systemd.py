@@ -12,7 +12,7 @@ from chibi.module import import_
 from chibi.snippet.string import camel_to_snake
 
 
-__all__ = [ 'Chibi_python' ]
+__all__ = [ 'Chibi_systemd' ]
 
 
 category_regex = re.compile( r"\[.*\]" )
@@ -33,7 +33,31 @@ class Chibi_systemd( Chibi_file ):
                 key, value = line.split( '=', 1 )
                 key = key.strip()
                 value = value.strip()
-                if key in section_dict:
-                    section_dict[key]
+                section_dict[key] = value
             result[ section_key.lower() ] = section_dict
+        return result
+
+    def write( self, data ):
+        result = ''
+        sort_order = [ 'unit', 'service' ]
+        other_keys = ( k for k in data.keys() if k not in sort_order )
+        for k in sort_order:
+            section = data[ k ]
+            section_str = self._transform_section( k, section )
+            result += section_str
+        for k in other_keys:
+            section = data[ k ]
+            section_str = self._transform_section( k, section )
+            result += section_str
+        super().write( result )
+
+    def _transform_section( self, name, section ):
+        name = name.capitalize()
+        result = f"[{name}]\n"
+        for k, v in section.items():
+            if isinstance( v, list ):
+                for inner in v:
+                    result += f"{k}={inner}\n"
+            else:
+                result += f"{k}={v}\n"
         return result

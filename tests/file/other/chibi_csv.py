@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 from chibi.file.temp import Chibi_temp_path
 from chibi.file.other import Chibi_csv
 
@@ -47,6 +47,9 @@ class Test_chibi_csv( TestCase ):
         with self.assertRaises( IndexError ):
             csv[1]
 
+    @skip( (
+        'esta prueba esta incompleta porque cambiara el '
+        'funcionamiento de los headers' ) )
     def test_when_append_dict_should_be_marked_like_has_headers( self ):
         self.fail( 'incomplreto' )
         csv = Chibi_csv( self.file_csv )

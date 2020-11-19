@@ -338,3 +338,23 @@ def __inner_keys_to_snake_case( d ):
     elif isinstance( d, tuple ):
         return tuple( __inner_keys_to_snake_case( a ) for a in d )
     return d
+
+
+def split( d ):
+    """
+    divide el dicionario en varios dicionarios
+
+    Params
+    ======
+    d: dict
+
+    Results
+    =======
+    map: generador con los dicionarios
+
+    Examples
+    ========
+    >>>list( split( { "a": "1", { "b": "2" } } ) )
+    [ { "a": "1" }, { "b": "2" } ]
+    """
+    return map( lambda x: { x[0]: x[1] }, d.items() )

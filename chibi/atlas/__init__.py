@@ -60,6 +60,9 @@ class Chibi_atlas( dict ):
         except TypeError:
             self[ name ] = _wrap( value )
 
+    def __delattr__( self, name ):
+        del self[ name ]
+
     def __setitem__( self, name, value ):
         super().__setitem__( name, _wrap( value ) )
 

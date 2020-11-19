@@ -90,3 +90,32 @@ class Test_copy_book( TestCase ):
         copy_book = copy.copy( book )
         self.assertIsNot( book, copy_book )
         self.assertEqual( book.offset, copy_book.offset )
+
+
+class Test_iter_book( TestCase ):
+    def setUp( self ):
+        self.book = Book( total_elements=10, page_size=3, page=1 )
+
+    def test_should_have_a_iter( self ):
+        self.assertTrue( iter( self.book ) )
+
+    def test_should_have_4_pages( self ):
+        count = 0
+        for page in self.book:
+            count += 1
+
+        self.assertEqual( count, 4 )
+
+    def test_should_have_all_pages( self ):
+        pages = [ page.page for page in self.book ]
+        self.assertEqual( pages, [ 1, 2, 3, 4 ] )
+
+    def test_each_page_generate_should_be_a_intance_of_book( self ):
+        count = 0
+        for page in self.book:
+            self.assertIsInstance( page, Book )
+
+    def test_each_page_generate_should_be_a_diferent_book_to_origin( self ):
+        count = 0
+        for page in self.book:
+            self.assertIsNot( page, self.book )

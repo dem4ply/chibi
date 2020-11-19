@@ -5,7 +5,7 @@ from faker import Factory as Faker_factory
 from chibi.snippet.dict import (
     keys_to_snake_case, replace_keys, pop_regex, get_regex, rename_keys,
     lower_keys, delete_list_of_keys, get_list_of_keys, get_from_dict,
-    remove_value, remove_nones, remove_xml_notatation
+    remove_value, remove_nones, remove_xml_notatation, split
 )
 
 
@@ -206,6 +206,17 @@ class Test_dict(TestCase):
         }
         result = remove_nones( dict_test )
         self.assertEqual( result, dict_result_expected )
+
+    def test_split( self ):
+        dict_test = {
+            "new_asdf": 234, "new_zxcv": 345, "new_qwer": 456
+        }
+        expected = [
+            { "new_asdf": 234 }, { "new_zxcv": 345 },
+            { "new_qwer": 456 }
+        ]
+        result = list( split( dict_test ) )
+        self.assertEqual( result, expected )
 
 
 class Test_pipeline( TestCase ):
