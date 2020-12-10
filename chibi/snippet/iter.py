@@ -29,17 +29,15 @@ class ___DUMP:
 
 def chunk_each( l, f ):
     inner_result = []
-    result = []
     iterator = iter( l )
     for i in iterator:
         if f( i ):
             if inner_result:
-                result.append( inner_result )
+                yield inner_result
             inner_result = []
         inner_result.append( i )
     if inner_result:
-        result.append( inner_result )
-    return result
+        yield inner_result
 
 
 def cut_until( iterator, until ):
