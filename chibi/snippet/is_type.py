@@ -38,7 +38,7 @@ def is_iter( obj ):
     try:
         iter( obj )
         return True
-    except TypeError as e:
+    except TypeError:
         return False
 
 

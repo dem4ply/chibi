@@ -1,7 +1,7 @@
 from .config import (
     __all__ as config_all,
     Configuration, Logger_configuration, Env_vars )
-from .logger import *  # noqa
+from .logger import *  # NOQA
 from chibi.file import Chibi_path
 
 

@@ -1,7 +1,5 @@
-from tests.snippet.files import Test_with_files
-import yaml
-from chibi.file import Chibi_file
 from chibi.file.other import Chibi_csv, Chibi_yaml
+from tests.snippet.files import Test_with_files
 
 
 class Test_chibi_file_resolution_class( Test_with_files ):

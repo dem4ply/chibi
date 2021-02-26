@@ -111,11 +111,9 @@ class Test_iter_book( TestCase ):
         self.assertEqual( pages, [ 1, 2, 3, 4 ] )
 
     def test_each_page_generate_should_be_a_intance_of_book( self ):
-        count = 0
         for page in self.book:
             self.assertIsInstance( page, Book )
 
     def test_each_page_generate_should_be_a_diferent_book_to_origin( self ):
-        count = 0
         for page in self.book:
             self.assertIsNot( page, self.book )

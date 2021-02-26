@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from chibi.file.snippets import chown, stat
 from tests.snippet.files import Test_with_files
 

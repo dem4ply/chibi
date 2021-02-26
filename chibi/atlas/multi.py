@@ -1,5 +1,4 @@
 from . import Chibi_atlas
-import copy
 
 
 class Chibi_atlas_multi( Chibi_atlas ):

@@ -1,7 +1,6 @@
 import os
 import random
 from unittest import TestCase
-from unittest.mock import patch
 
 from faker import Factory as Faker_factory
 
@@ -229,7 +228,7 @@ class Test_context_manager( Test_with_files ):
 
     def test_when_enter_raise_a_exception_should_do_nothing( self ):
         with self.assertRaises( ZeroDivisionError ):
-            with self.root_dir.temp_file() as f:
+            with self.root_dir.temp_file():
                 0 / 0
 
 

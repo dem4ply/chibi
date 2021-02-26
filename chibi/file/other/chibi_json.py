@@ -3,7 +3,7 @@ from chibi.file import Chibi_file
 from chibi.atlas import _wrap
 
 
-__all__ = [ 'Chibi_yaml' ]
+__all__ = [ 'Chibi_json' ]
 
 
 class Chibi_json( Chibi_file ):

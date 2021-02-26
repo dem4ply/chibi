@@ -103,12 +103,7 @@ class Chibi_file:
         """
         lee todo el archivo
         """
-        try:
-            result = self.file.read()
-        except Exception as e:
-            import pdb
-            pdb.set_trace()
-            pass
+        result = self.file.read()
         self.reread()
         return result
 

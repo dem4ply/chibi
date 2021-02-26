@@ -16,6 +16,7 @@ class Test_retry( TestCase ):
         exceptions = 0
         @retry_on_exception
         def asdf():
+            nonlocal exceptions
             exceptions += 1
             raise Exception( exceptions )
 

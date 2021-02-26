@@ -55,5 +55,5 @@ class Test_remove_inner_space( TestCase ):
     def test_should_remove_inner_spaces( self ):
         self.assertEqual( "asdf asdf", remove_inner_space( "asdf   asdf" ) )
 
-    def test_should_remove_inner_spaces( self ):
+    def test_should_remove_inner_new_lines( self ):
         self.assertEqual( "asdf asdf", remove_inner_space( "asdf \n  asdf" ) )

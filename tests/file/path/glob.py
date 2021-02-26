@@ -1,13 +1,7 @@
-import os
-import random
-from unittest import TestCase
-from unittest.mock import patch
-
 from faker import Factory as Faker_factory
 
-from chibi.file import Chibi_file
 from chibi.file.path import Chibi_path
-from chibi.file.snippets import exists, ls, file_dir
+from chibi.file.snippets import exists
 from tests.snippet.files import Test_with_files
 
 

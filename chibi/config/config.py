@@ -30,7 +30,7 @@ class Configuration( Chibi_atlas_default ):
                     self[ k ] = v
             elif isinstance( f, Chibi_python ):
                 logger.info( f"ejecutanto archivo python {f}" )
-                module = f.import_()
+                f.import_()
             else:
                 raise NotImplementedError(
                     "no esta implementado la carga de configuracion de los "

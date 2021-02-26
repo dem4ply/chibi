@@ -1,15 +1,9 @@
-import sys
 import re
-import importlib.util
-import copy
-import json
-import importlib
+
+from chibi.atlas import Chibi_atlas
+from chibi.atlas.multi import Chibi_atlas_multi
 from chibi.file import Chibi_file
 from chibi.snippet.iter import chunk_each
-from chibi.atlas.multi import Chibi_atlas_multi
-from chibi.atlas import Chibi_atlas
-from chibi.module import import_
-from chibi.snippet.string import camel_to_snake
 
 
 __all__ = [ 'Chibi_systemd' ]

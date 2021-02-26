@@ -1,10 +1,5 @@
-import sys
 import importlib.util
-import copy
-import json
-import importlib
 from chibi.file import Chibi_file
-from chibi.atlas import _wrap
 
 
 __all__ = [ 'Chibi_python' ]

@@ -19,12 +19,7 @@ class Descriptor:
         return instance.__dict__.get( self.name, self.default )
 
     def __set__( self, instance, value ):
-        try:
-            instance.__dict__[self.name] = value
-        except Exception as e:
-            import pdb
-            pdb.set_trace()
-            pass
+        instance.__dict__[ self.name ] = value
 
     def __repr__( self ):
         return "descriptor.{}".format( type( self ).__name__ )

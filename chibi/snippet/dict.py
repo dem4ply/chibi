@@ -56,7 +56,7 @@ def replace_keys( d, dr ):
                 d[ new_key ] = d[k]
                 del d[k]
                 k = new_key
-            except KeyError as e:
+            except KeyError:
                 pass
             replace_keys( d[k], dr )
 
