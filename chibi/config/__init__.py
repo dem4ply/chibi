@@ -24,12 +24,14 @@ def default_file_load():
         config_home = Chibi_path( '~/.config' )
 
     config_home += 'chibi'
-    if not config_home.exists:
-        config_home.mkdir()
-
     config_file = config_home + 'chibi.py'
+    if not config_home.exists:
+        return
+        # config_home.mkdir()
+
     if not config_file.exists:
-        config_file.touch()
+        return
+        # config_file.touch()
     load( config_file )
 
 
