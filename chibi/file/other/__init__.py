@@ -4,6 +4,7 @@ from .chibi_yaml import Chibi_yaml
 from .chibi_json import Chibi_json
 from .chibi_python import Chibi_python
 from .chibi_systemd import Chibi_systemd # NOQA
+from .conf import Chibi_conf # NOQA
 
 
 __all__ = [ 'Chibi_csv', 'Chibi_yaml', 'Chibi_json', 'Chibi_python' ]
