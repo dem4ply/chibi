@@ -70,25 +70,27 @@ class Test_chibi_conf( TestCase ):
         conf = Chibi_conf( self.file_service )
         result = conf.read()
         expected = {
-            '[www]': '',
-            'group': 'apache',
-            'listen': '127.0.0.1:9000',
-            'listen.allowed_clients': '127.0.0.1',
-            'user': 'apache'
+            'www': {
+                'group': 'apache',
+                'listen': '127.0.0.1:9000',
+                'listen.allowed_clients': '127.0.0.1',
+                'user': 'apache',
+            }
         }
         self.assertEqual( result, expected )
 
-    def test_should_have_expected_data( self ):
+    def test_when_change_variable_should_work( self ):
         conf = Chibi_conf( self.file_service )
         result = conf.read()
-        result[ '[www]' ] = 'qwert'
+        result[ 'www' ][ 'user' ] = 'qwert'
         conf.write( result )
         result_2 = conf.read()
         expected = {
-            '[www]': 'qwert',
-            'group': 'apache',
-            'listen': '127.0.0.1:9000',
-            'listen.allowed_clients': '127.0.0.1',
-            'user': 'apache'
+            'www': {
+                'group': 'apache',
+                'listen': '127.0.0.1:9000',
+                'listen.allowed_clients': '127.0.0.1',
+                'user': 'qwert',
+            }
         }
-        self.assertEqual( result, expected )
+        self.assertEqual( result_2, expected )
