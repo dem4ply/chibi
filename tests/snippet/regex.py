@@ -24,10 +24,10 @@ class test_regex(TestCase):
         self.invalid_email = [
             'abc\"def\"ghi@example.com', 'abc"defghi"xyz@example.com',
             'Abc.example.com', 'A@b@c@example.com',
-            'a"b(c)d,e:f;g<h>i[j\k]l@example.com',
+            'a"b(c)d,e:f;g<h>i[j\\k]l@example.com',
             'just"not"right@example.com',
             'this is"not\allowed@example.com',
-            'this\ still\"not\\allowed@example.com',
+            'this\\ still\"not\\allowed@example.com',
             'john..doe@example.com', 'john.doe@example..com', ]
 
     def test_test(self):

@@ -14,6 +14,7 @@ class Test_retry( TestCase ):
 
     def test_if_not_exception_should_fast_fail( self ):
         exceptions = 0
+
         @retry_on_exception
         def asdf():
             nonlocal exceptions
@@ -26,6 +27,7 @@ class Test_retry( TestCase ):
 
     def test_by_default_is_going_to_retry_5_times( self ):
         e = 0
+
         @retry_on_exception
         def asdf():
             nonlocal e
@@ -38,6 +40,7 @@ class Test_retry( TestCase ):
 
     def test_when_is_the_exception_should_do_the_retries( self ):
         es = 0
+
         @retry_on_exception( exceptions=( KeyError ) )
         def asdf():
             nonlocal es

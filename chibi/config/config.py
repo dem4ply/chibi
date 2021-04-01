@@ -42,7 +42,7 @@ class Logger_configuration( Chibi_atlas ):
         try:
             return super().__getitem__( name )
         except KeyError:
-            #logger = logging.getLogger( name )
+            # logger = logging.getLogger( name )
             self[ name ] = Logger( name=name )
             return super().__getitem__( name )
 

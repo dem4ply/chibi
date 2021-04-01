@@ -8,7 +8,8 @@ content = """
 [www]
 
 ; Unix user/group of processes
-; Note: The user is mandatory. If the group is not set, the default user's group
+; Note: The user is mandatory. If the group is not set, the
+; default user's group
 ;       will be used.
 ; RPM: apache Choosed to be able to access some dir as httpd
 user = apache
@@ -17,9 +18,9 @@ group = apache
 
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are:
-;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific IPv4 address on
+;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific
 ;                            a specific port;
-;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific IPv6 address on
+;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific
 ;                            a specific port;
 ;   'port'                 - to listen on a TCP socket to all addresses
 ;                            (IPv6 and IPv4-mapped) on a specific port;
@@ -45,14 +46,15 @@ listen = 127.0.0.1:9000
 ;listen.acl_users =
 ;listen.acl_groups =
 
-; List of addresses (IPv4/IPv6) of FastCGI clients which are allowed to connect.
-; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
-; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket. Each address
-; must be separated by a comma. If this value is left blank, connections will be
+; List of addresses (IPv4/IPv6) of FastCGI clients which are
+; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable
+; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket
+; must be separated by a comma. If this value is left blank, connections
 ; accepted from any ip address.
 ; Default Value: any
 listen.allowed_clients = 127.0.0.1
 """
+
 
 class Test_chibi_conf( TestCase ):
     def setUp( self ):

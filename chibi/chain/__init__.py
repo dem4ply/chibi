@@ -24,5 +24,6 @@ class Chibi_chain( list ):
                 "los siguientes items" )
 
         if self.next_obj is not None and not callable( self.retrieve_next ):
-            raise NotImplementedError( "retrieve_next deberia de ser llamable" )
+            raise NotImplementedError(
+                "retrieve_next deberia de ser llamable" )
         return True

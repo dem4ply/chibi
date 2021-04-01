@@ -21,7 +21,8 @@ class Test_chibi_csv( TestCase ):
     def test_should_append_dicts( self ):
         csv = Chibi_csv( self.file_csv )
         csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
-        csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9', 'cosa4': 'a' } )
+        csv.append(
+            { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9', 'cosa4': 'a' } )
         csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
         result = list( csv.read_as_dict() )
         self.assertEqual( len( result ), 3 )
@@ -55,7 +56,8 @@ class Test_chibi_csv( TestCase ):
         csv = Chibi_csv( self.file_csv )
         self.assertFalse( csv.has_headers )
         csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
-        csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9', 'cosa4': 'a' } )
+        csv.append(
+            { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9', 'cosa4': 'a' } )
         csv.append( { 'cosa1': '1', 'cosa2': '3', 'cosa3': '9' } )
         result = list( csv.read_as_dict() )
         self.assertEqual( len( result ), 3 )

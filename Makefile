@@ -99,7 +99,7 @@ pep8:
 
 flakes:
 	@echo "Running flakes tests..."
-	@pyflakes chibi tests
+	@flake8 chibi tests
 
 test: test_unit report
 

@@ -1,7 +1,6 @@
 import re
 
 from chibi.atlas import Chibi_atlas
-from chibi.atlas.multi import Chibi_atlas_multi
 from chibi.file import Chibi_file
 from chibi.snippet.iter import chunk_each
 

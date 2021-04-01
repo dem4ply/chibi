@@ -29,9 +29,9 @@ class Chibi_image( Chibi_file ):
         if not isinstance( other, Chibi_image ):
             return False
         return (
-            self.properties.mime == other.properties.mime and
-            self.dimension == other.dimension and
-            self.properties.size == other.properties.size
+            self.properties.mime == other.properties.mime
+            and self.dimension == other.dimension
+            and self.properties.size == other.properties.size
         )
 
     def thumbnail( self, path, size=( 64, 64 ) ):

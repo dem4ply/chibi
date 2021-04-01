@@ -83,7 +83,6 @@ class Test_path( Test_with_files ):
             set( f.base_name for f in source.ls() ),
             set( f.base_name for f in dest.ls() ) )
 
-
     def test_copy_to_a_existen_dir_should_override_the_current_files( self ):
         dest = Chibi_path( self.root_dir ) + 'hola'
         source = Chibi_path( self.folder_with_files_with_content )

@@ -1,11 +1,11 @@
 from .config import (
     __all__ as config_all,
     Configuration, Logger_configuration, Env_vars )
-from .logger import *  # NOQA
+from .logger import *  # noqa: F403
 from chibi.file import Chibi_path
 
 
-__all__ = config_all + logger.__all__
+__all__ = config_all + logger.__all__  # noqa: F405
 
 
 configuration = Configuration(

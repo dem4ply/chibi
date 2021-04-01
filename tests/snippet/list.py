@@ -17,6 +17,7 @@ class Test_group_by( TestCase ):
             'fail': [ dict( s='fail' ), dict( s='fail' ), ],
             'no': [ dict( s='no' ), ],
         }
+
     def test_should_return_expected_result_if_is_a_callable( self ):
         result = group_by( self.l, lambda v: v[ 's' ] )
         self.assertEqual( result, self.expected )
