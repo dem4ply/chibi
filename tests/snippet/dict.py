@@ -5,7 +5,8 @@ from faker import Factory as Faker_factory
 from chibi.snippet.dict import (
     keys_to_snake_case, replace_keys, pop_regex, get_regex, rename_keys,
     lower_keys, delete_list_of_keys, get_list_of_keys, get_from_dict,
-    remove_value, remove_nones, remove_xml_notatation, split
+    remove_value, remove_nones, remove_xml_notatation, split,
+    group_by
 )
 
 
@@ -216,6 +217,18 @@ class Test_dict(TestCase):
             { "new_qwer": 456 }
         ]
         result = list( split( dict_test ) )
+        self.assertEqual( result, expected )
+
+    def test_group_by_with_dict( self ):
+        dict_test = { 'id': 1 }
+        expected = { 1: dict_test }
+        result = group_by( dict_test, 'id' )
+        self.assertEqual( result, expected )
+
+    def test_group_by_with_list( self ):
+        dict_test = [ { 'id': 1 }, { 'id': 2 }, { 'id': 1 } ]
+        expected = { 1: [ dict_test[0], dict_test[2] ], 2: dict_test[1] }
+        result = group_by( dict_test, 'id' )
         self.assertEqual( result, expected )
 
 

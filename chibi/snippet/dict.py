@@ -358,3 +358,18 @@ def split( d ):
     [ { "a": "1" }, { "b": "2" } ]
     """
     return map( lambda x: { x[0]: x[1] }, d.items() )
+
+
+def group_by( d, key ):
+    from chibi.atlas.multi import Chibi_atlas_multi
+    result = Chibi_atlas_multi()
+    if isinstance( d, dict ):
+        try:
+            result[ d[ key ] ] = d
+        except KeyError:
+            pass
+    elif isinstance( d, list ):
+        for dd in d:
+            r = group_by( dd, key )
+            result.update( r )
+    return result

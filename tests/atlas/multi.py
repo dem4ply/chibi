@@ -18,3 +18,10 @@ class Test_chibi_atlas_multi( unittest.TestCase ):
         m[ 'a' ] = 'c'
 
         self.assertEqual( { 'a': [ 'a', 'b', 'c', ] }, m )
+
+    def test_when_update_should_add_a_list( self ):
+        m = Chibi_atlas_multi()
+        m[ 'a' ] = 'a'
+        d = { 'a': 'b' }
+        m.update( d )
+        self.assertEqual( m, { 'a': [ 'a', 'b' ] } )

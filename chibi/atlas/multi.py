@@ -12,3 +12,10 @@ class Chibi_atlas_multi( Chibi_atlas ):
             self[ name ].append( value )
         else:
             super().__setitem__( name, value )
+
+    def update( self, d ):
+        if not isinstance( d, dict ):
+            raise NotImplementedError(
+                f"no esta implementado el typo {type(d)}" )
+        for k, v in d.items():
+            self[ k ] = v
