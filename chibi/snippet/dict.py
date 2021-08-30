@@ -324,8 +324,10 @@ def __remove_element__list( l, element ):
             continue
         if isinstance( i, list ):
             result.append( __remove_element__list( i, element ) )
-        if isinstance( i, dict ):
+        elif isinstance( i, dict ):
             result.append( remove_value( i, element ) )
+        else:
+            result.append( i )
 
     return result
 

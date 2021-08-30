@@ -26,7 +26,7 @@ class Network( Chibi_atlas ):
             interface_name = re.search(
                 r"^.*: (?P<interface>\w+.+):",
                 interface_raw ).groupdict()[ 'interface' ]
-            interface = Interface()
+            interface = Interface( name=interface_name )
             result[ interface_name ] = interface
 
             interface.ip_v4 = re.search(
