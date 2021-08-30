@@ -250,6 +250,15 @@ class Test_search_value( TestCase ):
         self.assertEqual( result, expected )
 
 
+    def test_when_end_in_a_list( self ):
+        test_dict = {
+            'a': { 'b': [ 'b', 'a' ] }
+        }
+        expected = 'a__b__[1]'
+        result = search_value( test_dict, 'a' )
+        self.assertEqual( result, expected )
+
+
 class Test_pipeline( TestCase ):
     def setUp( self ):
         self.example = {

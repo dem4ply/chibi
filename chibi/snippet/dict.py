@@ -387,6 +387,8 @@ def search_value( d, value ):
                 return f"{k}__{in_search}"
     elif isinstance( d, list ):
         for i, dd in enumerate( d ):
+            if dd == value:
+                return f"[{i}]"
             in_search = search_value( dd, value )
             if in_search:
                 return f"[{i}]__{in_search}"
