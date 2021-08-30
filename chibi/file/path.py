@@ -101,7 +101,7 @@ class Chibi_path( str ):
         file_name, ext = os.path.splitext( self.base_name )
         return file_name
 
-    def open( self, chibi_file_class=None ):
+    def open( self, chibi_file_class=None, encoding=None, newline=None ):
         """
         abre el archivo usando un chibi file
         """
@@ -113,7 +113,7 @@ class Chibi_path( str ):
                 chibi_file_class = Chibi_file
             else:
                 chibi_file_class = self._chibi_file_class
-        return chibi_file_class( self )
+        return chibi_file_class( self, encoding=encoding, newline=newline )
 
     def relative_to( self, root ):
         from .snippets import get_relative_path

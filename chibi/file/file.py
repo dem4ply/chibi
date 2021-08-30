@@ -25,7 +25,9 @@ class Chibi_file:
         obj = super().__new__( cls )
         return obj
 
-    def __init__( self, file_name ):
+    def __init__( self, file_name, encoding=None, newline=None ):
+        self.encoding = encoding
+        self.newline = newline
         self._file_name = file_name
         self._current_dir = file_dir( file_name )
         if not self.exists:
@@ -76,26 +78,26 @@ class Chibi_file:
             return f.find( string_to_find )
 
     def reread( self ):
-        self.file = open( self.path, 'r' )
+        self.file = self._open( 'r' )
 
     def __contains__( self, string ):
         return self.find( string ) >= 0
 
     def append( self, string ):
         if isinstance( string, ( bytes, bytearray ) ):
-            with open( self.path, 'ab' ) as f:
+            with self._open( 'ab' ) as f:
                 f.write( string )
         else:
-            with open( self.path, 'a' ) as f:
+            with self._open( 'a' ) as f:
                 f.write( string )
         self.reread()
 
     def write( self, string ):
         if isinstance( string, ( bytes, bytearray ) ):
-            with open( self.path, 'wb' ) as f:
+            with self._open( 'wb' ) as f:
                 f.write( string )
         else:
-            with open( self.path, 'w' ) as f:
+            with self._open( 'w' ) as f:
                 f.write( string )
         self.reread()
 
@@ -180,3 +182,7 @@ class Chibi_file:
                 self += chunk
             return self
         self += str( other )
+
+    def _open( self, mode ):
+        return open(
+            self.path, mode, encoding=self.encoding, newline=self.newline )

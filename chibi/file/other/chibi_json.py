@@ -11,5 +11,5 @@ class Chibi_json( Chibi_file ):
         self.reread()
         return _wrap( json.load( self.file ) )
 
-    def write( self, data, is_safe=False ):
-        super().write( json.dumps( data ) )
+    def write( self, data, is_safe=False, **kw ):
+        super().write( json.dumps( data, **kw ) )
