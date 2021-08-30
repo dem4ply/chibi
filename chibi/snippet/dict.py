@@ -375,3 +375,18 @@ def group_by( d, key ):
             r = group_by( dd, key )
             result.update( r )
     return result
+
+
+def search_value( d, value ):
+    if isinstance( d, dict ):
+        for k, v in d.items():
+            if v == value:
+                return k
+            in_search = search_value( v, value )
+            if in_search:
+                return f"{k}__{in_search}"
+    elif isinstance( d, list ):
+        for i, dd in enumerate( d ):
+            in_search = search_value( dd, value )
+            if in_search:
+                return f"[{i}]__{in_search}"
