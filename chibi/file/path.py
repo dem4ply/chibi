@@ -206,7 +206,7 @@ class Chibi_path( str ):
         from chibi.file.snippets import chown
         chown(
             self, user_name=user_name, group_name=group_name,
-            recursive=recursive )
+            recursive=recursive, verbose=verbose )
 
     def chmod( self, mod ):
         """
