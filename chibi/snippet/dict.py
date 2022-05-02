@@ -362,18 +362,38 @@ def split( d ):
     return map( lambda x: { x[0]: x[1] }, d.items() )
 
 
-def group_by( d, key ):
+def group_by( d, *keys ):
     from chibi.atlas.multi import Chibi_atlas_multi
     result = Chibi_atlas_multi()
-    if isinstance( d, dict ):
+    if isinstance( d, dict  ):
+        d = [ d ]
+    return _group_by_list( d, *keys )
+
+
+def _group_by_list( d, *keys ):
+    from chibi.atlas.multi import Chibi_atlas_multi
+    result = Chibi_atlas_multi()
+    for v in d:
+        _group_by_dict( v, *keys, result=result )
+    return result
+
+
+def _group_by_dict( d, *keys, result ):
+    from chibi.atlas.multi import Chibi_atlas_multi
+    current = result
+    for k in keys[:-1]:
+        key = d[ k ]
         try:
-            result[ d[ key ] ] = d
+            current = current[ key ]
         except KeyError:
-            pass
-    elif isinstance( d, list ):
-        for dd in d:
-            r = group_by( dd, key )
-            result.update( r )
+            current[ key ] = Chibi_atlas_multi()
+            current = current[ key ]
+    k = keys[-1]
+    key = d[ k ]
+    if key not in current:
+        current[ key ] = [ d ]
+    else:
+        current[ key ] = d
     return result
 
 
@@ -392,3 +412,20 @@ def search_value( d, value ):
             in_search = search_value( dd, value )
             if in_search:
                 return f"[{i}]__{in_search}"
+
+
+def flatten( d, parent=None ):
+    if isinstance( d, dict ):
+        for k, v in d.items():
+            if parent:
+                yield from flatten( v, f"{parent}__{k}" )
+            else:
+                yield from flatten( v, f"{k}" )
+    elif isinstance( d, list ):
+        for i, dd in enumerate( d ):
+            if parent:
+                yield from flatten( dd, f"{parent}__[{i}]" )
+            else:
+                yield from flatten( dd, f"[{i}]" )
+    else:
+        yield parent, d

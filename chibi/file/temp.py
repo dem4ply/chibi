@@ -4,6 +4,10 @@ from .path import Chibi_path
 
 
 class Chibi_temp_path( Chibi_path ):
+    """
+    cuando se instancia crea un directorio temporal en /tmp/ y cuando
+    se elimina la instancia se borra la carpeta( algunas veces )
+    """
     def __new__( cls, *args, **kw ):
         args_2 = []
         args_2.append( tempfile.mkdtemp() )

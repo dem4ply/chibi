@@ -17,7 +17,7 @@ and files
 
 .. code-block:: python
 
-	import chibi.file import Chibi_path
+	from chibi.file import Chibi_path
 
 	tmp = Chibi_path( '/tmp/folder' )
 	isintance( p, str ) == true

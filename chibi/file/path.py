@@ -106,7 +106,8 @@ class Chibi_path( str ):
         abre el archivo usando un chibi file
         """
         if self.is_a_folder:
-            raise NotImplementedError
+            raise NotImplementedError(
+                f'abrir folders no esta implementado "{self}"' )
         if chibi_file_class is None:
             if self._chibi_file_class is None:
                 from .file import Chibi_file

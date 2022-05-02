@@ -6,7 +6,7 @@ from chibi.snippet.dict import (
     keys_to_snake_case, replace_keys, pop_regex, get_regex, rename_keys,
     lower_keys, delete_list_of_keys, get_list_of_keys, get_from_dict,
     remove_value, remove_nones, remove_xml_notatation, split,
-    group_by, search_value
+    group_by, search_value, flatten
 )
 
 
@@ -221,13 +221,34 @@ class Test_dict(TestCase):
 
     def test_group_by_with_dict( self ):
         dict_test = { 'id': 1 }
-        expected = { 1: dict_test }
+        expected = { 1: [ dict_test ] }
         result = group_by( dict_test, 'id' )
+        self.assertEqual( result, expected )
+
+    def test_group_by_multi_key( self ):
+        dict_test = [
+            { 'id': 1, 'a': 'a', 'b': 'b', 'c': 'c' },
+            { 'id': 2, 'a': 'b', 'b': 'c', 'c': 'd' },
+            { 'id': 3, 'a': 'a', 'b': 'b', 'c': 'c' },
+        ]
+        expected = {
+            'a': {
+                'b': {
+                    'c': [ dict_test[0], dict_test[2] ]
+                }
+            },
+            'b': {
+                'c': {
+                    'd': [ dict_test[1] ]
+                }
+            }
+        }
+        result = group_by( dict_test, 'a', 'b', 'c' )
         self.assertEqual( result, expected )
 
     def test_group_by_with_list( self ):
         dict_test = [ { 'id': 1 }, { 'id': 2 }, { 'id': 1 } ]
-        expected = { 1: [ dict_test[0], dict_test[2] ], 2: dict_test[1] }
+        expected = { 1: [ dict_test[0], dict_test[2] ], 2: [ dict_test[1] ] }
         result = group_by( dict_test, 'id' )
         self.assertEqual( result, expected )
 
@@ -256,6 +277,33 @@ class Test_search_value( TestCase ):
         }
         expected = 'a__b__[1]'
         result = search_value( test_dict, 'a' )
+        self.assertEqual( result, expected )
+
+
+class Test_flatten( TestCase ):
+    def test_when_is_pure_dicts( self ):
+        test_dict = {
+            'a': { 'b': 'a' }
+        }
+        expected = [ ( 'a__b', 'a' ) ]
+        result = list( flatten( test_dict ) )
+        self.assertEqual( result, expected )
+
+    def test_when_is_dicts_with_list( self ):
+        test_dict = {
+            'a': [ { 'b': 'a' } ]
+        }
+        expected = [ ( 'a__[0]__b', 'a' ) ]
+        result = list( flatten( test_dict, ) )
+        self.assertEqual( result, expected )
+
+
+    def test_when_end_in_a_list( self ):
+        test_dict = {
+            'a': { 'b': [ 'b', 'a' ] }
+        }
+        expected = [ ( 'a__b__[0]', 'b' ), ( 'a__b__[1]', 'a' ) ]
+        result = list( flatten( test_dict, ) )
         self.assertEqual( result, expected )
 
 
