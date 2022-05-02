@@ -25,11 +25,13 @@ class Chibi_file:
         obj = super().__new__( cls )
         return obj
 
-    def __init__( self, file_name, encoding=None, newline=None ):
+    def __init__(
+            self, file_name, encoding=None, newline=None, is_binary=False ):
         self.encoding = encoding
         self.newline = newline
         self._file_name = file_name
         self._current_dir = file_dir( file_name )
+        self.is_binary = is_binary
         if not self.exists:
             self.touch()
         self.reread()
@@ -78,7 +80,10 @@ class Chibi_file:
             return f.find( string_to_find )
 
     def reread( self ):
-        self.file = self._open( 'r' )
+        if self.is_binary:
+            self.file = self._open( 'rb' )
+        else:
+            self.file = self._open( 'r' )
 
     def __contains__( self, string ):
         return self.find( string ) >= 0
