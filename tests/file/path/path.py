@@ -264,3 +264,10 @@ class Test_path_open( Test_with_files ):
     def test_the_chibi_path_can_carrie_the_chibi_file_whant_to_be_used( self ):
         f = Chibi_path( self.files[0], chibi_file_class=Dump_chibi_file )
         self.assertIsInstance( f.open(), Dump_chibi_file )
+
+    def test_chibi_path_open_send_is_binary( self ):
+        f = Chibi_path( self.files[0], )
+        chibi_file = f.open( is_binary=True )
+        self.assertTrue( chibi_file.is_binary )
+        chibi_file = f.open( is_binary=False )
+        self.assertFalse( chibi_file.is_binary )

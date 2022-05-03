@@ -331,6 +331,7 @@ def check_sum_md5( file_name, check_sum ):
 
 
 def delete( path ):
+    logger.warning( "delete de snippets siendo usado" )
     if is_file( path ):
         os.remove( path )
     else:

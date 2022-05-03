@@ -9,6 +9,7 @@ import magic
 
 
 logger = logging.getLogger( "chibi.file.chibi_path" )
+logger_delete = logging.getLogger( "chibi.file.chibi_path.delete" )
 
 
 class Chibi_path( str ):
@@ -101,7 +102,7 @@ class Chibi_path( str ):
         file_name, ext = os.path.splitext( self.base_name )
         return file_name
 
-    def open( self, chibi_file_class=None, encoding=None, newline=None ):
+    def open( self, chibi_file_class=None, encoding=None, newline=None, **kw ):
         """
         abre el archivo usando un chibi file
         """
@@ -114,7 +115,8 @@ class Chibi_path( str ):
                 chibi_file_class = Chibi_file
             else:
                 chibi_file_class = self._chibi_file_class
-        return chibi_file_class( self, encoding=encoding, newline=newline )
+        return chibi_file_class(
+            self, encoding=encoding, newline=newline, **kw )
 
     def relative_to( self, root ):
         from .snippets import get_relative_path
@@ -194,9 +196,12 @@ class Chibi_path( str ):
         """
         elimina el archivo o la carpeta
         """
-        from.snippets import delete
-        delete( str( self ) )
-        logger.info( 'delete "{}"'.format( self ) )
+        if self.is_a_file:
+            os.remove( str( self ) )
+            logger_delete.info( 'delete file "{}"'.format( self ) )
+        else:
+            shutil.rmtree( str( self ) )
+            logger_delete.info( 'delete folder "{}"'.format( self ) )
 
     def chown(
             self, verbose=True, user_name=None, group_name=None,
