@@ -11,7 +11,8 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'requests>=2.19.1', 'python-magic>=0.4.15', 'dateutils>=0.6.6',
-    'xmltodict>=0.12.0', 'pyyaml>=5.1.2' ]
+    'xmltodict>=0.12.0', 'pyyaml>=5.1.2', 'chibi-donkey>=1.0.1',
+    'Pillow>=10.1.0' ]
 
 setup(
     name='chibi',

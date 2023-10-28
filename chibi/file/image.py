@@ -1,7 +1,6 @@
 from chibi.file import Chibi_file
 from chibi.file.snippets import add_extensions
 from chibi.file.path import Chibi_path
-from PIL import Image
 
 
 class Chibi_image( Chibi_file ):
@@ -11,6 +10,7 @@ class Chibi_image( Chibi_file ):
 
     @property
     def _PIL( self ):
+        from PIL import Image
         return Image.open( self.path )
 
     def read_cv2( self ):

@@ -363,6 +363,18 @@ def split( d ):
 
 
 def group_by( d, *keys ):
+    """
+    agrupa usando los keys
+
+    Params
+    ------
+    d: dict or list
+    keys: tuple
+
+    result
+    ------
+    dict
+    """
     from chibi.atlas.multi import Chibi_atlas_multi
     result = Chibi_atlas_multi()
     if isinstance( d, dict  ):
