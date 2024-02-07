@@ -38,7 +38,7 @@ def replace_keys( d, dr ):
     d: dict
         dict is going to have replace his keys
     dr: dict
-        dict is going to use for remplace his keys
+        dict is going to use for replace his keys
 
     Examples
     ========

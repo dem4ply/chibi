@@ -12,7 +12,7 @@ cosas utitles
 Chibi_path
 ==========
 
-the chibi path work like strings but with opperators have sense for folders
+the chibi path work like strings but with operators have sense for folders
 and files
 
 .. code-block:: python
