@@ -1,10 +1,8 @@
-GitPython==2.1.5
-dateutils==0.6.6
-factory-boy==2.9.2
-pep8==1.7.0
-pip==21.1
+factory-boy
+pep8
+pip
 pyflakes
-vcrpy-unittest==0.1.6
+vcrpy-unittest
 
 
 jedi
