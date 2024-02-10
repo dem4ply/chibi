@@ -270,7 +270,6 @@ class Test_search_value( TestCase ):
         result = search_value( test_dict, 'a' )
         self.assertEqual( result, expected )
 
-
     def test_when_end_in_a_list( self ):
         test_dict = {
             'a': { 'b': [ 'b', 'a' ] }
@@ -296,7 +295,6 @@ class Test_flatten( TestCase ):
         expected = [ ( 'a__[0]__b', 'a' ) ]
         result = list( flatten( test_dict, ) )
         self.assertEqual( result, expected )
-
 
     def test_when_end_in_a_list( self ):
         test_dict = {

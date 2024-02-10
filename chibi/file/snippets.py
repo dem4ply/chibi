@@ -306,9 +306,7 @@ def _print_verboce_chown( path, old_stat, current_stat ):
         logger.info(
             "el propietario de '{path}' permanece '{old}'"
             .format(
-                path=path, new="{user}:{group}".format(
-                    user=current_stat.user.name,
-                    group=current_stat.group.name ),
+                path=path,
                 old="{user}:{group}".format(
                     user=old_stat.user.name, group=old_stat.group.name ) ) )
 

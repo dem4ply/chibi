@@ -17,7 +17,7 @@ class Unit:
             symbol=self.symbol, prefix=self.prefix.symbol )
 
     def __repr__( self ):
-        return '{cls}( {value} )'.format( str( self.__class__ ), str( self ) )
+        return f"{str(self.__class__)}( {str( self )} )"
 
     def __add__( self, other ):
         if is_number( other ):

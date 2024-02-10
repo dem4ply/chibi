@@ -8,7 +8,7 @@ from chibi_atlas import (
     Chibi_atlas, Chibi_atlas_default, Chibi_atlas_ignore_case, Atlas,
 )
 
-from chibi_atlas.chibi_atlas import _wrap
+from chibi_atlas.chibi_atlas import _wrap  # noqa: F401
 
 
 __all__ = [

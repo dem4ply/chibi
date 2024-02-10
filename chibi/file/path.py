@@ -163,7 +163,7 @@ class Chibi_path( str ):
         """
         copia el archivo o carpeta al destino
         """
-        from.snippets import copy
+        from .snippets import copy
         dest = Chibi_path( dest )
         if self.is_a_file:
             if dest.is_a_folder:

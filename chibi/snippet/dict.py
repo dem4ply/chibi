@@ -376,7 +376,6 @@ def group_by( d, *keys ):
     ------
     dict
     """
-    result = Chibi_atlas_multi()
     if isinstance( d, dict  ):
         d = [ d ]
     return _group_by_list( d, *keys )

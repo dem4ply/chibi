@@ -1,7 +1,5 @@
 from tests.snippet.files import Test_with_files
-import json
 from chibi.file import Chibi_file
-from chibi.file.other import Chibi_json
 
 
 class Test_chibi_file_binary( Test_with_files ):
