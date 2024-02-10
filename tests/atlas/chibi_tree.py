@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from chibi.atlas.tree import Chibi_tree, build_tree
+from chibi_atlas.tree import Chibi_tree, build_tree
 
 
 class Value_test:

@@ -4,6 +4,7 @@ import re
 from . import regex as chibi_regex
 from .string import camel_to_snake
 from chibi.snippet.is_type import is_like_list
+from chibi_atlas.multi import Chibi_atlas_multi
 
 
 def keys_to_snake_case( d ):
@@ -375,7 +376,6 @@ def group_by( d, *keys ):
     ------
     dict
     """
-    from chibi.atlas.multi import Chibi_atlas_multi
     result = Chibi_atlas_multi()
     if isinstance( d, dict  ):
         d = [ d ]
@@ -383,7 +383,6 @@ def group_by( d, *keys ):
 
 
 def _group_by_list( d, *keys ):
-    from chibi.atlas.multi import Chibi_atlas_multi
     result = Chibi_atlas_multi()
     for v in d:
         _group_by_dict( v, *keys, result=result )
@@ -391,7 +390,6 @@ def _group_by_list( d, *keys ):
 
 
 def _group_by_dict( d, *keys, result ):
-    from chibi.atlas.multi import Chibi_atlas_multi
     current = result
     for k in keys[:-1]:
         key = d[ k ]

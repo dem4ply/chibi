@@ -1,5 +1,5 @@
 import unittest
-from chibi.atlas.multi import Chibi_atlas_multi
+from chibi_atlas.multi import Chibi_atlas_multi
 
 
 class Test_chibi_atlas_multi( unittest.TestCase ):

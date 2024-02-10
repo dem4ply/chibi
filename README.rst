@@ -47,6 +47,8 @@ and files
 Chibi_atlas
 ===========
 
+esta herramienta se migro al paquete chibi-atlas
+
 this is a dict but his keys can be access like attribute
 
 .. code-block:: python

@@ -1,7 +1,7 @@
 import datetime
 
-from chibi.atlas import Chibi_atlas, Chibi_atlas_default
-from chibi.atlas.tree import Chibi_tree
+from chibi_atlas import Chibi_atlas, Chibi_atlas_default
+from chibi_atlas.tree import Chibi_tree
 
 
 class Descriptor:
