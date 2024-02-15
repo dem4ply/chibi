@@ -17,6 +17,10 @@ def _default_factory():
 
 
 class Configuration( Chibi_atlas_default ):
+    """
+    esta clase funciona como un simple dicionario de atributos para asignar
+    configuraciones
+    """
     def __init__( self, default_factory=None, *args, **kw ):
         if default_factory is None:
             default_factory = _default_factory
@@ -38,6 +42,9 @@ class Configuration( Chibi_atlas_default ):
 
 
 class Logger_configuration( Chibi_atlas ):
+    """
+    su default busca los loggers de python usnado el key
+    """
     def __getitem__( self, name ):
         try:
             return super().__getitem__( name )
