@@ -12,7 +12,7 @@ cosas utitles
 Chibi_path
 ==========
 
-the chibi path work like strings but with opperators have sense for folders
+the chibi path work like strings but with operators have sense for folders
 and files
 
 .. code-block:: python
@@ -20,15 +20,17 @@ and files
 	from chibi.file import Chibi_path
 
 	tmp = Chibi_path( '/tmp/folder' )
-	isintance( p, str ) == true
+	isinstance( tmp, str ) == True
+	tmp.mkdir()
 	# return a generator with all the files and folders in
 	# the path
-	ls = list( p.ls() )
+	ls = list( tmp.ls() )
 	print( ls )
 	p = tmp + 'file.json'
 	str( p ) == '/tmp/folder/file.json'
 	f = p.open()
-	# check the file for see is containt the string
+	f.write('some string')
+	# check the file to see if it contains the string
 	'some string' in f
 
 	# write a dict like json in the file
@@ -38,9 +40,11 @@ and files
 	json.stuff == 'str'
 
 	# the same but in yaml
-	f = p + 'file.yaml'
-	f.write( { 'stuff': 'str' } )
-	yaml = f.read()
+	f = tmp + 'file.yaml'
+	y = f.open()
+
+	y.write( { 'stuff': 'str' } )
+	yaml = y.read()
 	yaml.stuff == 'str'
 
 
@@ -53,11 +57,11 @@ this is a dict but his keys can be access like attribute
 
 .. code-block:: python
 
-	import chibi.atals import Chibi_atlas
+	from chibi.atlas import Chibi_atlas
 
 
 	c = Chibi_atlas( { 'stuff': 'str', 'l': [ 1, { 'more_stuff': 'str_2' } ] } )
-	isintance( c, dict ) == true
+	isinstance( c, dict ) == True
 	c.stuff == 'str'
 	c.l[0] == 1
 	c.l[1].more_stuff == 'str_2'
