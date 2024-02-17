@@ -8,7 +8,6 @@ Welcome to chibi's documentation!
    readme
    installation
    usage
-   modules
    contributing
    authors
    history
