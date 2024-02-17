@@ -1,6 +1,15 @@
+
 =====
 chibi
 =====
+
+.. image:: https://img.shields.io/pypi/v/chibi.svg
+        :target: https://pypi.python.org/pypi/chibi
+
+.. image:: https://readthedocs.org/projects/chibi/badge/?version=latest
+    :target: https://chibi.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 
 this package is for i can put snippets and other useful things
 and i do not need to write the same thing for fifth time
