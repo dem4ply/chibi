@@ -95,7 +95,7 @@ open_report_firefox:
 
 pep8:
 	@echo "Running pep8 tests..."
-	@pep8 --statistics chibi tests
+	@pycodestyle --statistics chibi tests
 
 flakes:
 	@echo "Running flakes tests..."

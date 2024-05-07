@@ -236,6 +236,9 @@ class Chibi_path( str ):
         """
         if self.is_a_file:
             return self.properties.extension
+        elif not self.exists:
+            file_name, ext = os.path.splitext( self.base_name )
+            return ext
         else:
             raise NotImplementedError
 

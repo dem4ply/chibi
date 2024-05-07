@@ -177,6 +177,15 @@ class Test_path_file_name( Test_with_files ):
         self.assertEqual( expected, result )
 
 
+class Test_path_extention( Test_with_files ):
+    def test_when_no_exists_file_should_return_the_extention( self ):
+        f = Chibi_path( faker.file_name() )
+        self.assertFalse( f.exists )
+        file_name, ext = str( f ).split( "." )
+        result = f.extension
+        self.assertEqual( result, f".{ext}" )
+
+
 class Test_move( Test_with_files ):
     def test_when_move_a_empty_file_should_create_a_new_empty_file( self ):
         file = Chibi_path( random.choice( self.files ) )
