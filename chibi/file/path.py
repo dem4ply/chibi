@@ -232,7 +232,7 @@ class Chibi_path( str ):
     @property
     def extension( self ):
         """
-        regresa la extencion del archivo
+        regresa la extencion del archivo el formato es '.{ext}'
         """
         if self.is_a_file:
             return self.properties.extension
