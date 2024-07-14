@@ -11,6 +11,8 @@ chibi
     :alt: Documentation Status
 
 
+python snippets and other useful things
+
 this package is for i can put snippets and other useful things
 and i do not need to write the same thing for fifth time
 
