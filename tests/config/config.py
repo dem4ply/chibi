@@ -1,10 +1,12 @@
 import logging
 import unittest
+from unittest.mock import Mock, patch
 from tests.snippet.files import Test_with_files
 from chibi import config
 from chibi.atlas import Chibi_atlas
 from chibi.config.config import Logger
 from chibi.config import Configuration
+from chibi.config import default_file_load, _build_config_path
 
 
 class Test_load_config( Test_with_files ):
@@ -79,3 +81,45 @@ class Test_envars( unittest.TestCase ):
 
     def test_envars_should_no_be_empty( self ):
         self.assertTrue( self.config.env_vars )
+
+
+class Test_default_file_load( unittest.TestCase ):
+    def setUp( self ):
+        super().setUp()
+        from chibi.config import configuration
+        self.config = configuration
+
+    def test_should_work( self ):
+        default_file_load()
+
+    @patch( 'chibi.config.load' )
+    def test_should_call_load_funtion( self, load ):
+        default_file_load()
+        load.assert_called_once()
+
+    @patch( 'chibi.config._should_load_config_file' )
+    @patch( 'chibi.config.load' )
+    def test_should_load_other_default_configs( self, load, should_load ):
+        should_load.return_value = True
+        default_file_load( 'other.py' )
+        load.assert_called_once()
+        config_file = load.mock_calls[0].args[0]
+        self.assertEqual( config_file.base_name, 'other.py' )
+
+    @patch( 'chibi.config._should_load_config_file' )
+    @patch( 'chibi.config.load' )
+    def test_when_should_load_is_false_should_no_load(
+            self, load, should_load ):
+        should_load.return_value = False
+        default_file_load()
+        load.assert_not_called()
+
+    def test_with_touch_should_create_the_file( self ):
+        config_home = _build_config_path()
+        config_file = config_home + 'other.py'
+        if config_file.exists:
+            self.fail( f'el config file {config_file} existe' )
+        default_file_load( 'other.py', touch=True )
+        self.assertTrue(
+            config_file.exists, f'el config file {config_file} no se creo' )
+        config_file.delete()

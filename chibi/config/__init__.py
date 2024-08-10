@@ -14,7 +14,7 @@ configuration = Configuration(
 )
 
 
-def default_file_load():
+def _build_config_path():
     config_home = configuration.env_vars.HOME
     if not config_home:
         return
@@ -22,17 +22,28 @@ def default_file_load():
     config_home = Chibi_path( configuration.env_vars.XDG_CONFIG_HOME )
     if not config_home:
         config_home = Chibi_path( '~/.config' )
-
     config_home += 'chibi'
-    config_file = config_home + 'chibi.py'
-    if not config_home.exists:
-        return
-        # config_home.mkdir()
+    return config_home
 
+
+def _should_load_config_file( config_home, config_file ):
+    return config_home.exists and config_file.exists
+
+
+def _do_touch( config_home, config_file ):
+    if not config_home.exists:
+        config_home.mkdir()
     if not config_file.exists:
-        return
-        # config_file.touch()
-    load( config_file )
+        config_file.touch()
+
+
+def default_file_load( python_file_config='chibi.py', touch=False ):
+    config_home = _build_config_path()
+    config_file = config_home + python_file_config
+    if touch:
+        _do_touch( config_home, config_file )
+    if _should_load_config_file( config_home, config_file ):
+        load( config_file )
 
 
 def load( path ):
