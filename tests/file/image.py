@@ -1,9 +1,10 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 
 from chibi.file.image import Chibi_image
 from tests.snippet.files import Test_with_files
 
 
+@skip( "quiero quitar pillow de chibi y moverlo a chibi_miru" )
 class Test_images( TestCase ):
     def setUp( self ):
         super().setUp()

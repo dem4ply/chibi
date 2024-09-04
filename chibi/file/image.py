@@ -10,6 +10,7 @@ class Chibi_image( Chibi_file ):
 
     @property
     def _PIL( self ):
+        raise NotImplementedError
         from PIL import Image
         return Image.open( self.path )
 
