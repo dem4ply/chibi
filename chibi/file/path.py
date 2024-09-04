@@ -1,5 +1,4 @@
 import glob
-import distutils.dir_util
 import logging
 import os
 import shutil
@@ -174,7 +173,7 @@ class Chibi_path( str ):
             if dest.is_a_file:
                 raise NotImplementedError(
                     "no se puede copiar un folder dentro de un archivo" )
-            distutils.dir_util.copy_tree( str( self ), str( dest ) )
+            shutil.copytree( str( self ), str( dest ), dirs_exist_ok=True )
             return Chibi_path( dest )
         elif self.is_glob:
             if not dest.exists:
