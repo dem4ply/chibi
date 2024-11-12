@@ -2,6 +2,12 @@
 History
 =======
 
+******
+0.14.0
+******
+
+* inicio de migracion de pillow a chibi_miru
+
 *******
 0.11.10
 *******

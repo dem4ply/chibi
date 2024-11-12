@@ -16,3 +16,4 @@ coverage
 Sphinx
 twine
 pycodestyle
+build

@@ -17,7 +17,7 @@ def basic_config( level=logging.INFO, force=True ):
             logger = logging.getLogger( 'chibi.config.logger' )
             logger.warning(
                 "estas usando una version vieja de python por eso no se "
-                "puede usar la el parametro 'force' para asignar el "
+                "puede usar el parametro 'force' para asignar el "
                 "formato del los logs" )
         else:
             raise
