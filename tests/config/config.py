@@ -92,8 +92,10 @@ class Test_default_file_load( unittest.TestCase ):
     def test_should_work( self ):
         default_file_load()
 
+    @patch( 'chibi.config._should_load_config_file' )
     @patch( 'chibi.config.load' )
-    def test_should_call_load_funtion( self, load ):
+    def test_should_call_load_funtion( self, load, should_load ):
+        should_load.return_value = True
         default_file_load()
         load.assert_called_once()
 
