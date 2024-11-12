@@ -75,7 +75,7 @@ class Test_chibi_atlas_deeper_with_list( TestCase ):
             a='a',
             b=dict( b=dict( bb='bb' ) )
         ) )
-        self.d.l = [
+        self.d._list = [
             dict( q=1, w=2 ),
             dict( a=[ dict( z='z', x='x' ) ] )
         ]
@@ -83,6 +83,6 @@ class Test_chibi_atlas_deeper_with_list( TestCase ):
     def test_the_inner_dicts_should_be_chibi_atlas( self ):
         self.assertIsInstance( self.d.b, Chibi_atlas )
         self.assertIsInstance( self.d.b.b, Chibi_atlas )
-        self.assertIsInstance( self.d.l[0], Chibi_atlas )
-        self.assertIsInstance( self.d.l[1], Chibi_atlas )
-        self.assertIsInstance( self.d.l[1].a[0], Chibi_atlas )
+        self.assertIsInstance( self.d._list[0], Chibi_atlas )
+        self.assertIsInstance( self.d._list[1], Chibi_atlas )
+        self.assertIsInstance( self.d._list[1].a[0], Chibi_atlas )

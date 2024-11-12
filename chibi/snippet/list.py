@@ -1,13 +1,13 @@
 from chibi.atlas import Chibi_atlas
 
 
-def group_by( l, key ):
+def group_by( _list, key ):
     """
     agrupa por alguna llave
 
     Arguments
     =========
-    l: list, tuple, finite iter
+    _list: list, tuple, finite iter
     key: callable or str
         funcion que separara los elementos
         si es un string se asume que los elementos son dicionarios
@@ -19,17 +19,17 @@ def group_by( l, key ):
             de con los elementos de ese key
     """
     if isinstance( key, str ):
-        return _group_by_str( l, key )
+        return _group_by_str( _list, key )
     elif callable( key ):
-        return _group_by_callable( l, key )
+        return _group_by_callable( _list, key )
     else:
         raise NotImplementedError(
             f'no esta implementado si la llave es un tipo {type( key )}' )
 
 
-def _group_by_str( l, key ):
+def _group_by_str( _list, key ):
     result = Chibi_atlas()
-    for item in l:
+    for item in _list:
         value = item[ key ]
         try:
             result[ value ].append( item )
@@ -38,9 +38,9 @@ def _group_by_str( l, key ):
     return result
 
 
-def _group_by_callable( l, key ):
+def _group_by_callable( _list, key ):
     result = Chibi_atlas()
-    for item in l:
+    for item in _list:
         value = key( item )
         try:
             result[ value ].append( item )

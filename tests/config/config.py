@@ -1,12 +1,12 @@
 import logging
 import unittest
-from unittest.mock import Mock, patch
-from tests.snippet.files import Test_with_files
+from unittest.mock import patch
+
 from chibi import config
 from chibi.atlas import Chibi_atlas
+from chibi.config import Configuration, default_file_load, _build_config_path
 from chibi.config.config import Logger
-from chibi.config import Configuration
-from chibi.config import default_file_load, _build_config_path
+from tests.snippet.files import Test_with_files
 
 
 class Test_load_config( Test_with_files ):

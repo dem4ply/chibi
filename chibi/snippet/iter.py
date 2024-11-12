@@ -27,9 +27,9 @@ class ___DUMP:
         self.dump = dump
 
 
-def chunk_each( l, f ):
+def chunk_each( _list, f ):
     inner_result = []
-    iterator = iter( l )
+    iterator = iter( _list )
     for i in iterator:
         if f( i ):
             if inner_result:

@@ -41,8 +41,8 @@ class Test_path( Test_with_files ):
 
     def test_find_work( self ):
         result = list( self.path.find() )
-        for l in self.path.ls():
-            self.assertIn( l, result )
+        for _list in self.path.ls():
+            self.assertIn( _list, result )
 
     def test_mkdir_should_create_the_folder( self ):
         new_dir = Chibi_path( self.dirs[0] ) + 'asdf'

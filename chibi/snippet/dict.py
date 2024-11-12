@@ -318,9 +318,9 @@ def remove_xml_notatation( d ):
     return d
 
 
-def __remove_element__list( l, element ):
+def __remove_element__list( _list, element ):
     result = []
-    for i in l:
+    for i in _list:
         if i is element:
             continue
         if isinstance( i, list ):

@@ -4,7 +4,7 @@ from chibi.snippet.list import group_by
 
 class Test_group_by( TestCase ):
     def setUp( self ):
-        self.l = [
+        self._list = [
             dict( s='ok' ),
             dict( s='no' ),
             dict( s='fail' ),
@@ -19,9 +19,9 @@ class Test_group_by( TestCase ):
         }
 
     def test_should_return_expected_result_if_is_a_callable( self ):
-        result = group_by( self.l, lambda v: v[ 's' ] )
+        result = group_by( self._list, lambda v: v[ 's' ] )
         self.assertEqual( result, self.expected )
 
     def test_should_return_expected_result_if_is_a_string( self ):
-        result = group_by( self.l, 's' )
+        result = group_by( self._list, 's' )
         self.assertEqual( result, self.expected )
