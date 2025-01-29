@@ -112,6 +112,25 @@ class Test_path( Test_with_files ):
         path.delete()
         self.assertFalse( exists( path ) )
 
+    def test_properties_should_not_explote_when_is_a_folder( self ):
+        properties = self.folder_with_files_with_content.properties
+        self.assertTrue( properties )
+        self.assertEqual( properties.mime, 'folder' )
+        self.assertEqual( properties.extension, '' )
+
+    def test_when_find_have_permission_denied_should_be_ignore( self ):
+        tmp = Chibi_path( '/tmp/' )
+        for f in tmp.ls( files=False ):
+            if ( f.properties.user.name == 'root'
+                    and f.properties.group.name == 'root' ):
+                files = list( tmp.find( f.base_name ) )
+                # si tiene que estar vacio porque no lo puedes leer
+                self.assertFalse( files )
+                return
+        self.fail(
+            'se tiene que crear alguna carpeta con archivos en /tmp/ '
+            'de parte de group para que esto funcione' )
+
 
 class Test_path_with_files( Test_with_files ):
     def test_if_path_is_a_file_should_only_use_the_dir( self ):

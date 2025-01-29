@@ -5,6 +5,7 @@ import shutil
 import re
 
 import magic
+from chibi.snippet import regex
 
 
 logger = logging.getLogger( "chibi.file.chibi_path" )
@@ -224,8 +225,12 @@ class Chibi_path( str ):
         from chibi.file.snippets import stat
 
         prop = stat( self )
-        prop.mime = magic.Magic( mime=True ).from_file( self )
-        prop.extension = os.path.splitext( self )[1][1:]
+        if self.is_a_folder:
+            prop.mime = 'folder'
+            prop.extension = ''
+        else:
+            prop.mime = magic.Magic( mime=True ).from_file( self )
+            prop.extension = os.path.splitext( self )[1][1:]
         return prop
 
     @property
@@ -280,13 +285,25 @@ class Chibi_path( str ):
         if self.is_a_file:
             raise NotImplementedError(
                 "no esta implementa buscar en un archivo" )
-        from .snippets import find, find_only_files, find_only_folders
+        from .snippets import ls
         if dirs and files:
-            return find( self, search_term )
+            name = re.compile( search_term )
+            list_files = ls( self, recursive=True )
+            try:
+                for f in list_files:
+                    base_name = f.base_name
+                    if regex.test( name, base_name ):
+                        yield f
+            except PermissionError as e:
+                logger.warning( f'{e}' )
         elif dirs and not files:
-            return find_only_folders( self, search_term )
+            return (
+                f for f in self.find( search_term=search_term )
+                if f.is_folder )
         elif not dirs and files:
-            return find_only_files( self, search_term )
+            return (
+                f for f in self.find( search_term=search_term )
+                if f.is_file )
         else:
             raise NotImplementedError
 
