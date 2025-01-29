@@ -297,13 +297,13 @@ class Chibi_path( str ):
             except PermissionError as e:
                 logger.warning( f'{e}' )
         elif dirs and not files:
-            return (
+            yield from (
                 f for f in self.find( search_term=search_term )
-                if f.is_folder )
+                if f.is_a_folder )
         elif not dirs and files:
-            return (
+            yield from (
                 f for f in self.find( search_term=search_term )
-                if f.is_file )
+                if f.is_a_file )
         else:
             raise NotImplementedError
 

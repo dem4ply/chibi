@@ -131,6 +131,16 @@ class Test_path( Test_with_files ):
             'se tiene que crear alguna carpeta con archivos en /tmp/ '
             'de parte de group para que esto funcione' )
 
+    def test_find_only_files_should_only_return_files( self ):
+        tmp = Chibi_path( '/tmp/' )
+        for f in tmp.find( dirs=False, files=True ):
+            self.assertTrue( f.is_a_file )
+
+    def test_find_only_folders_should_only_return_folders( self ):
+        tmp = Chibi_path( '/tmp/' )
+        for f in tmp.find( dirs=False, files=True ):
+            self.assertTrue( f.is_a_folder )
+
 
 class Test_path_with_files( Test_with_files ):
     def test_if_path_is_a_file_should_only_use_the_dir( self ):
