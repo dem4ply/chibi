@@ -2,6 +2,12 @@
 History
 =======
 
+*******************
+0.16.0 (2025-03-11)
+*******************
+
+* se agrego el parametro para no elimnar los chibi_path_temp cuando se eliminen
+
 ******
 0.14.0
 ******
