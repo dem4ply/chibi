@@ -8,13 +8,16 @@ class Chibi_temp_path( Chibi_path ):
     cuando se instancia crea un directorio temporal en /tmp/ y cuando
     se elimina la instancia se borra la carpeta( algunas veces )
     """
-    def __new__( cls, *args, **kw ):
+    def __new__( cls, *args, delete_on_del=True, **kw ):
         args_2 = []
         args_2.append( tempfile.mkdtemp() )
-        return str.__new__( cls, *args_2, **kw )
+        result = str.__new__( cls, *args_2, **kw )
+        result._delete_on_del = delete_on_del
+        return result
 
     def __del__( self ):
-        self.delete()
+        if self._delete_on_del:
+            self.delete()
 
     def __add__( self, other ):
         return Chibi_path( str( self ) ) + other
