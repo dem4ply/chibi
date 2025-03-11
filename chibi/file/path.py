@@ -119,6 +119,22 @@ class Chibi_path( str ):
             self, encoding=encoding, newline=newline, **kw )
 
     def relative_to( self, root ):
+        """
+        regresa el path relativos
+
+        Parameters
+        ==========
+        root: string
+
+        Returns
+        =======
+        string
+
+        Examples
+        ========
+        >>>Chibi_path( '/usr/var/log' ).relative_to(  root='/usr/var/' )
+        'log'
+        """
         from .snippets import get_relative_path
         return type( self )( get_relative_path( self, root=root ) )
 

@@ -138,7 +138,7 @@ class Test_path( Test_with_files ):
 
     def test_find_only_folders_should_only_return_folders( self ):
         tmp = Chibi_path( '/tmp/' )
-        for f in tmp.find( dirs=False, files=True ):
+        for f in tmp.find( dirs=True, files=False ):
             self.assertTrue( f.is_a_folder )
 
 
