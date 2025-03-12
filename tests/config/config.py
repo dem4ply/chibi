@@ -1,6 +1,6 @@
 import logging
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 from chibi import config
 from chibi.atlas import Chibi_atlas
@@ -125,3 +125,8 @@ class Test_default_file_load( unittest.TestCase ):
         self.assertTrue(
             config_file.exists, f'el config file {config_file} no se creo' )
         config_file.delete()
+
+    @patch( 'chibi.config._build_config_path' )
+    def test_when_no_have_home_should_nothing( self, build_config ):
+        build_config.return_value = None
+        default_file_load()

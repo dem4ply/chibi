@@ -39,6 +39,8 @@ def _do_touch( config_home, config_file ):
 
 def default_file_load( python_file_config='chibi.py', touch=False ):
     config_home = _build_config_path()
+    if config_home is None:
+        return
     config_file = config_home + python_file_config
     if touch:
         _do_touch( config_home, config_file )
