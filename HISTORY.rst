@@ -3,6 +3,12 @@ History
 =======
 
 *******************
+0.16.1 (2025-03-12)
+*******************
+
+* cuando no hay un home no carga el archivo de configuracion de chibi
+
+*******************
 0.16.0 (2025-03-11)
 *******************
 

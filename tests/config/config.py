@@ -1,6 +1,6 @@
 import logging
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 from chibi import config
 from chibi.atlas import Chibi_atlas
