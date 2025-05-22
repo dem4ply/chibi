@@ -130,8 +130,8 @@ class Test_path( Test_with_files ):
                     files,
                     "la lista de archivos tiene que estar vacia porque no"
                     "lo puedes leer\n"
-                    f"se intento de buscar '{f}'"
-                    f"lista de archivos {all_tmp}"
+                    f"se intento de buscar '{f}'\n"
+                    f"lista de archivos {'\n'.join( all_tmp )}"
                 )
                 return
         self.fail(
