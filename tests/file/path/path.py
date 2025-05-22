@@ -120,12 +120,19 @@ class Test_path( Test_with_files ):
 
     def test_when_find_have_permission_denied_should_be_ignore( self ):
         tmp = Chibi_path( '/tmp/' )
-        for f in tmp.ls( files=False ):
+        all_tmp = list( tmp.ls( files=False ) )
+        for f in all_tmp:
             if ( f.properties.user.name == 'root'
                     and f.properties.group.name == 'root' ):
                 files = list( tmp.find( f.base_name ) )
                 # si tiene que estar vacio porque no lo puedes leer
-                self.assertFalse( files )
+                self.assertFalse(
+                    files,
+                    "la lista de archivos tiene que estar vacia porque no"
+                    "lo puedes leer\n"
+                    f"se intento de buscar '{f}'"
+                    f"lista de archivos {all_tmp}"
+                )
                 return
         self.fail(
             'se tiene que crear alguna carpeta con archivos en /tmp/ '
