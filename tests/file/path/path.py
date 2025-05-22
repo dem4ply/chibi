@@ -119,7 +119,12 @@ class Test_path( Test_with_files ):
         self.assertEqual( properties.mime, 'folder' )
         self.assertEqual( properties.extension, '' )
 
-    @skipIf( os.getlogin() == 'root', "the world god only knows" )
+    try:
+        i_am_god = os.getlogin() == 'root',
+    except OSError:
+        i_am_god = True
+
+    @skipIf( i_am_god, "the world god only knows" )
     def test_when_find_have_permission_denied_should_be_ignore( self ):
         tmp = Chibi_path( '/tmp/' )
         all_tmp = list( tmp.ls( files=False ) )
