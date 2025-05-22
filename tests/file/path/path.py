@@ -128,12 +128,13 @@ class Test_path( Test_with_files ):
                     and f.properties.group.name == 'root' ):
                 files = list( tmp.find( f.base_name ) )
                 # si tiene que estar vacio porque no lo puedes leer
+                all_tmp_str = "\n".join( all_tmp )
                 self.assertFalse(
                     files,
                     "la lista de archivos tiene que estar vacia porque no"
                     "lo puedes leer\n"
                     f"se intento de buscar '{f}'\n"
-                    f"lista de archivos {'\n'.join( all_tmp )}"
+                    f"lista de archivos {all_tmp_str}"
                 )
                 return
         self.fail(
