@@ -1,6 +1,7 @@
 import os
 import random
 from unittest import TestCase
+from unittest import skipIf
 
 from faker import Factory as Faker_factory
 
@@ -118,6 +119,7 @@ class Test_path( Test_with_files ):
         self.assertEqual( properties.mime, 'folder' )
         self.assertEqual( properties.extension, '' )
 
+    @skipIf( os.getlogin() == 'root', "the world god only knows" )
     def test_when_find_have_permission_denied_should_be_ignore( self ):
         tmp = Chibi_path( '/tmp/' )
         all_tmp = list( tmp.ls( files=False ) )
