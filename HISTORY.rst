@@ -3,6 +3,13 @@ History
 =======
 
 *******************
+0.17.0 (2025-03-12)
+*******************
+
+* los config de los envars ahora funcionan como chibi_atlas para encadenar 
+  atributos
+
+*******************
 0.16.1 (2025-03-12)
 *******************
 
