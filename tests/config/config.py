@@ -5,7 +5,7 @@ from unittest.mock import patch
 from chibi import config
 from chibi.atlas import Chibi_atlas
 from chibi.config import Configuration, default_file_load, _build_config_path
-from chibi.config.config import Logger
+from chibi.config.config import Logger, Env_vars
 from tests.snippet.files import Test_with_files
 
 
@@ -77,10 +77,22 @@ class Test_envars( unittest.TestCase ):
     def setUp( self ):
         super().setUp()
         from chibi.config import configuration
+        self.envars_fixture = {
+            'simple': 'simple_value',
+            'double__single': 'single_value',
+            'double__inner__out': 'out_value',
+        }
         self.config = configuration
 
     def test_envars_should_no_be_empty( self ):
         self.assertTrue( self.config.env_vars )
+
+    def test_envars_should_are_similar_to_chibi_atlas( self ):
+        with patch.dict( 'os.environ', self.envars_fixture ):
+            envars = Env_vars()
+            self.assertEqual( envars.simple, 'simple_value' )
+            self.assertEqual( envars.double.single, 'single_value' )
+            self.assertEqual( envars.double.inner.out, 'out_value' )
 
 
 class Test_default_file_load( unittest.TestCase ):
