@@ -71,8 +71,7 @@ class Chibi_path( str ):
         """
         es un archivo
         """
-        from chibi.file.snippets import is_a_file
-        return is_a_file( self )
+        return os.path.isfile( str( self ) )
 
     @property
     def is_glob( self ):
