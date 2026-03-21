@@ -98,6 +98,9 @@ class Chibi_file:
         self.reread()
 
     def write( self, string ):
+        self.write_text( string )
+
+    def write_text( self, string ):
         if isinstance( string, ( bytes, bytearray ) ):
             with self._open( 'wb' ) as f:
                 f.write( string )
@@ -109,6 +112,12 @@ class Chibi_file:
     def read( self ):
         """
         lee todo el archivo
+        """
+        return self.read_text()
+
+    def read_text( self ):
+        """
+        lee el archivo como texto
         """
         result = self.file.read()
         self.reread()
