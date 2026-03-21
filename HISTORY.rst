@@ -3,6 +3,14 @@ History
 =======
 
 *******************
+0.18.0 (2026-03-21)
+*******************
+
+* chibi file para archivos de tipo .env "from chibi.file.other import Chibi_conf_env"
+* se quito otro snippet de is_a_file de chibi path
+* se agregan funciones de read_text y write_text a chibi file
+
+*******************
 0.17.0 (2025-03-12)
 *******************
 
