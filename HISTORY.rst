@@ -3,6 +3,12 @@ History
 =======
 
 *******************
+0.19.0 (2026-03-22)
+*******************
+
+* se agrego funcion para crear enlaces simbolicos usando chibi path
+
+*******************
 0.18.0 (2026-03-21)
 *******************
 
