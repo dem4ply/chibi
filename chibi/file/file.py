@@ -57,6 +57,27 @@ class Chibi_file:
 
     @property
     def properties( self ):
+        """
+        propiedades de un archivo
+
+        Examples
+        --------
+        >>>Chibi_path( "/etc/hostname" ).properties
+        {
+            'mode': 33188, 'ino': 263318, 'dev': 66308, 'nlink': 1,
+            'size': 13, 'atime': 1774078442.3462608,
+            'mtime': 1683520231.7298448, 'ctime': 1683520231.7298448,
+            'user': {
+                'name': 'root', 'passwd': 'x', 'uid': 0, 'gid': 0,
+                'gecos': '', 'dir': '/root', 'shell': '/bin/bash'
+            },
+            'group': {
+                'name': 'root', 'passwd': 'x', 'gid': 0, 'mem': ['root']
+            },
+            'mime': 'text/plain',
+            'extension': ''
+        }
+        """
         prop = stat( self.path )
         prop.mime = magic.Magic( mime=True ).from_file( self.path )
         prop.extension = os.path.splitext( self.path )[1][1:]
