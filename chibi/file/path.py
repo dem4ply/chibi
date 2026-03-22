@@ -159,10 +159,10 @@ class Chibi_path( str ):
             if dest.is_a_folder:
                 dest += self.base_name
             shutil.move( str( self ), str( dest ) )
-            logger.info( "{} -> {}".format( self, dest ) )
+            logger.info( "move: {} -> {}".format( self, dest ) )
         elif self.is_a_folder:
             shutil.move( str( self ), str( dest ) )
-            logger.info( "{} -> {}".format( self, dest ) )
+            logger.info( "move: {} -> {}".format( self, dest ) )
         elif self.is_glob:
             if not dest.exists:
                 dest.mkdir()
@@ -237,6 +237,27 @@ class Chibi_path( str ):
 
     @property
     def properties( self ):
+        """
+        propiedades de un archivo
+
+        Examples
+        --------
+        >>>Chibi_path( "/etc/hostname" ).properties
+        {
+            'mode': 33188, 'ino': 263318, 'dev': 66308, 'nlink': 1,
+            'size': 13, 'atime': 1774078442.3462608, 'is_link': False,
+            'mtime': 1683520231.7298448, 'ctime': 1683520231.7298448,
+            'user': {
+                'name': 'root', 'passwd': 'x', 'uid': 0, 'gid': 0,
+                'gecos': '', 'dir': '/root', 'shell': '/bin/bash'
+            },
+            'group': {
+                'name': 'root', 'passwd': 'x', 'gid': 0, 'mem': ['root']
+            },
+            'mime': 'text/plain',
+            'extension': ''
+        }
+        """
         from chibi.file.snippets import stat
 
         prop = stat( self )
@@ -381,3 +402,16 @@ class Chibi_path( str ):
             return os.path.expanduser( self )
         else:
             return os.path.abspath( self )
+
+    def link( self, link, *, verbose=True ):
+        """
+        crea un enlace simbolico en el target
+
+        Returns
+        -------
+        Chibi_path: path del enlace
+        """
+        os.symlink( str( self ), link )
+        if verbose:
+            logger.info( f"link: {self} -> {link}" )
+        return type( self )( link )

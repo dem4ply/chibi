@@ -32,3 +32,8 @@ class Test_stat_to_file( Test_with_files ):
     def test_stat_to_file_should_return_the_user( self ):
         result = stat( self.files[0] )
         self.assertIn( 'user', result )
+
+    def test_stat_should_have_is_a_link( self ):
+        result = stat( self.files[0] )
+        self.assertIn( 'is_link', result )
+        self.assertFalse( result[ 'is_link' ] )

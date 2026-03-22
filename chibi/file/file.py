@@ -62,10 +62,10 @@ class Chibi_file:
 
         Examples
         --------
-        >>>Chibi_path( "/etc/hostname" ).properties
+        >>>Chibi_file( "/etc/hostname" ).properties
         {
             'mode': 33188, 'ino': 263318, 'dev': 66308, 'nlink': 1,
-            'size': 13, 'atime': 1774078442.3462608,
+            'size': 13, 'atime': 1774078442.3462608, 'is_link': False,
             'mtime': 1683520231.7298448, 'ctime': 1683520231.7298448,
             'user': {
                 'name': 'root', 'passwd': 'x', 'uid': 0, 'gid': 0,

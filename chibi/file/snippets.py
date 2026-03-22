@@ -378,6 +378,9 @@ def stat( src ):
         ctime=s.st_ctime ) )
     result.user = get_passwd( uid=s.st_uid )
     result.group = get_group( gid=s.st_gid )
+    result.is_link = os.path.islink( str( src ) )
+    if result.is_link:
+        result.link_target = os.readlink( str( src ) )
 
     return result
 

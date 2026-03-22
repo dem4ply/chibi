@@ -1,9 +1,7 @@
 import re
 
 from chibi.atlas import Chibi_atlas
-from chibi_atlas.multi import Chibi_atlas_multi
 from chibi.file import Chibi_file
-from chibi.snippet.iter import chunk_each
 
 
 __all__ = [ 'Chibi_conf_env' ]
@@ -38,7 +36,7 @@ class Chibi_conf_env( Chibi_file ):
 def from_string( text ):
     lines = text.split( '\n' )
     lines = filter( bool, lines )
-    lines = ( l.split( '=', 1 ) for l in lines )
+    lines = ( line.split( '=', 1 ) for line in lines )
     lines = ( ( k.strip(), v.strip() ) for k, v in lines )
     result = Chibi_atlas( dict( lines ) )
     return result

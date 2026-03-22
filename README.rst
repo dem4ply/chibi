@@ -62,6 +62,26 @@ and files
 	yaml.stuff == 'str'
 
 
+create symbolic link
+====================
+
+.. code-block:: python
+
+	from chibi.file import Chibi_path
+
+	tmp = Chibi_path( '/etc/hostname' )
+	symbolic_link = tmp.link( "hostname_link" )
+
+	assert symbolic_link.properties.is_link == True
+	assert symbolic_link.properties.link_target == tmp
+
+	assert tmp.properties.is_link == False
+	assert 'link_target' not in tmp.properties
+
+	assert str( symbolic_link.inflate ) != str( tmp )
+	assert symbolic_link.open().read() == tmp.open().read()
+
+
 Chibi_atlas
 ===========
 
