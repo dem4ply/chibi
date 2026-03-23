@@ -324,3 +324,19 @@ class Test_path_open( Test_with_files ):
         self.assertTrue( chibi_file.is_binary )
         chibi_file = f.open( is_binary=False )
         self.assertFalse( chibi_file.is_binary )
+
+
+class Test_path_touch( Test_with_files ):
+    def test_should_work_with_actual_files( self ):
+        f = self.files[0]
+        f.touch()
+
+    def test_when_folders_not_exists_should_create_folders( self ):
+        result = self.root_dir + 'level1' + 'level2' + 'file_on_level2.txt'
+        self.assertFalse( result.exists )
+        self.assertFalse( result.dir_name.exists )
+        result.touch()
+        self.assertTrue( result.exists )
+        self.assertTrue( result.is_a_file )
+        self.assertTrue( result.dir_name.exists )
+        self.assertTrue( result.dir_name.is_a_folder )

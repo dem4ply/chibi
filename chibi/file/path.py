@@ -13,6 +13,16 @@ logger_delete = logging.getLogger( "chibi.file.chibi_path.delete" )
 
 
 class Chibi_path( str ):
+    """
+    maneja de manera humana los path de archivos
+
+    si el path tiene el simbolo ~ lo expande automaticamente
+
+    Arguments
+    ---------
+    chibi_file_class: py:class:`chibi.file.Chibi_file`
+        clase de chibi file que se usara para abrir el archivo
+    """
     def __new__( cls, *args, chibi_file_class=None, **kw ):
         args_2 = []
         for a in args:
@@ -33,7 +43,7 @@ class Chibi_path( str ):
 
         Returns
         =======
-        Chibi_path
+        py:class:`chibi.file.Chibi_path`
         """
         if isinstance( other, self.__class__ ):
             if self.is_a_file:
@@ -81,6 +91,11 @@ class Chibi_path( str ):
     def dir_name( self ):
         """
         regresa la carpeta padre
+
+        Example
+        -------
+        >>>Chibi_path( "/tmp/something.txt" )
+        /tmp
         """
         from chibi.file.snippets import file_dir
         return type( self )( os.path.dirname( str( self ) ) )
@@ -90,6 +105,11 @@ class Chibi_path( str ):
     def base_name( self ):
         """
         regresa el nombre del archivo o de la carpeta
+
+        Example
+        -------
+        >>>Chibi_path( "/tmp/something.txt" )
+        something.txt
         """
         return Chibi_path( os.path.basename( self ) )
 
@@ -97,6 +117,11 @@ class Chibi_path( str ):
     def file_name( self ):
         """
         regresa el nombre del archivo sin la extencion
+
+        Example
+        -------
+        >>>Chibi_path( "/tmp/something.txt" )
+        something
         """
         file_name, ext = os.path.splitext( self.base_name )
         return file_name
@@ -104,6 +129,15 @@ class Chibi_path( str ):
     def open( self, chibi_file_class=None, encoding=None, newline=None, **kw ):
         """
         abre el archivo usando un chibi file
+
+        Parameters
+        ----------
+        chibi_file_class: py:class:`chibi.file.Chibi_file`
+            clase de chibi file que se usara para abrir el archivo
+        encoding: str
+            encodificacion en la que se abrira el archivo
+        newline: str
+            caracter de nueva linea
         """
         if self.is_a_folder:
             raise NotImplementedError(
@@ -141,11 +175,12 @@ class Chibi_path( str ):
         """
         crea una carpeta en la direcion del chibi path
         """
-        try:
+        if self.exists:
+            logger.info(
+                f"el directorio '{self}' ya existe, se omite su creacion" )
+        else:
             os.makedirs( self )
-            logger.info( "se creo el directorio '{}'".format( self ) )
-        except OSError:
-            pass
+            logger.info( f"se creo el directorio '{self}'" )
         if kw:
             logger.warning(
                 "mkdir de chibi path recibio parametros {}".format( kw ) )
@@ -374,6 +409,9 @@ class Chibi_path( str ):
 
     @property
     def expand( self ):
+        """
+        expande un blob del path
+        """
         if self.is_glob:
             return ( type( self )( f ) for f in glob.iglob( self ) )
         else:
@@ -386,13 +424,20 @@ class Chibi_path( str ):
         pass
 
     def touch( self ):
+        """
+        Ejecuta el touch al archivo o crea el archivo si no existe
+        en caso de que el la carpeta del archivo no exista se crea las
+        carpetas
+        """
         if not self.exists or self.is_a_file:
+            if not self.dir_name.exists:
+                self.dir_name.mkdir()
             self.open().touch()
         elif self.is_a_folder:
-            raise NotADirectoryError(
+            raise NotImplementedError(
                 f"no implementado touch a un folder '{self}'" )
         else:
-            raise NotADirectoryError(
+            raise NotImplementedError(
                 f"no implementado touch cuando no es un "
                 f"archivo o folder'{self}'" )
 
