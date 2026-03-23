@@ -3,6 +3,12 @@ History
 =======
 
 *******************
+0.20.0 (2026-03-22)
+*******************
+
+* la funcion touch de chibi path ahora puede crear los directorios padres del archivo
+
+*******************
 0.19.0 (2026-03-22)
 *******************
 
