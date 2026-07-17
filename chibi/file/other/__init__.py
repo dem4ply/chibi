@@ -4,6 +4,7 @@ from .chibi_yaml import Chibi_yaml
 from .chibi_json import Chibi_json
 from .chibi_python import Chibi_python
 from .chibi_systemd import Chibi_systemd  # noqa: F401
+from .chibi_ini import Chibi_ini  # noqa: F401
 from .conf import Chibi_conf  # noqa: F401
 from .simple_env import Chibi_conf_env  # noqa: F401
 
