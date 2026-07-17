@@ -348,3 +348,14 @@ class Test_path_is_empty( Test_with_files ):
 
     def test_is_empty_should_be_false_if_have_files( self ):
         self.assertFalse( self.folder_with_files_with_content.is_empty )
+
+
+class Test_exists( Test_with_files ):
+    def test_not_exists_should_raise( self ):
+        file = self.empty_folder + 'no_file'
+        with self.assertRaises( OSError ):
+            file.raise_not_exists()
+
+    def test_when_exists_should_not_raise( self ):
+        file = self.files[0]
+        file.raise_not_exists()

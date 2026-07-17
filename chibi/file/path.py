@@ -469,3 +469,7 @@ class Chibi_path( str ):
             return not any( self.ls() )
         else:
             raise NotImplementedError( f"{self}" )
+
+    def raise_not_exists( self ):
+        if not self.exists:
+            raise OSError( f"'{self}' no existe" )
