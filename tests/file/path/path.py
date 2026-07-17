@@ -340,3 +340,11 @@ class Test_path_touch( Test_with_files ):
         self.assertTrue( result.is_a_file )
         self.assertTrue( result.dir_name.exists )
         self.assertTrue( result.dir_name.is_a_folder )
+
+
+class Test_path_is_empty( Test_with_files ):
+    def test_is_empty_should_be_true_if_not_have_files( self ):
+        self.assertTrue( self.empty_folder.is_empty )
+
+    def test_is_empty_should_be_false_if_have_files( self ):
+        self.assertFalse( self.folder_with_files_with_content.is_empty )

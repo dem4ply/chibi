@@ -460,3 +460,12 @@ class Chibi_path( str ):
         if verbose:
             logger.info( f"link: {self} -> {link}" )
         return type( self )( link )
+
+    @property
+    def is_empty( self ):
+        if self.is_a_file:
+            raise NotImplementedError( f"{self}" )
+        if self.is_a_folder:
+            return not any( self.ls() )
+        else:
+            raise NotImplementedError( f"{self}" )
