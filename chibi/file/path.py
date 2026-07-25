@@ -3,6 +3,7 @@ import logging
 import os
 import shutil
 import re
+import yaml
 
 import magic
 from chibi.snippet import regex
@@ -473,3 +474,17 @@ class Chibi_path( str ):
     def raise_not_exists( self ):
         if not self.exists:
             raise OSError( f"'{self}' no existe" )
+
+
+def chibi_path_representer( dumper, data ):
+    return dumper.represent_scalar( '!chibi_path', str( data ))
+
+
+def chibi_path_constructor( loader, node ):
+    value = loader.construct_scalar( node )
+    return Chibi_path( value )
+
+
+yaml.add_representer( Chibi_path, chibi_path_representer )
+yaml.add_constructor(
+    '!chibi_path', chibi_path_constructor, Loader=yaml.FullLoader )

@@ -1,6 +1,6 @@
 from tests.snippet.files import Test_with_files
 import yaml
-from chibi.file import Chibi_file
+from chibi.file import Chibi_file, Chibi_path
 from chibi.file.other import Chibi_yaml
 
 
@@ -36,3 +36,9 @@ class Test_chibi_file_yaml( Test_with_files ):
         result = self.chibi_file.read()
         self.assertIsInstance( result, dict )
         self.assertEqual( result, self.data )
+
+    def test_can_write_and_read_chibi_paths( self ):
+        data = { 'path': Chibi_path( self.files[0] ) }
+        self.chibi_file.write( data )
+        new_data = self.chibi_file.read()
+        self.assertEqual( data, new_data )
