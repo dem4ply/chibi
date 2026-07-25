@@ -1,7 +1,6 @@
 import re
 
 from chibi.atlas import Chibi_atlas
-from chibi_atlas.multi import Chibi_atlas_multi
 from chibi.file import Chibi_file
 from chibi.snippet.iter import chunk_each
 
@@ -59,4 +58,3 @@ class Chibi_ini( Chibi_file ):
     def write( self, data ):
         result = to_string( data )
         super().write( result )
-

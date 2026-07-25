@@ -12,10 +12,12 @@ run-directory=/run/lightdm
 #
 # Seat configuration
 #
-# Seat configuration is matched against the seat name glob in the section, for example:
+# Seat configuration is matched against the seat name glob
+# in the section, for example:
 # [Seat:*] matches all seats and is applied first.
 # [Seat:seat0] matches the seat named "seat0".
-# [Seat:seat-thin-client*] matches all seats that have names that start with "seat-thin-client".
+# [Seat:seat-thin-client*] matches all seats that
+# have names that start with "seat-thin-client".
 #
 #
 [Seat:*]
