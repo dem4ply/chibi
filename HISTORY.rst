@@ -3,6 +3,13 @@ History
 =======
 
 *******************
+0.22.0 (2026-07-17)
+*******************
+
+* se agrego la propiedad is_empty para las carpetas en Chibi_path
+* se agrega funcion para raise cuando no existen los archivos en Chibi_path
+
+*******************
 0.21.0 (2026-07-16)
 *******************
 
