@@ -3,6 +3,13 @@ History
 =======
 
 *******************
+0.23.0 (2026-07-28)
+*******************
+
+* sea agrego funcion required a los config
+* se agrego reprecentacion de yaml de los chibi path
+
+*******************
 0.22.0 (2026-07-17)
 *******************
 
