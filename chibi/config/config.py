@@ -6,6 +6,7 @@ import chibi_donkey as donkey
 from chibi.atlas import Chibi_atlas, Chibi_atlas_default, Atlas
 from chibi.file import Chibi_path
 from chibi.file.other import Chibi_json, Chibi_yaml, Chibi_python
+from chibi.config.exception import Chibi_config_not_set
 
 
 logger = logging.getLogger( 'chibi.config.Configuration' )
@@ -23,10 +24,66 @@ class Configuration( Chibi_atlas_default ):
     esta clase funciona como un simple dicionario de atributos para asignar
     configuraciones
     """
-    def __init__( self, default_factory=None, *args, **kw ):
+    def __init__( self, default_factory=None, *args, _path='', **kw ):
         if default_factory is None:
             default_factory = _default_factory
         super().__init__( default_factory, *args, **kw )
+        object.__setattr__( self, '_path', _path )
+
+    def __missing__( self, key ):
+        if self._path:
+            child_path = f"{self._path}.{key}"
+        else:
+            child_path = key
+        value = self.default_factory()
+        if isinstance( value, Configuration ):
+            object.__setattr__( value, '_path', child_path )
+        self[ key ] = value
+        return value
+
+    def required( self, path=None ):
+        """
+        resuelve un path de puntos y valida que el valor final no
+        este vacio
+
+        Parameters
+        ----------
+        path: str
+            ruta separada por puntos, ej 'api.host'
+
+        Raises
+        ------
+        Chibi_config_not_set
+            si el valor resuelto es falso
+
+        Examples
+        --------
+        >>> configuration.api.host = 'localhost'
+        >>> configuration.require( 'api.host' )
+        'localhost'
+        >>> configuration.api.require( 'api.host' )
+        'localhost'
+        """
+        if path is None:
+            if not self:
+                raise Chibi_config_not_set( self._path )
+            return self
+
+        value = self
+        for part in path.split( '.' ):
+            if not isinstance( value, Configuration ):
+                value = value[ part ]
+            else:
+                value = getattr( value, part )
+
+        if self._path:
+            full_path = f"{self._path}.{path}"
+        else:
+            full_path = path
+
+        if not value:
+            raise Chibi_config_not_set( full_path )
+        return value
 
     def load( self, path ):
         path = Chibi_path( path )

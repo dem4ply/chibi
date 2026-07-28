@@ -473,7 +473,7 @@ class Chibi_path( str ):
 
     def raise_not_exists( self ):
         if not self.exists:
-            raise OSError( f"'{self}' no existe" )
+            raise FileNotFoundError( f"'{self}' no existe" )
 
 
 def chibi_path_representer( dumper, data ):
