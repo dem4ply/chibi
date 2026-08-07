@@ -1,3 +1,6 @@
+from chibi_atlas import Chibi_atlas
+
+
 fix_values_of_bool = {
     'true': True,
     'false': False,
@@ -9,7 +12,7 @@ fix_values_of_bool = {
 
 def link_header( header, link_delimiter=',', param_delimiter=';' ):
     """
-    Parsea en dicionario la respusta de las cabezera ``link``
+    Parsea en dicionario la respuesta de las cabezera ``link``
 
     Parameters
     ----------
@@ -29,7 +32,7 @@ def link_header( header, link_delimiter=',', param_delimiter=';' ):
     enlace a la especificacion del header
     `link header <https://tools.ietf.org/html/rfc5988>`_
     """
-    result = {}
+    result = Chibi_atlas()
     links = header.split( link_delimiter )
     for link in links:
         segments = link.split( param_delimiter )
