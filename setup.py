@@ -17,7 +17,7 @@ requirements = [
 setup(
     name='chibi',
     keywords='chibi',
-    version='0.22.1',
+    version='0.22.2',
     description='python snippets and other useful things',
     long_description=readme + '\n\n' + history,
     license="WTFPL",
